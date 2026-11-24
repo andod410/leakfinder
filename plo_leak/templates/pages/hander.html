@@ -1,0 +1,72 @@
+<div class="hb">
+  <div>
+    <div class="toolbar">
+      <div class="seg" id="hq">
+        <button type="button" data-q="forlust" class="on">Största förluster</button><button type="button" data-q="vinst">Största vinster</button><button type="button" data-q="pott">Största pottar</button><button type="button" data-q="senaste">Senaste</button><button type="button" data-q="allin">All-in</button><button type="button" data-q="sd">Showdown</button>{% if fu %}<button type="button" data-q="brott">Regelbrott</button>{% endif %}{% if focus %}<button type="button" data-q="fokus" data-regel="{{ focus.id }}">Fokusläckan</button>{% endif %}
+      </div>
+      <select id="hpos" aria-label="Position"><option value="">Alla positioner</option>{% for r in pos_rows %}<option>{{ r.pos }}</option>{% endfor %}</select>
+      <input id="hid" type="text" placeholder="Handnummer" aria-label="Sök handnummer" style="width:140px">
+      <form id="hexp" method="post" action="/v/{{ vid }}/exportera-lista" style="display:flex;gap:6px;margin-left:auto">
+        <input type="hidden" name="q"><input type="hidden" name="regel"><input type="hidden" name="pos"><input type="hidden" name="id"><input type="hidden" name="sort"><input type="hidden" name="dir"><input type="hidden" name="fran_ts"><input type="hidden" name="till_ts">
+        <input type="number" name="limit" min="1" placeholder="Antal: alla" aria-label="Antal händer att exportera" style="width:110px">
+        <button class="btn sm ghost" type="submit" title="Spara händerna i listan i originalformatet för DriveHUD/HoldemManager">Exportera listan</button>
+      </form>
+    </div>
+    <div class="panel scroll" style="padding:0">
+      <table class="tbl" id="ht">
+        <thead><tr><th class="s" data-s="date">Datum</th><th class="hide-m">Spel</th><th>Pos</th><th>Hand</th><th class="n s" data-s="pot">Pott</th><th class="n s" data-s="net">Resultat</th><th class="n s hide-m" data-s="ev">All-in EV</th><th class="n s hide-m" data-s="money">Pengar</th><th class="hide-m">Info</th></tr></thead>
+        <tbody><tr><td colspan="9" class="empty">Hämtar händer …</td></tr></tbody>
+      </table>
+    </div>
+    <div class="pager"><span id="hinfo"></span><span><button type="button" id="hprev">◀ Föregående</button> <button type="button" id="hnext">Nästa ▶</button></span></div>
+    <p class="note">Tryck på en hand för att spela upp den med kort, insatser och equity på varje gata. Resultat och pott i bb. Equity räknas bara mellan händerna vars kort syns – spelare med okända kort räknas inte med, så andelarna blir tillsammans 100 %. Flop och turn räknas exakt, preflop med 20 000 slumpade bord.</p>
+  </div>
+  <aside class="panel" id="rpl-dock"><div class="mh"><b>Uppspelning</b></div><div class="mb"><p class="note">Välj en hand i listan.</p></div></aside>
+</div>
+<script>
+(function(){
+  const API='/api/hander/{{ vid }}', SYM={h:'♥',d:'♦',c:'♣',s:'♠'}, RK={10:'T',11:'J',12:'Q',13:'K',14:'A'};
+  const esc=t=>String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  const cards=cs=>cs.map(c=>`<span class="card ${c[1]}">${RK[c[0]]||c[0]}${SYM[c[1]]}</span>`).join('');
+  const sg=(v,d)=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(d);
+  const DEF={forlust:['net','asc'],vinst:['net','desc'],pott:['pot','desc'],senaste:['date','desc'],allin:['date','desc'],sd:['date','desc'],brott:['date','desc']};
+  let st={q:'forlust',sort:'net',dir:'asc',pos:'',id:'',page:0,regel:'',fran_ts:'',till_ts:''}, size=50, total=0, timer=null;
+  DEF.fokus=['date','desc']; DEF.session=['date','asc']; DEF.sessbrott=['date','asc'];
+  (function(){ const u=new URLSearchParams(location.search); if(u.get('q')){ st.q=u.get('q'); st.regel=u.get('regel')||''; st.fran_ts=u.get('fran_ts')||''; st.till_ts=u.get('till_ts')||''; [st.sort,st.dir]=DEF[st.q]||['date','desc'];
+    document.querySelectorAll('#hq button').forEach(x=>x.classList.toggle('on',x.dataset.q===st.q)); } })();
+  const tb=document.querySelector('#ht tbody');
+  async function load(){
+    const p=new URLSearchParams({q:st.q,sort:st.sort,dir:st.dir,pos:st.pos,id:st.id,page:st.page,size:size,regel:st.regel,fran_ts:st.fran_ts,till_ts:st.till_ts});
+    tb.innerHTML='<tr><td colspan="9" class="empty">Hämtar händer …</td></tr>';
+    let j; try{ const r=await fetch(API+'?'+p); j=await r.json(); if(!r.ok) throw new Error(j.error||r.status); }
+    catch(e){ tb.innerHTML=`<tr><td colspan="9" class="empty">Kunde inte hämta händerna: ${esc(e.message)}</td></tr>`; return; }
+    total=j.total;
+    tb.innerHTML=j.rows.length?j.rows.map(r=>`<tr class="hrow" data-hid="${esc(r.id)}"><td style="white-space:nowrap">${esc(r.date)}</td><td class="hide-m" style="white-space:nowrap">${esc(r.game)} <span class="note" style="font-size:11px">$${esc(r.stake)}</span></td><td>${esc(r.pos)}</td><td style="white-space:nowrap">${cards(r.hole)}</td>
+      <td class="n">${r.pot.toFixed(0)}</td><td class="n ${r.net>=0?'pos':'neg'}">${sg(r.net,1)}</td><td class="n hide-m ${r.ev>=0?'pos':'neg'}">${sg(r.ev,1)}</td><td class="n hide-m ${r.money>=0?'pos':'neg'}">${sg(r.money,2)}</td>
+      <td class="hide-m" style="white-space:nowrap">${r.allin?`<span class="tag">all-in ${esc(r.allin)}</span>`:''}${r.sd?'<span class="tag">showdown</span>':''}${r.dev?'<span class="tag bad">regelbrott</span>':''}</td></tr>`).join('')
+      :'<tr><td colspan="9" class="empty">Inga händer matchar.</td></tr>';
+    const a=st.page*size;
+    document.getElementById('hinfo').textContent=total?`${(a+1).toLocaleString('sv-SE')}–${Math.min(a+size,total).toLocaleString('sv-SE')} av ${total.toLocaleString('sv-SE')} händer`:'';
+    document.getElementById('hprev').disabled=st.page===0; document.getElementById('hnext').disabled=a+size>=total;
+    document.querySelectorAll('#ht th.s').forEach(th=>{th.classList.toggle('on',th.dataset.s===st.sort);th.classList.toggle('asc',st.dir==='asc');});
+    const first=tb.querySelector('.hrow'), dock=document.getElementById('rpl-dock');
+    if(first && dock.offsetParent!==null && !dock.dataset.used){ first.click(); }
+  }
+  document.getElementById('hq').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return;
+    document.querySelectorAll('#hq button').forEach(x=>x.classList.toggle('on',x===b));
+    st.q=b.dataset.q; st.regel=b.dataset.regel||''; st.fran_ts=''; st.till_ts=''; [st.sort,st.dir]=DEF[st.q]; st.page=0; load();});
+  document.getElementById('hpos').addEventListener('change',e=>{st.pos=e.target.value; st.page=0; load();});
+  document.getElementById('hid').addEventListener('input',e=>{clearTimeout(timer); timer=setTimeout(()=>{st.id=e.target.value.trim(); st.page=0; load();},300);});
+  document.querySelectorAll('#ht th.s').forEach(th=>th.addEventListener('click',()=>{
+    if(st.sort===th.dataset.s) st.dir=st.dir==='asc'?'desc':'asc'; else {st.sort=th.dataset.s; st.dir=th.dataset.s==='date'?'desc':'asc';}
+    st.page=0; load();}));
+  document.getElementById('hprev').addEventListener('click',()=>{st.page=Math.max(0,st.page-1); load();});
+  document.getElementById('hnext').addEventListener('click',()=>{st.page++; load();});
+  tb.addEventListener('click',e=>{const tr=e.target.closest('.hrow'); if(!tr) return;
+    tb.querySelectorAll('.hrow.sel').forEach(x=>x.classList.remove('sel')); tr.classList.add('sel');
+    const dock=document.getElementById('rpl-dock'); if(e.isTrusted) dock.dataset.used='1';
+    window.RPL.open(tr);});
+  document.getElementById('hexp').addEventListener('submit',e=>{const f=e.target; for(const k of ['q','regel','pos','id','sort','dir','fran_ts','till_ts']) f.elements[k].value=st[k];});
+  load();
+})();
+</script>

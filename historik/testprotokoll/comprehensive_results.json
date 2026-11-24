@@ -1,0 +1,660 @@
+[
+  {
+    "name": "full_deep_export",
+    "status": "klar",
+    "seconds": 378.53,
+    "error": null,
+    "result": "/djupanalys/klar/plo_djupanalys_till_claude_20261113_001035.zip",
+    "route": 200,
+    "route/status": 200,
+    "route/rapport": 302,
+    "destination_status": 200
+  },
+  {
+    "name": "full_deep_download",
+    "http": 200,
+    "bytes": 17867272,
+    "files": [
+      "hands_del1.csv",
+      "hands_del2.csv",
+      "preflop.csv",
+      "turn_calls.csv",
+      "river.csv",
+      "postflop_del1.csv",
+      "postflop_del2.csv",
+      "preflop_context.csv",
+      "opponents_del1.csv",
+      "opponents_del2.csv",
+      "METOD_2.70.txt",
+      "stakes.csv",
+      "sessions.csv",
+      "rules.json",
+      "L\u00c4S_MIG.txt"
+    ]
+  },
+  {
+    "name": "export_hand_part",
+    "file": "hands_del1.csv",
+    "rows": 107427
+  },
+  {
+    "name": "export_hand_part",
+    "file": "hands_del2.csv",
+    "rows": 102112
+  },
+  {
+    "name": "hand_filter_forlust",
+    "http": 200,
+    "total": 96490,
+    "rows": 7
+  },
+  {
+    "name": "hand_filter_vinst",
+    "http": 200,
+    "total": 49988,
+    "rows": 7
+  },
+  {
+    "name": "hand_filter_pott",
+    "http": 200,
+    "total": 209539,
+    "rows": 7
+  },
+  {
+    "name": "hand_filter_senaste",
+    "http": 200,
+    "total": 209539,
+    "rows": 7
+  },
+  {
+    "name": "hand_filter_allin",
+    "http": 200,
+    "total": 7510,
+    "rows": 7
+  },
+  {
+    "name": "hand_filter_sd",
+    "http": 200,
+    "total": 23792,
+    "rows": 7
+  },
+  {
+    "name": "hand_filter_brott",
+    "http": 200,
+    "total": 12924,
+    "rows": 7
+  },
+  {
+    "name": "hand_filter_fokus",
+    "http": 200,
+    "total": 0,
+    "rows": 0
+  },
+  {
+    "name": "hand_filter_session",
+    "http": 200,
+    "total": 0,
+    "rows": 0
+  },
+  {
+    "name": "hand_filter_sessbrott",
+    "http": 200,
+    "total": 0,
+    "rows": 0
+  },
+  {
+    "name": "hand_filter_invalid",
+    "http": 200,
+    "total": 209539,
+    "rows": 7
+  },
+  {
+    "name": "sort_date_asc",
+    "http": 200,
+    "ids": [
+      "OM89894633",
+      "OM89894646",
+      "OM89894665",
+      "OM89894678",
+      "OM89894702"
+    ]
+  },
+  {
+    "name": "sort_date_desc",
+    "http": 200,
+    "ids": [
+      "OM116261679",
+      "OM116261668",
+      "OM116261667",
+      "OM116261657",
+      "OM116222169"
+    ]
+  },
+  {
+    "name": "sort_pot_asc",
+    "http": 200,
+    "ids": [
+      "OM91428072",
+      "OM89894678",
+      "OM89894708",
+      "OM89856636",
+      "OM89932515"
+    ]
+  },
+  {
+    "name": "sort_pot_desc",
+    "http": 200,
+    "ids": [
+      "OM108849537",
+      "OM108849732",
+      "OM107901041",
+      "OM92140491",
+      "OM107901156"
+    ]
+  },
+  {
+    "name": "sort_net_asc",
+    "http": 200,
+    "ids": [
+      "OM105003672",
+      "OM102910876",
+      "OM92939852",
+      "OM105202801",
+      "OM109080009"
+    ]
+  },
+  {
+    "name": "sort_net_desc",
+    "http": 200,
+    "ids": [
+      "OM102584110",
+      "OM105497372",
+      "OM91527976",
+      "OM100749620",
+      "OM115562456"
+    ]
+  },
+  {
+    "name": "sort_ev_asc",
+    "http": 200,
+    "ids": [
+      "OM109009067",
+      "OM115917514",
+      "OM98183509",
+      "OM97158042",
+      "OM115960961"
+    ]
+  },
+  {
+    "name": "sort_ev_desc",
+    "http": 200,
+    "ids": [
+      "OM107901156",
+      "OM102996635",
+      "OM108848600",
+      "OM105354141",
+      "OM92968055"
+    ]
+  },
+  {
+    "name": "sort_money_asc",
+    "http": 200,
+    "ids": [
+      "OM102910876",
+      "OM115917514",
+      "OM98400134",
+      "OM99382500",
+      "OM98183509"
+    ]
+  },
+  {
+    "name": "sort_money_desc",
+    "http": 200,
+    "ids": [
+      "OM96161981",
+      "OM105497372",
+      "OM91527976",
+      "OM102584110",
+      "OM116222146"
+    ]
+  },
+  {
+    "name": "hand_args",
+    "args": {
+      "pos": "BB"
+    },
+    "http": 200,
+    "total": 33536
+  },
+  {
+    "name": "hand_args",
+    "args": {
+      "id": "OM116261681"
+    },
+    "http": 200,
+    "total": 0
+  },
+  {
+    "name": "hand_args",
+    "args": {
+      "page": "1"
+    },
+    "http": 200,
+    "total": 96490
+  },
+  {
+    "name": "hand_args",
+    "args": {
+      "page": "bad"
+    },
+    "http": 200,
+    "total": 96490
+  },
+  {
+    "name": "hand_args",
+    "args": {
+      "size": "bad"
+    },
+    "http": 200,
+    "total": 96490
+  },
+  {
+    "name": "hand_args",
+    "args": {
+      "page": "-1"
+    },
+    "http": 200,
+    "total": 96490
+  },
+  {
+    "name": "hand_args",
+    "args": {
+      "size": "100000"
+    },
+    "http": 200,
+    "total": 96490
+  },
+  {
+    "name": "share_api",
+    "args": {},
+    "http": 200,
+    "keys": [
+      "bars",
+      "first",
+      "game",
+      "last",
+      "marks",
+      "mode",
+      "series",
+      "start",
+      "total",
+      "year"
+    ]
+  },
+  {
+    "name": "share_api",
+    "args": {
+      "fran": "2026-11-01"
+    },
+    "http": 200,
+    "keys": [
+      "first",
+      "game",
+      "last",
+      "marks",
+      "mode",
+      "periods",
+      "series",
+      "start",
+      "total",
+      "year"
+    ]
+  },
+  {
+    "name": "share_api",
+    "args": {
+      "fran": "2099-01-01"
+    },
+    "http": 200,
+    "keys": [
+      "error"
+    ]
+  },
+  {
+    "name": "share_api",
+    "args": {
+      "fran": "invalid"
+    },
+    "http": 200,
+    "keys": [
+      "bars",
+      "first",
+      "game",
+      "last",
+      "marks",
+      "mode",
+      "series",
+      "start",
+      "total",
+      "year"
+    ]
+  },
+  {
+    "name": "replay_allin",
+    "http": 200,
+    "bytes": 5375,
+    "seconds": 0.07
+  },
+  {
+    "name": "replay_fold",
+    "http": 200,
+    "bytes": 2498,
+    "seconds": 0.0
+  },
+  {
+    "name": "replay_showdown",
+    "http": 200,
+    "bytes": 5375,
+    "seconds": 0.0
+  },
+  {
+    "name": "replay_missing",
+    "http": 404
+  },
+  {
+    "name": "hh_export_zip_dag",
+    "status": "klar",
+    "seconds": 1.14,
+    "error": null,
+    "result": "/exportera?klar=PLO_export_20261113_001037_029619_100h.zip",
+    "route": 200,
+    "route/status": 200,
+    "route/rapport": 302,
+    "destination_status": 200
+  },
+  {
+    "name": "hh_download",
+    "http": 200,
+    "bytes": 12989
+  },
+  {
+    "name": "hh_export_zip_en",
+    "status": "klar",
+    "seconds": 0.66,
+    "error": null,
+    "result": "/exportera?klar=PLO_export_20261113_001037_788521_100h.zip",
+    "route": 200,
+    "route/status": 200,
+    "route/rapport": 302,
+    "destination_status": 200
+  },
+  {
+    "name": "hh_download",
+    "http": 200,
+    "bytes": 12969
+  },
+  {
+    "name": "hh_export_txt_dag",
+    "status": "klar",
+    "seconds": 0.65,
+    "error": null,
+    "result": "/exportera?klar=mapp1794528638558",
+    "route": 200,
+    "route/status": 200,
+    "route/rapport": 302,
+    "destination_status": 200
+  },
+  {
+    "name": "export_filtered_list",
+    "status": "klar",
+    "seconds": 0.1,
+    "error": null,
+    "result": "/exportera?klar=mapp1794528638783",
+    "route": 200,
+    "route/status": 200,
+    "route/rapport": 302,
+    "destination_status": 200
+  },
+  {
+    "name": "sessionfile",
+    "keys": [
+      "1794449881"
+    ],
+    "http": 200,
+    "bytes": 28382
+  },
+  {
+    "name": "sessionfile",
+    "keys": [],
+    "http": 404,
+    "bytes": 55642
+  },
+  {
+    "name": "session_zip",
+    "status": "klar",
+    "seconds": 3.01,
+    "error": null,
+    "result": "/djupanalys/klar/plo_djupanalys_till_claude_20261113_001042.zip",
+    "route": 200,
+    "route/status": 200,
+    "route/rapport": 302,
+    "destination_status": 200
+  },
+  {
+    "name": "session_limit",
+    "data": {
+      "vid": "5ade072f29",
+      "h": "2.5"
+    },
+    "http": 302,
+    "saved": 2.5
+  },
+  {
+    "name": "session_limit",
+    "data": {
+      "vid": "5ade072f29",
+      "h": "invalid"
+    },
+    "http": 302,
+    "saved": null
+  },
+  {
+    "name": "session_limit",
+    "data": {
+      "vid": "5ade072f29",
+      "h": "-2"
+    },
+    "http": 302,
+    "saved": null
+  },
+  {
+    "name": "session_limit",
+    "data": {
+      "vid": "5ade072f29",
+      "h": ""
+    },
+    "http": 302,
+    "saved": null
+  },
+  {
+    "name": "auto_toggle",
+    "http": 200,
+    "body": {
+      "auto_update": false
+    },
+    "saved": false
+  },
+  {
+    "name": "auto_toggle",
+    "http": 200,
+    "body": {
+      "auto_update": true
+    },
+    "saved": true
+  },
+  {
+    "name": "focus",
+    "http": 302,
+    "saved": {
+      "PLO6": "rundown"
+    }
+  },
+  {
+    "name": "focus",
+    "http": 302,
+    "saved": {}
+  },
+  {
+    "name": "validation",
+    "url": "/exportera",
+    "data": {
+      "latest": "-1"
+    },
+    "http": 400
+  },
+  {
+    "name": "validation",
+    "url": "/exportera",
+    "data": {
+      "fran": "2026-99-99"
+    },
+    "http": 400
+  },
+  {
+    "name": "validation",
+    "url": "/exportera",
+    "data": {
+      "mapp": "relative/foo"
+    },
+    "http": 400
+  },
+  {
+    "name": "validation",
+    "url": "/analyze",
+    "data": {
+      "fran": "bad"
+    },
+    "http": 400
+  },
+  {
+    "name": "validation",
+    "url": "/analyze",
+    "data": {
+      "folder": "/does/not/exist"
+    },
+    "http": 400
+  },
+  {
+    "name": "validation",
+    "url": "/analyze",
+    "data": {
+      "latest_on": "1",
+      "latest": "abc"
+    },
+    "http": 400
+  },
+  {
+    "name": "validation",
+    "url": "/bevaka",
+    "data": {
+      "watch": "/does/not/exist"
+    },
+    "http": 400
+  },
+  {
+    "name": "validation",
+    "url": "/bevaka",
+    "data": {
+      "off": "1"
+    },
+    "http": 200
+  },
+  {
+    "name": "origin_guard",
+    "base": "http://evil.example",
+    "origin": null,
+    "http": 403
+  },
+  {
+    "name": "origin_guard",
+    "base": "http://localhost",
+    "origin": "http://evil.example",
+    "http": 403
+  },
+  {
+    "name": "origin_guard",
+    "base": "http://localhost",
+    "origin": "null",
+    "http": 403
+  },
+  {
+    "name": "lan_guard",
+    "has_code": false,
+    "http": 403
+  },
+  {
+    "name": "lan_guard",
+    "has_code": true,
+    "http": 200
+  },
+  {
+    "name": "restart_snapshot",
+    "loaded": true,
+    "hands": 209539,
+    "version": "2.70"
+  },
+  {
+    "name": "watch_first_scan",
+    "result": {
+      "files": 1,
+      "files_skipped": 0,
+      "hands_seen": 2,
+      "hands_new": 2,
+      "hands_known": 0,
+      "hands_unreadable": 0,
+      "hands_other_games": 0,
+      "unreadable_examples": [],
+      "newest": "2026-09-01T20:16:10",
+      "raw_filled": 0
+    },
+    "count": 2
+  },
+  {
+    "name": "watch_repeat_scan",
+    "result": {
+      "files": 0,
+      "files_skipped": 0,
+      "hands_new": 0
+    },
+    "count": 2
+  },
+  {
+    "name": "watch_save_job",
+    "http": 302,
+    "state": "klar",
+    "settings": {
+      "watch": "/workspace/scratch/5a3b4649c8e8/audit270/disposable/watched",
+      "auto": false
+    }
+  },
+  {
+    "name": "upload_analyze_no_db",
+    "http": 302,
+    "state": "klar",
+    "error": null,
+    "result": [
+      "03cb7da890",
+      "oversikt"
+    ]
+  },
+  {
+    "name": "clear_disposable",
+    "http": 200,
+    "before": 2,
+    "after": 0
+  },
+  {
+    "name": "done",
+    "cases": 76
+  }
+]

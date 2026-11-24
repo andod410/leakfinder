@@ -1,0 +1,159 @@
+[
+  {
+    "name": "rakeback_initial_calc",
+    "passed": true,
+    "details": "<div>🔴 <b>Poäng per dag: 6 800</b> → utanför prislistan (2,0 h, varav 2,0 i happy hour).</div><div>🏆 Plats 1 kräver 10,8 h per dag (2,0 h happy hour + 8,8 h övrigt). Plats 9 kräver 4,7 h.</div><div>💸 Rake −$96.20/h · rakeback +$19.24/h · leaderboard $0.00/h = <b>+$19.24/h tillbaka</b> (+2.6 bb/100).</div><div>🟡 <b>Break-even: −2.6 bb/100</b> i EV efter rake. Det motsvarar +10.4 bb/100 före rake.</div><div>🟢 Med din winrate 0.0 bb/100: <b>+$19.24 per timme</b>, +$770 per månad.</div>"
+  },
+  {
+    "name": "rakeback_known_arithmetic",
+    "passed": true,
+    "details": "<div>🔴 <b>Poäng per dag: 0</b> → utanför prislistan (1,0 h, varav 0,0 i happy hour).</div><div>🏆 Plats 1 kräver 21675,0 h per dag (0,0 h happy hour + 21675,0 h övrigt). Plats 9 kräver 11337,0 h.</div><div>💸 Rake −$10.00/h · rakeback +$2.00/h · leaderboard $0.00/h = <b>+$2.00/h tillbaka</b> (+2.0 bb/100).</div><div>🟡 <b>Break-even: −2.0 bb/100</b> i EV efter rake. Det motsvarar +8.0 bb/100 före rake.</div><div>🟢 Med din winrate +5.0 bb/100: <b>+$7.00 per timme</b>, +$140 per månad.</div>"
+  },
+  {
+    "name": "points_calibration",
+    "passed": true,
+    "details": 1000
+  },
+  {
+    "name": "rakeback_storage_restore",
+    "passed": true,
+    "details": 1000
+  },
+  {
+    "name": "rakeback_source_0",
+    "passed": true,
+    "details": {
+      "bb": 2,
+      "hph": 300,
+      "wr": "-16.5"
+    }
+  },
+  {
+    "name": "rakeback_source_1",
+    "passed": true,
+    "details": {
+      "bb": 1,
+      "hph": 270,
+      "wr": "-5.3"
+    }
+  },
+  {
+    "name": "mixed_stake_source_is_not_offered",
+    "passed": true,
+    "details": {
+      "note": "Mixed total has a direct USD/h summary; calculator sources are individual stakes only"
+    }
+  },
+  {
+    "name": "share_mobile_draw",
+    "passed": true,
+    "details": {
+      "errors": [],
+      "width": 1080,
+      "height": 1920
+    }
+  },
+  {
+    "name": "share_desktop_format",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "share_periods_draw",
+    "passed": true,
+    "details": {
+      "errors": []
+    }
+  },
+  {
+    "name": "share_png_handler",
+    "passed": true,
+    "details": [
+      {
+        "toBlob": "image/png",
+        "width": 1920,
+        "height": 1080
+      }
+    ]
+  },
+  {
+    "name": "share_storage_restore",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "trainer_fetch_initial",
+    "passed": true,
+    "details": "BB – någon har öppnat före dig"
+  },
+  {
+    "name": "trainer_answer_and_history",
+    "passed": true,
+    "details": "1 av 1 rätt"
+  },
+  {
+    "name": "trainer_next",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "trainer_rfi_answer",
+    "passed": true,
+    "details": "<div class=\"bad\">Fel – öppna</div><div class=\"note\">Handen är topp 51 % i den här situationen; din gräns är topp 58 %.</div><div class=\"note\" style=\"margin-top:6px\">Handen bryter inte mot någon av dina regler och ligger inom din gräns.</div>"
+  },
+  {
+    "name": "trainer_history_restore",
+    "passed": true,
+    "details": "1 rätt · 1 fel"
+  },
+  {
+    "name": "trainer_clear_history",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "trainer_wrong_answer",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "trainer_retrain_mode",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "trainer_retrain_fixed",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "trainer_old_hand",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "trainer_keyboard",
+    "passed": true,
+    "details": {}
+  },
+  {
+    "name": "handlist_load",
+    "passed": true,
+    "details": "1–50 av 96 490 händer"
+  },
+  {
+    "name": "handlist_hnext",
+    "passed": true,
+    "details": "51–100 av 96 490 händer"
+  },
+  {
+    "name": "handlist_hprev",
+    "passed": true,
+    "details": "1–50 av 96 490 händer"
+  },
+  {
+    "name": "handlist_position_handler",
+    "passed": true,
+    "details": {}
+  }
+]

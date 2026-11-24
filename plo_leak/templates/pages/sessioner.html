@@ -1,0 +1,393 @@
+{% macro fcol(v) -%}
+{%- set x = (([([(v - 70) / 30 * 100, 0]|max), 100]|min)|round(0)) if v is not none else 50 -%}
+color-mix(in srgb, var(--good) {{ x }}%, var(--bad))
+{%- endmacro %}
+{% macro pill(v) -%}
+{%- if v is none %}<span class="note" style="margin:0">–</span>{% else %}<span class="fpill" style="background:{{ fcol(v) }}">{{ '%.0f'|format(v) }} %</span>{% endif -%}
+{%- endmacro %}
+{% macro cmp(s) -%}
+{%- if s.follow is not none and s.base_follow is not none -%}
+{%- set d = s.follow - s.base_follow -%}
+<span class="{{ 'pos' if d > 0.5 else ('neg' if d < -0.5 else 'note') }}" style="margin:0">{{ '▲' if d > 0.5 else ('▼' if d < -0.5 else '＝') }} {{ '%+.0f'|format(d) }}</span>
+{%- else %}<span class="note" style="margin:0">–</span>{% endif -%}
+{%- endmacro %}
+<style>
+.fpill{display:inline-block;min-width:48px;text-align:center;padding:2px 8px;border-radius:999px;color:#fff;font-weight:700;font-size:13px}
+.strend{display:flex;align-items:flex-end;gap:3px;height:110px;margin:8px 0 4px;position:relative}
+.strend a{flex:1;min-width:6px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;text-decoration:none}
+.strend a i{display:block;border-radius:3px 3px 0 0}
+.strend .base{position:absolute;left:0;right:0;border-top:1px dashed var(--ink2)}
+.verdict{padding:10px 14px;border-radius:8px;font-weight:700;margin:0 0 14px}
+.verdict.good{background:color-mix(in srgb,var(--good) 22%,transparent);color:var(--good)}
+.verdict.good-soft{background:color-mix(in srgb,var(--good) 12%,transparent);color:var(--good)}
+.verdict.bad{background:color-mix(in srgb,var(--bad) 22%,transparent);color:var(--bad)}
+.verdict.bad-soft{background:color-mix(in srgb,var(--bad) 12%,transparent);color:var(--bad)}
+.verdict:not(.good):not(.bad):not(.good-soft):not(.bad-soft){background:var(--chip)}
+.rbar{position:relative;height:12px;background:var(--chip);border-radius:3px;min-width:90px}
+.rbar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px}
+.rbar b{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.show-m{display:none}@media(max-width:700px){.show-m{display:block}}
+.kpi .s{font-size:11.5px;color:var(--ink2);margin-top:2px}
+tr.focusrow td{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+</style>
+<div class="panel" style="margin-bottom:14px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+  <button class="btn" type="button" onclick="plQuick('sessioner')">⚡ Läs in nya händer</button>
+  <span class="note" style="margin:0">Läser in nya händer från den bevakade mappen och visar den nya sessionen direkt – läckor och regler räknas inte om (det gör "Uppdatera").</span>
+</div>
+
+{% set T = sessions %}
+{% if multi is defined and multi %}{% set M = multi %}
+<p style="margin-top:0"><a href="/v/{{ vid }}/sessioner">← Alla sessioner</a></p>
+{% if M.error %}<div class="verdict bad">{{ M.error }}</div>{% else %}
+<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>📈 {{ M.n_sess }} sessioner tillsammans</b><span class="note" style="margin:0">{{ M.first }} – {{ M.last }}</span></div>
+<div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+  {% if M.ev100_rb is defined %}<div class="kpi"><div class="l">Verklig winrate (all-in EV inkl. rakeback)</div><div class="v {{ 'pos' if M.ev100_rb >= 0 else 'neg' }}">{{ '%+.1f'|format(M.ev100_rb) }} bb/100</div></div>
+  <div class="kpi"><div class="l">Rakeback bb/100</div><div class="v pos">{{ '%+.1f'|format(M.rb100) }}</div><div class="note" style="margin:0">${{ '{:,.0f}'.format(M.rb_m).replace(',', ' ') }}</div></div>{% endif %}
+  <div class="kpi"><div class="l">Händer</div><div class="v">{{ '{:,}'.format(M.hands).replace(',', ' ') }}</div></div>
+  <div class="kpi"><div class="l">Speltid</div><div class="v">{{ M.minutes // 60 }} h {{ M.minutes % 60 }} min</div>{% if M.active_minutes is defined %}<div class="s">aktiv tid {{ M.active_minutes // 60 }} h {{ M.active_minutes % 60 }} min (används för $/h, som på Översikt)</div>{% endif %}</div>
+  <div class="kpi"><div class="l">Resultat</div><div class="v {{ 'pos' if M.money >= 0 else 'neg' }}">{{ ('+' if M.money > 0 else ('−' if M.money < 0 else '')) ~ '$' ~ ('{:,.0f}'.format(M.money|abs)).replace(',', ' ') }}</div></div>
+  <div class="kpi"><div class="l">All-in EV</div><div class="v {{ 'pos' if M.ev_m >= 0 else 'neg' }}">{{ ('+' if M.ev_m > 0 else ('−' if M.ev_m < 0 else '')) ~ '$' ~ ('{:,.0f}'.format(M.ev_m|abs)).replace(',', ' ') }}</div><div class="note" style="margin:0">{{ '%+.1f'|format(M.ev100) }} bb/100</div></div>
+  {% if M.ev_rb_m is defined %}<div class="kpi"><div class="l">All-in EV inkl. rakeback</div><div class="v {{ 'pos' if M.ev_rb_m >= 0 else 'neg' }}">{{ ('+' if M.ev_rb_m > 0 else ('−' if M.ev_rb_m < 0 else '')) ~ '$' ~ ('{:,.0f}'.format(M.ev_rb_m|abs)).replace(',', ' ') }}</div><div class="note" style="margin:0">rakeback ${{ '{:,.0f}'.format(M.rb_m).replace(',', ' ') }}</div></div>{% endif %}
+  <div class="kpi"><div class="l">EV per timme</div><div class="v">{{ ('$%+.0f'|format(M.hourly_ev)) if M.hourly_ev is not none else '–' }}</div></div>
+  <div class="kpi"><div class="l">Rake</div><div class="v">${{ '{:,.0f}'.format(M.rake_m|abs).replace(',', ' ') }}</div></div>
+  {% if M.fel100 is defined %}<div class="kpi"><div class="l">Klara fel preflop</div><div class="v">{{ M.fel }}</div><div class="note" style="margin:0">{{ '%.1f'|format(M.fel100 or 0) }} per 100 händer</div></div>{% endif %}
+</div>
+<div style="display:flex;gap:8px;margin-top:8px"><a class="btn sm" href="/v/{{ vid }}/sessionsfil?{% for k in M['keys'] %}s={{ k }}{{ '&' if not loop.last }}{% endfor %}">📤 Sessionsfil för de {{ M.n_sess }} sessionerna</a><a class="btn sm ghost" id="m-zip" href="/v/{{ vid }}/sessionzip?{% for k in M['keys'] %}s={{ k|urlencode }}{{ '&' if not loop.last }}{% endfor %}" title="Bara de valda sessionernas händer (tabeller, sessionsfil och handhistorik)">📦 Zip med händerna för de {{ M.n_sess }} sessionerna</a></div>
+</div>
+{% if M.chart %}{{ unitcharts(M.chart, M.chart_money, "multi-chart", "De valda sessionerna hand för hand", note="Dra med musen i grafen för att markera ett stycke.") }}{% endif %}
+{% endif %}
+{% elif not T or not T.sessions %}
+<div class="panel">Inga sessioner i urvalet.</div>
+{% elif sess %}
+{% set s = sess %}
+<p style="margin-top:0"><a href="/v/{{ vid }}/sessioner">← Alla sessioner</a></p>
+<div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px">{% if sess_facit and sess_facit.n %}{% set SF = sess_facit %}<div class="verdict {{ 'good-soft' if SF.fel == 0 else ('bad' if SF.per100 and SF.per100 >= 1 else 'bad-soft') }}" style="margin:0;flex:1">Klara fel preflop: {{ SF.fel }} ({{ '%.1f'|format(SF.per100 or 0) }} per 100 händer) · tveksamma {{ SF.tvek }} · av {{ SF.n }} beslut i solverlägena</div>{% else %}<div class="verdict {{ s.verdict.tone }}" style="margin:0;flex:1">{{ s.verdict.text }}</div>{% endif %}
+  <a class="btn" href="/v/{{ vid }}/sessionsfil?s={{ s.key }}" title="Sammanfattning och de 10 största potterna – ladda upp filen i chatten med Claude">📤 Sessionsfil till Claude</a>
+  <a class="btn ghost" href="/v/{{ vid }}/sessionzip?s={{ s.key }}" title="Alla sessionens händer som zip (tabeller, sessionsfil och handhistorik) – för följdfrågor till Claude">📦 Zip med händerna</a></div>
+{% if sess_stab %}{% if sess_stab.passive %}<div class="verdict bad-soft">😴 Passiv session: du bettade {{ '%.0f'|format(sess_stab.stab) }} % när det checkats till dig i position, mot normalt {{ '%.0f'|format(sess_stab.normal) }} %. Attackera svaghet – betta oftare med drag och svaga händer heads-up.</div>{% elif sess_stab.normal is not none and sess_stab.stab >= sess_stab.normal + 4 %}<div class="verdict good-soft">⚔️ Aggressiv session: du bettade {{ '%.0f'|format(sess_stab.stab) }} % när det checkats till dig i position (normalt {{ '%.0f'|format(sess_stab.normal) }} %).</div>{% endif %}{% endif %}
+{% if when and when.significant %}{% set hr = s.start[11:13]|int %}{% set blk = ['00–06', '06–12', '12–18', '18–24'][hr // 6] %}{% if blk != when.best %}<div class="verdict bad-soft">🕘 Sessionen startade kl. {{ s.start[11:16] }} – utanför din bästa tid ({{ when.best }}).</div>{% endif %}{% endif %}
+{% if sess_long %}{% set L = sess_long %}{% if L.warn or L.worse %}<div class="verdict bad-soft">⏱ Passet pågick {{ ('%.1f'|format(L.hours)).replace('.', ',') }} h{% if L.warn %} och ligger minus i all-in EV ({{ '%+.0f'|format(L.ev_bb) }} bb){% endif %}{% if L.worse %}; klara fel ökade från {{ '%.1f'|format(L.early) }} till {{ '%.1f'|format(L.late) }} per 100 händer efter 4 h{% endif %}. Regeln är att sluta efter 2 h.</div>{% else %}<div class="verdict good-soft">⏱ Långt pass ({{ ('%.1f'|format(L.hours)).replace('.', ',') }} h) men plus i all-in EV och inga fler fel mot slutet – ingen varning.</div>{% endif %}{% endif %}
+<div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+  <div class="kpi"><div class="l">Regelföljning</div><div class="v">{{ pill(s.follow) }}</div><div class="s">ditt snitt hittills: {{ '%.0f'|format(s.base_follow) ~ ' %' if s.base_follow is not none else '–' }}</div></div>
+  <div class="kpi"><div class="l">Regelbrott</div><div class="v">{{ s.dev }} <small class="note">av {{ s.opps }}</small></div><div class="s">tillfällen där en regel säger folda</div></div>
+  <div class="kpi"><div class="l">Väntad kostnad av brotten</div><div class="v {{ 'neg' if s.exp_cost < 0 else '' }}">{{ s.exp_cost|signed(1) }} bb</div><div class="s">{{ s.exp100|signed(1) }} bb/100 i sessionen</div></div>
+  <div class="kpi"><div class="l">Session</div><div class="v" style="font-size:18px">{{ s.start }}–{{ s.end }}</div><div class="s">{{ s.minutes }} min · {{ s.hands }} händer</div>{% if s.gap_txt %}<div class="s">{{ s.rest_tags|join(' · ') }}{{ ' · ' if s.rest_tags else '' }}{{ s.gap_txt }}</div>{% endif %}</div>
+  {% if sess_rb is defined and sess_rb %}<div class="kpi"><div class="l">Verklig winrate (all-in EV inkl. rakeback)</div><div class="v {{ 'pos' if sess_rb.ev100_rb >= 0 else 'neg' }}">{{ '%+.1f'|format(sess_rb.ev100_rb) }} bb/100</div><div class="s">rakeback {{ '%+.1f'|format(sess_rb.rb100) }} bb/100 · ${{ '%.2f'|format(sess_rb.rb_m) }}</div></div>{% endif %}
+  <div class="kpi"><div class="l">Resultat (bara info)</div><div class="v {{ 'pos' if s.net >= 0 else 'neg' }}">{{ s.net|signed(1) }} bb</div><div class="s">all-in EV {{ s.ev|signed(1) }} bb · {{ s.money|signed(2) }} $</div></div>
+</div>
+<div class="note">Regelföljningen är det du styr över och säger mycket redan efter en kort session. Resultatet svänger för mycket för att säga något om en enskild session – döm inte sessionen efter det.</div>
+{% if sess_chart %}<div style="margin-top:14px">{{ unitcharts(sess_chart, sess_chart_money, "sess-chart", "Sessionen hand för hand", note="Faktiskt resultat, all-in EV och all-in EV inkl. rakeback (procentsatserna från Översikt) under sessionen. Tryck på en linje för att visa eller dölja den.") }}</div>{% endif %}
+
+<div class="panel scroll" style="margin-top:14px">
+  <div class="card-h"><b>Regel för regel</b><span class="note" style="margin:0">strecket = ditt snitt hittills</span></div>
+  {% if s.per_rule %}
+  <table class="tbl"><tr><th>Regel</th><th class="n">Tillfällen</th><th class="n">Brott</th><th>Brottsandel</th><th class="n">Snitt</th><th class="n">Kostnad</th></tr>
+  {% for r in s.per_rule %}{% set fid = focus.id if focus else '' %}
+  <tr class="{{ 'focusrow' if r.id == fid else '' }}"><td>{% if r.id == fid %}🎯 {% endif %}{{ r.title }} <span class="tag {{ '' if r.level == 'trolig' else 'bad' }}">{{ r.level }}</span></td>
+    <td class="n">{{ r.opps }}</td><td class="n">{{ r.dev }}</td>
+    <td><div class="rbar"><i style="width:{{ [r.rate, 100]|min }}%;background:{{ fcol(100 - r.rate) }}"></i>{% if r.base is not none %}<b style="left:{{ [r.base, 100]|min }}%"></b>{% endif %}</div></td>
+    <td class="n">{{ '%.0f'|format(r.base) ~ ' %' if r.base is not none else '–' }}</td>
+    <td class="n {{ 'neg' if r.cost < 0 else '' }}">{{ r.cost|signed(1) }} bb</td></tr>
+  {% endfor %}</table>
+  {% else %}<div class="note" style="margin:0">Ingen av dina regler gällde någon hand i den här sessionen.</div>{% endif %}
+</div>
+
+{% if sess_stop %}{% set S = sess_stop %}
+<div class="panel" style="margin-top:14px">
+  <div class="card-h"><b>🛑 Stoppregeln: {{ ('%g'|format(S.stop_h)).replace('.', ',') }} timmar, −{{ '%g'|format(S.stop_bb) }} bb, paus efter förlust &gt; {{ '%g'|format(S.big_loss_bb) }} bb</b><span class="note" style="margin:0">räknas i efterhand – aldrig under spel</span></div>
+  {% if S.big_losses %}<div class="verdict {{ 'good-soft' if S.pauses_taken == S.big_losses else 'bad-soft' }}" style="margin-bottom:10px">{{ '✅' if S.pauses_taken == S.big_losses else '⚠' }} Förlorade potter över {{ '%g'|format(S.big_loss_bb) }} bb: {{ S.big_losses }} – paus på 15 min tagen efter {{ S.pauses_taken }} (ungefärligt: bara handens starttid finns).</div>{% endif %}
+  {% if S.kept %}<div class="verdict good-soft" style="margin:0">✅ Passet nådde aldrig gränsen.</div>
+  {% else %}
+  <div class="verdict {{ 'bad-soft' if S.after.hands > 30 else 'good-soft' }}" style="margin-bottom:10px">{{ '⛔' if S.after.hands > 30 else '✅' }} Gränsen ({{ S.why }}) nåddes efter {{ S.at_min // 60 }} h {{ S.at_min % 60 }} min{% if S.after.hands > 30 %} – du spelade {{ S.after.hands }} händer till.{% else %} och du slutade.{% endif %}</div>
+  {% if S.after.hands %}
+  <table class="tbl"><tr><th></th><th class="n">Händer</th><th class="n">VPIP</th><th class="n">Mot ditt snitt</th><th class="n">Regelbrott / 100</th><th class="n">All-in EV</th></tr>
+  {% for lbl, x in [('Före gränsen', S.before), ('Efter gränsen', S.after)] %}<tr><td>{{ lbl }}</td><td class="n">{{ x.hands }}</td><td class="n">{{ '%.0f'|format(x.vpip) ~ ' %' if x.vpip is not none else '–' }}</td><td class="n {{ 'neg' if x.vdev and x.vdev > 2 else '' }}">{{ '%+.1f'|format(x.vdev) ~ ' %-enh.' if x.vdev is not none else '–' }}</td><td class="n">{{ '%.1f'|format(x.brk100) if x.brk100 is not none else '–' }}</td><td class="n {{ 'pos' if x.ev >= 0 else 'neg' }}">{{ x.ev|signed(1) }} bb</td></tr>{% endfor %}
+  </table>
+  <div class="note">EV för en enskild session svänger mycket – titta mest på VPIP och regelbrott. I hela databasen blir du lösare och bryter fler regler ju längre du spelar. Stoppgränsen är en vald rutin: 2 h är en beteenderegel (VPIP och regelbrott stiger med tiden – EV-effekten inom samma pass är inte visad), −500 bb är bankrulleskydd. Efter en förlorad pott > 175 bb: 15 minuters paus (regel 7).</div>
+  {% endif %}{% endif %}
+</div>
+{% endif %}
+
+{% if sess_hours and sess_hours|length > 1 %}
+<div class="panel scroll" style="margin-top:14px">
+  <div class="card-h"><b>Timme för timme</b><span class="note" style="margin:0">spelar du fler händer än du brukar ju längre du spelar?</span></div>
+  <table class="tbl"><tr><th>Timme</th><th class="n">Händer</th><th class="n">VPIP</th><th class="n">Mot ditt snitt</th><th class="n">Regelbrott</th><th class="n">Kostnad</th></tr>
+  {% for x in sess_hours %}<tr{% if fatigue and fatigue.limit_h and loop.index0 >= fatigue.limit_h %} style="background:color-mix(in srgb,var(--bad) 8%,transparent)"{% endif %}><td>{{ x.label }}</td><td class="n">{{ x.hands }}</td><td class="n">{{ '%.0f'|format(x.vpip) }} %</td><td class="n {{ 'neg' if x.vdev > 2 else ('pos' if x.vdev < -2 else '') }}">{{ '%+.0f'|format(x.vdev) }} %-enh.</td><td class="n">{{ x.brk }}</td><td class="n {{ 'neg' if x.cost < 0 else '' }}">{{ x.cost|signed(1) }} bb</td></tr>{% endfor %}
+  </table>
+</div>
+{% endif %}
+{% if sess_hands %}{% set SH = sess_hands %}
+<div class="panel" style="margin-top:14px" id="shands">
+  <div class="card-h"><b>🎬 Spela upp händerna</b><span class="note" style="margin:0">Pott 1–{{ SH|selectattr('nr')|list|length }} = samma nummer som i sessionsfilen</span></div>
+  <div class="shf">
+    <button type="button" class="chipb on" data-f="top">De {{ SH|selectattr('nr')|list|length }} största</button>
+    <button type="button" class="chipb" data-f="vpip">Spelade ({{ SH|selectattr('vpip')|list|length }})</button>
+    <button type="button" class="chipb" data-f="rule">Regelbrott ({{ SH|selectattr('rule')|list|length }})</button>
+    <button type="button" class="chipb" data-f="allin">All-in ({{ SH|selectattr('allin')|list|length }})</button>
+    <button type="button" class="chipb" data-f="all">Alla ({{ SH|length }})</button>
+  </div>
+  <div class="scroll">
+  <table class="tbl sht"><thead><tr>
+    <th data-k="nr" data-t="n" title="Pottens nummer i sessionsfilen">Pott</th><th data-k="ts" data-t="n">Tid</th><th data-k="pos">Pos</th><th class="hide-m">Kort</th>
+    <th class="n" data-k="pot" data-t="n">Pott bb</th><th class="n" data-k="net" data-t="n">Netto</th><th class="n" data-k="ev" data-t="n">All-in EV</th><th class="n hide-m" data-k="luck" data-t="n" title="Netto minus all-in EV: plus = tur, minus = otur">Tur</th><th class="hide-m">Regel</th><th></th></tr></thead>
+  {% set SH_multi_stake = SH|map(attribute='stake')|unique|list|length > 1 %}<tbody>{% for h in SH %}
+  <tr data-nr="{{ h.nr or 999 }}" data-ts="{{ h.ts }}" data-pos="{{ h.pos }}" data-pot="{{ h.pot }}" data-net="{{ h.net }}" data-ev="{{ h.ev }}" data-luck="{{ h.luck }}" data-top="{{ 1 if h.nr else 0 }}" data-vpip="{{ 1 if h.vpip else 0 }}" data-rule="{{ 1 if h.rule else 0 }}" data-allin="{{ 1 if h.allin else 0 }}">
+    <td>{% if h.nr %}<b class="potnr">{{ h.nr }}</b>{% else %}<span class="note" style="margin:0">–</span>{% endif %}</td>
+    <td>{{ h.time }}</td><td>{{ h.pos }}{% if SH_multi_stake %} <span class="note" style="margin:0">${{ h.stake.replace('/', '/$') }}</span>{% endif %}</td>
+    <td class="hide-m" style="white-space:nowrap">{% for c in h.hole %}<span class="card {{ c[1] }}">{{ {10:'T',11:'J',12:'Q',13:'K',14:'A'}.get(c[0], c[0]) }}{{ {'h':'♥','d':'♦','c':'♣','s':'♠'}[c[1]] }}</span>{% endfor %}</td>
+    <td class="n">{{ '%.0f'|format(h.pot) }}</td>
+    <td class="n {{ 'pos' if h.net > 0 else ('neg' if h.net < 0 else '') }}">{{ h.net|signed(1) }}</td>
+    <td class="n {{ 'pos' if h.ev > 0 else ('neg' if h.ev < 0 else '') }}">{{ h.ev|signed(1) }}</td>
+    <td class="n hide-m {{ 'pos' if h.luck > 0.5 else ('neg' if h.luck < -0.5 else 'note') }}">{{ h.luck|signed(1) if h.luck|abs > 0.05 else '–' }}</td>
+    <td class="hide-m">{% if h.rule %}<span class="tag bad" title="{{ h.rule }}">⚠ {{ h.rule|truncate(34) }}</span>{% endif %}</td>
+    <td><button type="button" class="rpl-open" data-hid="{{ h.id }}" data-label="{{ ('Pott ' ~ h.nr ~ ' · ') if h.nr else '' }}{{ h.time }} · {{ h.pos }} · {{ h.net|signed(1) }} bb">▶ Spela upp</button></td></tr>
+  {% endfor %}</tbody></table></div>
+  <div class="note">Tryck på en rubrik för att sortera. I uppspelningen tar ⏭ Nästa hand dig till nästa rad i tabellen.</div>
+</div>
+<style>
+.shf{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 10px}
+.chipb{border:1px solid var(--line);background:var(--chip);color:var(--ink);border-radius:999px;padding:4px 12px;font-size:13px;cursor:pointer}
+.chipb.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.sht th[data-k]{cursor:pointer;user-select:none;white-space:nowrap}
+.sht th[data-k]:after{content:" ↕";opacity:.35}
+.sht th.asc:after{content:" ▲";opacity:1}.sht th.desc:after{content:" ▼";opacity:1}
+.potnr{display:inline-block;min-width:22px;text-align:center;border-radius:6px;background:var(--accent);color:#fff;padding:0 5px}
+</style>
+<script>
+(function(){
+  const P=document.getElementById('shands'); if(!P) return;
+  const tb=P.querySelector('tbody'), rows=[...tb.rows];
+  let f='top', key='nr', dir=1;
+  function apply(){
+    rows.forEach(r=>{r.hidden=!(f==='all'||r.dataset[f]==='1');});
+    const th=P.querySelector(`th[data-k="${key}"]`), num=th&&th.dataset.t==='n';
+    rows.slice().sort((a,b)=>{const x=a.dataset[key], y=b.dataset[key];
+      return dir*(num?(+x)-(+y):x.localeCompare(y,'sv'));}).forEach(r=>tb.appendChild(r));
+    P.querySelectorAll('th[data-k]').forEach(t=>t.classList.remove('asc','desc'));
+    if(th) th.classList.add(dir>0?'asc':'desc');
+  }
+  P.querySelectorAll('.chipb').forEach(b=>b.addEventListener('click',()=>{
+    P.querySelectorAll('.chipb').forEach(x=>x.classList.toggle('on',x===b)); f=b.dataset.f;
+    if(f!=='top' && key==='nr'){key='ts';dir=1;} if(f==='top'){key='nr';dir=1;} apply();}));
+  P.querySelectorAll('th[data-k]').forEach(t=>t.addEventListener('click',()=>{
+    const k=t.dataset.k; if(k===key) dir=-dir; else {key=k; dir=(t.dataset.t==='n'&&k!=='nr'&&k!=='ts')?-1:1;} apply();}));
+  apply();
+})();
+</script>
+{% endif %}
+<div class="panel scroll" style="margin-top:14px">
+  <div class="card-h"><b>Händerna där du bröt mot en regel ({{ s.devs_all }}){% if s.devs_all > s.devs|length %} – de {{ s.devs|length }} dyraste{% endif %}</b><a href="/v/{{ vid }}/hander?q=session&fran_ts={{ s.t0 }}&till_ts={{ s.t1 }}">Alla händer i sessionen →</a></div>
+  {% if s.devs %}
+  <table class="tbl"><tr><th>Tid</th><th>Pos</th><th>Kort</th><th>Regel</th><th class="n">Netto</th><th></th></tr>
+  {% for d in s.devs %}<tr><td>{{ d.time }}</td><td>{{ d.pos }}</td>
+    <td style="white-space:nowrap">{% for c in d.hole %}<span class="card {{ c[1] }}">{{ {10:'T',11:'J',12:'Q',13:'K',14:'A'}.get(c[0], c[0]) }}{{ {'h':'♥','d':'♦','c':'♣','s':'♠'}[c[1]] }}</span>{% endfor %}</td>
+    <td>{{ d.rule }}</td><td class="n {{ 'pos' if d.net >= 0 else 'neg' }}">{{ d.net|signed(1) }} bb</td>
+    <td><button type="button" class="rpl-open" data-hid="{{ d.id }}">▶ Spela upp</button></td></tr>{% endfor %}
+  </table>
+  <div class="note">Gå igenom händerna en gång: vad fick dig att spela? Tryck på ▶ för att spela upp handen.</div>
+  {% else %}<div class="answer good" style="border-left-color:var(--good);margin:0"><b>Inga regelbrott!</b> Du följde alla dina regler i den här sessionen.</div>{% endif %}
+</div>
+
+{% else %}
+<p class="sec-i">En ny session börjar när det gått mer än {{ T.gap_min }} minuter mellan två händer. Varje session jämförs med dina regler (bekräftade och troliga) och med ditt snitt i alla tidigare sessioner. Tryck på en session för att se den i detalj.</p>
+{% if not T.has_rules %}<div class="alert">Det finns inga sparade regler än. Analysera hela databasen för en variant så sparas de – sedan visas regelföljningen per session här.</div>{% endif %}
+{% set F = fatigue %}
+{% if F and F.rows %}
+<div class="panel" id="tid" style="margin-bottom:14px">
+  <div class="card-h"><b>⏱ Tid i sessionen – spelar du sämre ju längre du spelar?</b></div>
+  {% if F.significant %}
+  <div class="verdict bad" style="margin-bottom:10px">Efter {{ ('%g'|format(F.recommended_h)).replace('.', ',') }} {{ 'timme' if F.recommended_h == 1 else 'timmar' }} i samma session spelar du tydligt lösare än under första timmen{% if F.save100 and F.save100 > 0 %} – en paus efter {{ ('%g'|format(F.limit_h)).replace('.', ',') }} h är värd ca <b>{{ '%.1f'|format(F.save100) }} bb/100</b>{% endif %}.</div>
+  {% else %}<div class="verdict good-soft" style="margin-bottom:10px">Inget tyder på att du spelar sämre när sessionen blir lång.</div>{% endif %}
+  <div class="scroll">
+  <table class="tbl"><tr><th>Tid in i sessionen</th><th class="n">Händer</th><th class="n hide-m">VPIP</th><th>Spelar fler händer än du brukar</th><th class="n">Regelbrott / 100</th><th class="n">Kostnad / 100</th><th class="n hide-m">All-in EV / 100</th></tr>
+  {% set vmax = [F.rows|selectattr('hands')|map(attribute='vdev')|map('abs')|max, 2]|max %}
+  {% for x in F.rows %}{% if x.hands %}
+  <tr><td>{{ x.label }}{% if x.worse %} <span class="tag bad">tydligt sämre</span>{% endif %}</td><td class="n">{{ '{:,}'.format(x.hands).replace(',', ' ') }}</td><td class="n hide-m">{{ '%.1f'|format(x.vpip) }} %</td>
+    <td style="min-width:140px"><div class="rbar" title="{{ '%+.1f'|format(x.vdev) }} procentenheter jämfört med ditt snitt i samma läge"><i style="left:50%;width:{{ 50 * ([x.vdev|abs, vmax]|min) / vmax }}%;{{ '' if x.vdev >= 0 else 'left:auto;right:50%;' }}background:var({{ '--bad' if x.vdev > 0 else '--good' }})"></i><b style="left:50%"></b></div><span class="note" style="margin:0">{{ '%+.1f'|format(x.vdev) }} %-enheter</span></td>
+    <td class="n">{{ '%.1f'|format(x.brk100) }}</td><td class="n {{ 'neg' if x.cost100 < 0 else '' }}">{{ '%.1f'|format(x.cost100) }} bb</td>
+    <td class="n hide-m {{ 'pos' if x.ev100 >= 0 else 'neg' }}">{{ x.ev100|signed(1) }}{% if x.ev_se == x.ev_se %} <span class="note" style="margin:0">±{{ '%.0f'|format(1.96 * x.ev_se) }}</span>{% endif %}</td></tr>
+  {% endif %}{% endfor %}</table></div>
+  <div class="note">"Spelar fler händer än du brukar" jämför med ditt eget snitt i samma läge (position, antal spelare, nivå, bordstyp), så det beror inte på att borden ser olika ut. "Tydligt sämre" = högre än första timmen även med felmarginalen. All-in EV svänger för mycket för att säga något säkert per timme – ±-värdet är felmarginalen.</div>
+  {% if F.significant %}
+  <div class="grid2" style="margin-top:10px">
+    <div><div class="lbl" style="margin-top:0">Vad en paus är värd</div>
+      <table class="tbl"><tr><th>Paus efter</th><th class="n">Händer efter gränsen</th><th class="n">Väntad vinst</th></tr>
+      {% for o in F.options %}<tr{% if F.limit_h and (o.h - F.limit_h)|abs < 0.01 %} style="font-weight:700"{% endif %}><td>{{ ('%g'|format(o.h)).replace('.', ',') }} h</td><td class="n">{{ '%.0f'|format(o.late_share) }} %</td><td class="n {{ 'pos' if o.save100 > 0 else '' }}">{{ o.save100|signed(1) }} bb/100</td></tr>{% endfor %}</table>
+      <div class="note">Om händerna efter gränsen i stället hade spelats som under din första timme. En paus på mer än 30 minuter startar en ny session, och dina nya sessioner börjar tight igen.</div></div>
+    <div><div class="lbl" style="margin-top:0">Din gräns</div>
+      <form method="post" action="/sessgrans" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="hidden" name="vid" value="{{ vid }}">
+        <select name="h"><option value="">Rekommenderad{% if F.recommended_h %} ({{ ('%g'|format(F.recommended_h)).replace('.', ',') }} h){% endif %}</option>{% for o in F.options %}<option value="{{ o.h }}"{% if F.limit_h and (o.h - F.limit_h)|abs < 0.01 and F.limit_h != F.recommended_h %} selected{% endif %}>{{ ('%g'|format(o.h)).replace('.', ',') }} timmar</option>{% endfor %}</select>
+        <button class="btn sm" type="submit">Spara</button></form>
+      <div class="note">Gränsen blir en läcka i fokuskön ("Ta minst 30 minuters paus efter … timmar") och visas i varje sessionsanalys. Ställ en timer i mobilen när du börjar spela.</div></div>
+  </div>
+  {% endif %}
+</div>
+{% endif %}
+{% set D = down %}
+{% if D and D.rows %}
+<div class="panel" id="back" style="margin-bottom:14px">
+  <div class="card-h"><b>📉 När det går dåligt – spelar du sämre när du ligger back i passet?</b></div>
+  {% set e = D.eff %}
+  {% if not D.estimable %}<div class="note">Förlusteffekten kan inte skattas för detta urval (för lite variation). Det är inte bevis för att effekten saknas.</div>{% elif D.significant %}<div class="verdict bad" style="margin-bottom:10px">Ja. När du ligger mer än {{ '%g'|format(D.down_bb) }} bb back spelar du <b>{{ '%.1f'|format(e.vpip_back) }} procentenheter</b> fler händer än vid samma tid i andra pass. Sluta när du når −{{ '%g'|format(D.down_bb) }} bb.</div>
+  {% else %}<div class="verdict {{ 'bad-soft' if D.hour_sig else 'good-soft' }}" style="margin-bottom:10px">{% if D.hour_sig %}<b>Tidssambandet är tydligare än förlustsambandet.</b> Vid samma tid i passet spelar du inte säkert lösare när du ligger back ({{ '%+.1f'|format(e.vpip_back) }} ± {{ '%.1f'|format(1.96 * e.vpip_back_se) }} procentenheter) – men varje timme vid bordet är förknippad med att du är {{ '%.1f'|format(e.vpip_hour) }} procentenheter lösare och ger {{ '%.2f'|format(e.brk_hour) }} fler regelbrott/100. Sluta efter 2 timmar (eller vid −500 bb) – en beteenderegel, inte ett EV-löfte.{% else %}Inget säkert tecken på att du spelar sämre när du ligger back eller när passet blir långt.{% endif %}</div>{% endif %}
+  {% if D.loss_sig %}<div class="verdict bad-soft" style="margin-bottom:10px">Efter en förlorad pott på mer än 100 bb bryter du mot reglerna {{ '%.1f'|format(e.brk_after_loss) }} gånger oftare per 100 händer de närmaste 50 händerna. Ta 15 minuters paus (regel 7) och läs dina tre viktigaste preflop-regler.</div>{% endif %}
+  <div class="scroll"><table class="tbl"><tr><th>Läge i passet (före handen)</th><th class="n">Händer</th><th class="n">Spelar fler än du brukar</th><th class="n">Regelbrott / 100</th><th class="n hide-m">All-in EV / 100</th><th class="n hide-m">Snitt tid in</th></tr>
+  {% for x in D.rows %}{% if x.hands %}<tr><td>{{ x.label }}</td><td class="n">{{ '{:,}'.format(x.hands).replace(',', ' ') }}</td><td class="n {{ 'neg' if x.vdev > 2 else '' }}">{{ '%+.1f'|format(x.vdev) }} %-enh.</td><td class="n">{{ '%.1f'|format(x.brk100) }}</td><td class="n hide-m {{ 'pos' if x.ev100 >= 0 else 'neg' }}">{{ x.ev100|signed(1) }}</td><td class="n hide-m">{{ ('%.1f'|format(x.hours)).replace('.', ',') }} h</td></tr>{% endif %}{% endfor %}
+  </table></div>
+  <div class="note">Varje pass jämförs med sig självt och tiden i passet räknas bort i halvtimmesblock. Tabellen ovan är utan den justeringen – "back" sker oftare sent i passet. Granskning 2026-11-12: ren all-in-otur gör dig inte lösare; att ligga back är ett tecken på en dålig dag, inte orsaken.</div>
+</div>
+{% endif %}
+{% if T.trend %}
+<div class="panel" style="margin-bottom:14px">
+  <div class="card-h"><b>Regelföljning per session</b><span class="note" style="margin:0">senaste {{ T.trend|length }} sessionerna · streckat = snittet {{ '%.0f'|format(T.follow) }} %</span></div>
+  <div class="strend">
+    {% if T.follow is not none %}<div class="base" style="bottom:{{ T.follow }}%"></div>{% endif %}
+    {% for t in T.trend %}<a href="/v/{{ vid }}/sessioner?s={{ t.key }}" title="{{ t.label }}: {{ '%.0f'|format(t.follow) }} % ({{ t.opps }} tillfällen)"><i style="height:{{ [t.follow, 2]|max }}%;background:{{ fcol(t.follow) }}"></i></a>{% endfor %}
+  </div>
+  <div class="note" style="margin:0">Grönt = du följde reglerna, rött = många brott. Målet är jämnt grönt.</div>
+</div>
+{% endif %}
+<div class="panel scroll">
+  <div class="spickbar" id="spickbar">
+    <button class="btn sm ghost" type="button" id="spick-day" title="Välj sessionerna från den senaste dagen">Välj senaste dagen</button>
+    <button class="btn sm ghost" type="button" id="spick-clear">Rensa val</button>
+    <a class="btn sm" id="spick-go" href="#" aria-disabled="true">📤 Sessionsfil för valda (<span id="spick-n">0</span>)</a>
+    <a class="btn sm" id="spick-graf" href="#" aria-disabled="true">📈 Graf och resultat</a>
+    <a class="btn sm ghost" id="spick-zip" href="#" aria-disabled="true" title="Zip med alla händer i de valda sessionerna (tabeller, sessionsfil och handhistorik) – för följdfrågor till Claude">📦 Zip med händerna</a>
+    <span class="note" style="margin:0">Kryssa i valfritt antal sessioner. Fler än 5 i sessionsfilen: en sammanställning och de 20 största potterna totalt.</span>
+  </div>
+  <table class="tbl" id="slist">
+    <thead><tr><th class="pk" title="Välj till sessionsfilen">Välj</th><th class="ss" data-k="t0">Session</th><th class="n hide-m ss" data-k="min">Längd</th><th class="n hide-m ss" data-k="hands">Händer</th><th class="n ss" data-k="follow">Regelföljning</th><th class="n hide-m ss" data-k="diff">Mot snittet</th><th class="n hide-m ss" data-k="dev">Brott</th><th class="n hide-m ss" data-k="cost">Väntad kostnad</th><th class="n hide-m ss" data-k="net">Resultat</th><th class="n hide-m ss" data-k="ev">EV</th><th class="n ss" data-k="usd">Dollar</th><th class="n ss" data-k="evusd" title="All-in EV i dollar – resultatet utan tur i all-ins">EV $</th><th></th></tr></thead>
+    <tbody>
+    {% for s in T.sessions %}
+    <tr class="srow" data-t0="{{ s.t0 }}" data-t1="{{ s.t1 }}" data-min="{{ s.minutes }}" data-hands="{{ s.hands }}" data-follow="{{ s.follow if s.follow is not none else '' }}" data-diff="{{ (s.follow - s.base_follow) if (s.follow is not none and s.base_follow is not none) else '' }}" data-dev="{{ s.dev }}" data-cost="{{ s.exp_cost }}" data-net="{{ s.net }}" data-ev="{{ s.ev }}" data-usd="{{ s.money }}" data-evusd="{{ s.ev_money }}" title="Visa sessionens händer"><td class="pk" onclick="event.stopPropagation()"><input type="checkbox" class="spick" value="{{ s.key }}" data-day="{{ s.day }}" aria-label="Välj sessionen {{ s.start }}"></td><td><span class="sx">▸</span> {{ s.start }}–{{ s.end }}{% if s.morning %} <span title="Morgonpass (start 06–12) – hypotes">🌅</span>{% endif %}{% if s.rested %} <span title="Utvilad: minst 8 h sedan förra passet – hypotes">😴</span>{% elif s.rested is sameas false %} <span title="{{ s.gap_txt }}">⚠</span>{% endif %}<div class="show-m note" style="margin:0">{{ s.minutes }} min · {{ s.hands }} händer · {{ s.dev }}/{{ s.opps }} brott</div></td><td class="n hide-m">{{ s.minutes }} min</td><td class="n hide-m">{{ s.hands }}</td>
+      <td class="n">{{ pill(s.follow) }}</td><td class="n hide-m">{{ cmp(s) }}</td><td class="n hide-m">{{ s.dev }} / {{ s.opps }}</td>
+      <td class="n hide-m {{ 'neg' if s.exp_cost < 0 else '' }}">{{ s.exp_cost|signed(1) }} bb</td>
+      <td class="n hide-m {{ 'pos' if s.net >= 0 else 'neg' }}">{{ s.net|signed(1) }} bb</td>
+      <td class="n hide-m {{ 'pos' if s.ev >= 0 else 'neg' }}">{{ s.ev|signed(1) }} bb</td>
+      <td class="n {{ 'pos' if s.money >= 0 else 'neg' }}">{{ ('+' if s.money > 0 else ('−' if s.money < 0 else '')) ~ '$' ~ ('{:,.0f}'.format(s.money|abs)).replace(',', ' ') }}</td>
+      <td class="n {{ 'pos' if s.ev_money >= 0 else 'neg' }}">{{ ('+' if s.ev_money > 0 else ('−' if s.ev_money < 0 else '')) ~ '$' ~ ('{:,.0f}'.format(s.ev_money|abs)).replace(',', ' ') }}</td>
+      <td><a class="btn sm ghost" href="/v/{{ vid }}/sessioner?s={{ s.key }}" onclick="event.stopPropagation()">Analysera<span class="hide-m"> →</span></a></td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  <div class="note" style="margin:6px 0 0">Tryck på en rubrik för att sortera. Tryck på en session för att visa och sortera dess händer. ▶ spelar upp handen.</div>
+  {% if T.count > T.sessions|length %}<div class="note">Visar de senaste {{ T.sessions|length }} av {{ T.count }} sessioner (sorteringen gäller dem).</div>{% endif %}
+</div>
+{% endif %}
+
+{% if T and T.sessions and not sess and not (multi is defined and multi) %}
+<style>
+#slist th.ss{cursor:pointer;user-select:none;white-space:nowrap}#slist th.ss:after{content:" ↕";opacity:.35}
+#slist th.ss.on:after{content:" ▼";opacity:1}#slist th.ss.on.asc:after{content:" ▲"}
+.spickbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+#spick-go[aria-disabled="true"],#spick-zip[aria-disabled="true"],#spick-graf[aria-disabled="true"]{opacity:.45;pointer-events:none}
+#slist td.pk,#slist th.pk{width:34px;text-align:center}#slist td.pk input{width:18px;height:18px;cursor:pointer}
+tr.srow{cursor:pointer}tr.srow:hover td{background:color-mix(in srgb,var(--accent) 6%,transparent)}
+tr.srow.open td{background:color-mix(in srgb,var(--accent) 10%,transparent)}
+.sx{display:inline-block;width:12px;color:var(--ink2);transition:transform .15s}tr.srow.open .sx{transform:rotate(90deg)}
+tr.sexp>td{padding:10px 8px 16px!important;background:var(--bg)}
+.sexp .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:8px}
+.sexp .seg button{font-size:12.5px}
+.sexp th.s{cursor:pointer;white-space:nowrap}.sexp th.s:after{content:" ↕";opacity:.35}
+.sexp th.s.on:after{content:" ▼";opacity:1}.sexp th.s.on.asc:after{content:" ▲"}
+.sexp tr.hrow{cursor:pointer}
+.potnr{display:inline-block;min-width:22px;text-align:center;border-radius:6px;background:var(--accent);color:#fff;padding:0 5px}
+.sexp .pager{display:flex;justify-content:space-between;align-items:center;margin-top:6px;font-size:13px}
+</style>
+<script>
+(function(){
+  // välj 1–5 sessioner till en gemensam sessionsfil
+  const MAX=500, boxes=()=>Array.from(document.querySelectorAll('#slist input.spick'));
+  const go=document.getElementById('spick-go'), nEl=document.getElementById('spick-n');
+  function upd(){
+    const on=boxes().filter(b=>b.checked);
+    nEl.textContent=on.length;
+    boxes().forEach(b=>{ b.disabled=!b.checked && on.length>=MAX; });
+    const zp=document.getElementById('spick-zip');
+    if(zp){ if(on.length){ zp.setAttribute('aria-disabled','false'); zp.href='/v/{{ vid }}/sessionzip?'+on.map(b=>'s='+encodeURIComponent(b.value)).join('&'); } else { zp.setAttribute('aria-disabled','true'); zp.href='#'; } }
+    const gr=document.getElementById('spick-graf');
+    if(gr){ if(on.length){ gr.setAttribute('aria-disabled','false'); gr.href='/v/{{ vid }}/sessioner?'+on.map(b=>'m='+encodeURIComponent(b.value)).join('&'); } else { gr.setAttribute('aria-disabled','true'); gr.href='#'; } }
+    if(on.length){ go.setAttribute('aria-disabled','false'); go.href='/v/{{ vid }}/sessionsfil?'+on.map(b=>'s='+encodeURIComponent(b.value)).join('&'); }
+    else { go.setAttribute('aria-disabled','true'); go.href='#'; }
+  }
+  document.getElementById('slist').addEventListener('change',e=>{ if(e.target.classList.contains('spick')) upd(); });
+  document.getElementById('spick-clear').addEventListener('click',()=>{ boxes().forEach(b=>b.checked=false); upd(); });
+  document.getElementById('spick-day').addEventListener('click',()=>{
+    const all=boxes(); if(!all.length) return;
+    const day=all.map(b=>b.dataset.day).sort().pop();
+    all.forEach(b=>b.checked=false);
+    all.filter(b=>b.dataset.day===day).sort((a,b)=>+b.value - +a.value).slice(0,MAX).forEach(b=>b.checked=true);
+    upd();
+  });
+  upd();
+})();
+(function(){
+  const API='/api/hander/{{ vid }}', SYM={h:'♥',d:'♦',c:'♣',s:'♠'}, RK={10:'T',11:'J',12:'Q',13:'K',14:'A'};
+  const esc=t=>String(t).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  const cards=cs=>cs.map(c=>`<span class="card ${c[1]}">${RK[c[0]]||c[0]}${SYM[c[1]]}</span>`).join('');
+  const sg=(v,d)=>(v>0?'+':v<0?'−':'')+Math.abs(v).toFixed(d);
+  const POS={{ (pos_rows|map(attribute='pos')|list if pos_rows else ['BTN','CO','HJ','SB','BB'])|tojson }};
+  // samma val som fliken Händer, plus de 10 största potterna (samma nummer som i sessionsfilen)
+  const Q=[['alla','Alla','date','asc'],['top','10 största (sessionsfilen)','nr','asc'],['forlust','Största förluster','net','asc'],['vinst','Största vinster','net','desc'],
+           ['pott','Största pottar','pot','desc'],['allin','All-in','date','asc'],['sd','Showdown','date','asc']{% if fu %},['brott','Regelbrott','date','asc']{% endif %}];
+  const COLS=[['nr','Pott'],['date','Tid'],[null,'Pos'],[null,'Hand'],['pot','Pott bb'],['net','Resultat'],['ev','All-in EV'],['luck','Tur'],['money','Pengar'],[null,'Info'],[null,'']];
+  function open(tr){
+    const ex=document.createElement('tr'); ex.className='sexp';
+    const n=tr.children.length;
+    ex.innerHTML=`<td colspan="${n}"><div class="toolbar"><div class="seg">${Q.map((q,i)=>`<button type="button" data-q="${q[0]}" class="${i?'':'on'}">${q[1]}</button>`).join('')}</div>
+      <select aria-label="Position"><option value="">Alla positioner</option>${POS.map(p=>`<option>${esc(p)}</option>`).join('')}</select></div>
+      <div class="scroll"><table class="tbl"><thead><tr>${COLS.map(c=>`<th class="${c[0]?'s':''} ${['pot','net','ev','luck','money'].includes(c[0])?'n':''} ${['luck','money'].includes(c[0])||c[1]==='Info'?'hide-m':''}" ${c[0]?`data-s="${c[0]}"`:''}>${c[1]}</th>`).join('')}</tr></thead>
+      <tbody><tr><td colspan="11" class="empty">Hämtar händer …</td></tr></tbody></table></div>
+      <div class="pager"><span class="hinfo"></span><span><button type="button" data-p="-1">◀ Föregående</button> <button type="button" data-p="1">Nästa ▶</button></span></div></td>`;
+    tr.after(ex); tr.classList.add('open');
+    const st={q:'alla',sort:'date',dir:'asc',pos:'',page:0,fran_ts:tr.dataset.t0,till_ts:tr.dataset.t1}, size=100, tb=ex.querySelector('tbody');
+    async function load(){
+      const p=new URLSearchParams({...st,size});
+      let j; try{const r=await fetch(API+'?'+p); j=await r.json(); if(!r.ok) throw new Error(j.error||r.status);}
+      catch(e){tb.innerHTML=`<tr><td colspan="11" class="empty">Kunde inte hämta händerna: ${esc(e.message)}</td></tr>`; return;}
+      tb.innerHTML=j.rows.length?j.rows.map(r=>{const lk=r.net-r.ev, lbl=(r.nr?`Pott ${r.nr} · `:'')+`${r.time} · ${r.pos} · ${sg(r.net,1)} bb`;
+        return `<tr class="hrow"><td>${r.nr?`<b class="potnr">${r.nr}</b>`:'<span class="note" style="margin:0">–</span>'}</td><td>${esc(r.time)}</td>
+        <td>${esc(r.pos)} <span class="note" style="margin:0;font-size:11px">$${esc(r.stake)}</span></td><td style="white-space:nowrap">${cards(r.hole)}</td>
+        <td class="n">${r.pot.toFixed(0)}</td><td class="n ${r.net>=0?'pos':'neg'}">${sg(r.net,1)}</td><td class="n ${r.ev>=0?'pos':'neg'}">${sg(r.ev,1)}</td>
+        <td class="n hide-m ${lk>0.5?'pos':lk<-0.5?'neg':'note'}">${Math.abs(lk)>0.05?sg(lk,1):'–'}</td><td class="n hide-m ${r.money>=0?'pos':'neg'}">${sg(r.money,2)}</td>
+        <td class="hide-m" style="white-space:nowrap">${r.allin?`<span class="tag">all-in ${esc(r.allin)}</span>`:''}${r.sd?'<span class="tag">showdown</span>':''}${r.dev?'<span class="tag bad">regelbrott</span>':''}</td>
+        <td><button type="button" class="rpl-open" data-hid="${esc(r.id)}" data-label="${esc(lbl)}">▶</button></td></tr>`;}).join('')
+        :'<tr><td colspan="11" class="empty">Inga händer matchar.</td></tr>';
+      const a=st.page*size;
+      ex.querySelector('.hinfo').textContent=j.total?`${a+1}–${Math.min(a+size,j.total)} av ${j.total} händer`:'';
+      ex.querySelector('[data-p="-1"]').disabled=st.page===0; ex.querySelector('[data-p="1"]').disabled=a+size>=j.total;
+      ex.querySelectorAll('th.s').forEach(th=>{th.classList.toggle('on',th.dataset.s===st.sort); th.classList.toggle('asc',st.dir==='asc');});
+    }
+    ex.querySelector('.seg').addEventListener('click',e=>{const b=e.target.closest('button'); if(!b) return;
+      ex.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x===b));
+      const q=Q.find(x=>x[0]===b.dataset.q); st.q=q[0]; st.sort=q[2]; st.dir=q[3]; st.page=0; load();});
+    ex.querySelector('select').addEventListener('change',e=>{st.pos=e.target.value; st.page=0; load();});
+    ex.querySelectorAll('th.s').forEach(th=>th.addEventListener('click',()=>{const k=th.dataset.s;
+      if(st.sort===k) st.dir=st.dir==='asc'?'desc':'asc'; else {st.sort=k; st.dir=(k==='date'||k==='nr')?'asc':'desc';} st.page=0; load();}));
+    ex.querySelectorAll('[data-p]').forEach(b=>b.addEventListener('click',()=>{st.page=Math.max(0,st.page+(+b.dataset.p)); load();}));
+    tb.addEventListener('click',e=>{if(e.target.closest('.rpl-open')) return; const tr2=e.target.closest('.hrow'); if(tr2) tr2.querySelector('.rpl-open').click();});
+    load();
+  }
+  // sortera sessionslistan; en utfälld handlista följer med sin session
+  const SL=document.getElementById('slist');
+  if(SL){ let sk='t0', sd=-1; const body=SL.tBodies[0];
+    const val=(tr,k)=>{const v=tr.dataset[k]; return v===''||v==null?null:+v;};
+    function sortS(){
+      const rows=[...body.querySelectorAll('tr.srow')];
+      rows.sort((a,b)=>{const x=val(a,sk), y=val(b,sk); if(x===null&&y===null) return 0; if(x===null) return 1; if(y===null) return -1; return sd*(x-y);});
+      rows.forEach(r=>{const nx=r.nextElementSibling, ex=nx&&nx.classList.contains('sexp')?nx:null; body.appendChild(r); if(ex) body.appendChild(ex);});
+      SL.querySelectorAll('th.ss').forEach(t=>{t.classList.toggle('on',t.dataset.k===sk); t.classList.toggle('asc',sd>0);});
+    }
+    SL.querySelectorAll('th.ss').forEach(t=>t.addEventListener('click',()=>{const k=t.dataset.k;
+      if(k===sk) sd=-sd; else {sk=k; sd=(k==='cost')?1:-1;} sortS();}));
+    sortS();
+  }
+  document.querySelectorAll('tr.srow').forEach(tr=>tr.addEventListener('click',e=>{
+    if(e.target.closest('a,button')) return;
+    const nx=tr.nextElementSibling;
+    if(nx && nx.classList.contains('sexp')){nx.remove(); tr.classList.remove('open');} else open(tr);
+  }));
+})();
+</script>
+{% endif %}

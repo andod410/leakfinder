@@ -1,0 +1,74 @@
+{% if not solver_blocked %}<span data-solver-page hidden></span>{% endif %}
+{% if solver_blocked %}
+<div class="panel"><div class="card-h"><b>🔒 Solver-sidan är dold</b></div>
+<div class="note">{% if solver_blocked == 'ja' %}GG-klienten körs.{% else %}Det gick inte att kontrollera om GG-klienten körs.{% endif %}
+Solverns frekvenser visas bara när du inte spelar – att ha dem framme under spel kan räknas som otillåten realtidshjälp (RTA) på GG.
+Stäng GG och ladda om sidan. Resten av programmet fungerar som vanligt.</div></div>
+{% else %}
+<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>🧮 Solverfil</b>
+{% if solver_info and not solver_info.error %}<span class="note" style="margin:0">inlagd · fingeravtryck <code>{{ solver_info.hash }}</code>{% if solver_info.extracted %} · från {{ solver_info.extracted[:10] }}{% endif %}</span>{% endif %}</div>
+{% if solver_info and solver_info.error %}<div class="verdict bad">Solverfilen kunde inte läsas: {{ solver_info.error }}</div>{% endif %}
+{% if solver_info and solver_info.warn %}<div class="note">⚠ Inställningarna i filen ser annorlunda ut än väntat (saknar {{ solver_info.warn|join(', ') }}): {{ solver_info.settings }}</div>{% endif %}
+{% if not solver_info %}<div class="note">Ingen solverfil inlagd. Lägg in din egen fil från PLO Trainer (JSON med de 14 preflopnoderna). Den sparas bredvid din databas, inte i programmappen, och tas aldrig med i export, delning eller sessionsfiler.</div>{% endif %}
+<form method="post" action="/solver/fil" enctype="multipart/form-data" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px">
+  <input type="hidden" name="vid" value="{{ vid }}"><input type="file" name="fil" accept=".json">
+  <button class="btn sm" type="submit">{{ 'Byt solverfil' if solver_info else 'Lägg in solverfil' }}</button>
+  {% if solver_info %}<button class="btn sm ghost" type="submit" name="ta_bort" value="1">Ta bort</button>{% endif %}
+</form>
+<div class="note" style="margin-top:6px">Bara för ditt eget bruk – dela aldrig filen. Visas inte medan GG körs.</div></div>
+
+{% set T = training %}{% if T and not T.empty %}
+<div class="panel" id="trana" style="margin-bottom:14px"><div class="card-h"><b>🏋️ Träna denna vecka ({{ T['from'] }} – {{ T['to'] }})</b><span class="note" style="margin:0">{{ T.total_fel }} klara fel · {{ '%.1f'|format(T.total_per100) }} per 100 händer{% if T.total_usd_h is not none %} · ≈ ${{ '%.1f'|format(T.total_usd_h) }}/h{% endif %} · klart fel = solvern gör din handling under 1 %</span></div>
+{% for r in T.lagen %}<div style="border-top:1px solid var(--line);padding:10px 0">
+  <b>{{ loop.index }}. {{ r.label }}{% if r.usd_h is not none %} · ≈ ${{ '%.1f'|format(r.usd_h) }}/h{% endif %}</b>{% if r.desc %}<div class="note" style="margin:2px 0">{{ r.desc }}</div>{% endif %} <span class="note" style="margin:0">{{ r.fel }} fel{% if r.felfold %} (varav {{ r.felfold }} felfoldar){% endif %} av {{ r.n }} beslut · du spelar {{ '%.0f'|format(r.du) }} %, solvern {{ '%.0f'|format(r.sol) }} %</span>
+  {% if r.overcorr %}<div class="verdict bad" style="margin:6px 0">⚠ Överkorrigering: du spelar {{ '%.0f'|format(r.du) }} % mot solverns {{ '%.0f'|format(r.sol) }} %. Spela inte tightare än solvern.</div>{% endif %}
+  {% if r.rules %}<ul style="margin:6px 0">{% for x in r.rules %}<li>{{ x.text }} <span class="note" style="margin:0">({{ x.n }} händer)</span></li>{% endfor %}</ul>{% endif %}
+  {% if r.examples %}<div class="note" style="margin:4px 0 2px">Exempel (dina händer):</div><ul class="mini">{% for e in r.examples %}<li><span>{{ e.cards }} · {{ e.act }} · solvern fold {{ '%.0f'|format(e.sol[0]) }} / syn {{ '%.0f'|format(e.sol[1]) }} / höj {{ '%.0f'|format(e.sol[2]) }} %</span><span class="note" style="margin:0">{{ e.date }}{% if e.delta is not none %} · {{ '%+.1f'|format(e.delta) }} bb (utfall, inte EV){% endif %}</span></li>{% endfor %}</ul>{% endif %}
+  <div class="note" style="margin:4px 0 0">Klara fel vecka för vecka: {% for w in r.weeks %}{{ w.label }} {{ ('%.1f'|format(w.rate) ~ ' %') if w.rate is not none else '–' }}{{ ' · ' if not loop.last }}{% endfor %}</div>
+</div>{% endfor %}
+<div class="note">Träna i PLO Trainer → Train: välj samma lägen, 100 händer var, före passet – aldrig medan GG är öppet. Listan visar de lägen som kostar mest per timme just nu: spelade klara fel per 100 händer senaste 7 dagarna × kostnad per fel (hela urvalet, krympt mot snittet{% if T.hph %}) × {{ '%.0f'|format(T.hph) }} händer/h × bb ${{ '%.2f'|format(T.bb_usd) }}{% else %}){% endif %}. Felfoldar räknas inte i $/h (okänd kostnad). Listan väljs om vid varje analys – det är en trend bakåt, inte en låst uppföljning av de lägen du började träna. Färre gruppavvikelser säger inte hur många dollar du vunnit.</div>
+</div>{% elif T and T.error %}<div class="verdict bad">Träningsrutan kunde inte räknas: {{ T.error }}</div>{% endif %}
+{% if solver_error %}<div class="verdict bad">Jämförelsen misslyckades: {{ solver_error }}</div>{% endif %}
+{% if solver and solver.empty %}<div class="panel note">Inga preflopbeslut i solverlägena i urvalet. Kör en full analys (fakta byggs om för 2.76) eller välj PLO6.</div>{% endif %}
+{% if solver and not solver.empty %}{% set R = solver %}
+<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>Sammanfattning</b><span class="note" style="margin:0">{{ '{:,}'.format(R.decisions).replace(',', ' ') }} första preflopbeslut i 14 lägen · grupp matchad på detaljnivå {{ '%.0f'|format(R.lvl3) }} % · {{ R.excluded }} utan solvergrupp (trips)</span></div>
+<div class="keypoints">
+<div class="kp {{ 'bad' if R.dev.mean is not none and R.dev.mean < 0 else '' }}" style="flex-direction:column;gap:2px"><b>Spel där solvern nästan aldrig gör samma sak (&lt; 10 %)</b>
+<span>{{ '{:,}'.format(R.dev.n).replace(',', ' ') }} beslut ({{ '%.1f'|format(R.dev.share) }} %){% if R.dev.mean is not none %} · {{ '%+.2f'|format(R.dev.mean) }} ± {{ '%.2f'|format(R.dev.ci or 0) }} bb per beslut · ≈ {{ '%+.1f'|format(R.dev.per100) }} ± {{ '%.1f'|format(R.dev.per100_ci or 0) }} bb/100{% endif %}</span></div>
+<div class="kp" style="flex-direction:column;gap:2px"><b>När du gör det solvern oftast gör (≥ 50 %)</b>
+<span>{{ '{:,}'.format(R.main.n).replace(',', ' ') }} beslut{% if R.main.mean is not none %} · {{ '%+.2f'|format(R.main.mean) }} ± {{ '%.2f'|format(R.main.ci or 0) }} bb per beslut{% endif %}</span></div>
+</div>
+<div class="note">Resultat = hela handens utfall mot fold (preflop + postflop, all-in EV efter rake), felmarginal 95 % per spelpass. Observationellt: riktningen gäller, storleken är osäker. Solverns frekvens gäller handgruppen, inte den exakta handen.</div></div>
+
+<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>Frekvenser per läge</b><span class="note" style="margin:0">fold / syn / höj i %</span></div>
+<table class="tbl"><tr><th>Läge</th><th class="n">Beslut</th><th class="n">Du</th><th class="n">Solvern</th><th class="n">Största skillnad</th></tr>
+{% for r in R.lagen %}<tr><td>{{ r.label }}</td><td class="n">{{ '{:,}'.format(r.n).replace(',', ' ') }}</td>
+<td class="n">{{ '%.0f'|format(r.du[0]) }} / {{ '%.0f'|format(r.du[1]) }} / {{ '%.0f'|format(r.du[2]) }}</td>
+<td class="n">{{ '%.0f'|format(r.sol[0]) }} / {{ '%.0f'|format(r.sol[1]) }} / {{ '%.0f'|format(r.sol[2]) }}</td>
+<td class="n {{ 'neg' if r.diff >= 10 else '' }}">{{ '%.0f'|format(r.diff) }} pe</td></tr>{% endfor %}</table></div>
+
+{% if R.rows %}<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>Dyraste avvikande spel per läge</b><span class="note" style="margin:0">där solvern gör din handling &lt; 10 % – sorterat efter förlust (överskattar, se hypotes H4)</span></div>
+<table class="tbl"><tr><th>Läge</th><th>Handling</th><th class="n">Antal</th><th class="n">Solvern foldar</th><th class="n">Mot fold / beslut</th><th class="n">Totalt bb</th><th class="n">bb/100</th></tr>
+{% for r in R.rows %}<tr><td>{{ r.label }}</td><td>{{ r.act }}</td><td class="n">{{ r.n }}</td><td class="n">{{ '%.0f'|format(r.sol_fold) }} %</td>
+<td class="n">{{ '%+.2f'|format(r.mean) }}{% if r.ci is not none %} ± {{ '%.2f'|format(r.ci) }}{% endif %}</td><td class="n">{{ '%+.0f'|format(r.total) }}</td><td class="n">{{ '%+.2f'|format(r.per100) }}</td></tr>{% endfor %}</table></div>{% endif %}
+
+{% if R.groups %}<details class="panel" style="margin-bottom:14px"><summary><b>Dyraste handgrupper</b> <span class="note" style="margin:0">minst 30 beslut</span></summary>
+<table class="tbl"><tr><th>Läge</th><th>Handling</th><th>Grupp</th><th class="n">Antal</th><th class="n">Solvern f/s/h</th><th class="n">Mot fold / beslut</th><th class="n">Totalt bb</th></tr>
+{% for r in R.groups %}<tr><td>{{ r.label }}</td><td>{{ r.act }}</td><td>{{ r.group }}</td><td class="n">{{ r.n }}</td><td class="n">{{ '%.0f'|format(r.sol[0]) }}/{{ '%.0f'|format(r.sol[1]) }}/{{ '%.0f'|format(r.sol[2]) }}</td>
+<td class="n">{{ '%+.2f'|format(r.mean) }}{% if r.ci is not none %} ± {{ '%.2f'|format(r.ci) }}{% endif %}</td><td class="n">{{ '%+.0f'|format(r.total) }}</td></tr>{% endfor %}</table></details>{% endif %}
+
+{% if R.missed.n %}<details class="panel" style="margin-bottom:14px"><summary><b>Händer du foldar men solvern spelar (≥ 70 %)</b> <span class="note" style="margin:0">{{ R.missed.n }} gånger – kostnaden syns inte i din data</span></summary>
+<table class="tbl"><tr><th>Läge</th><th>Grupp</th><th class="n">Gånger</th></tr>
+{% for r in R.missed.rows %}<tr><td>{{ r.label }}</td><td>{{ r.group }}</td><td class="n">{{ r.n }}</td></tr>{% endfor %}</table></details>{% endif %}
+
+<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>Utveckling per månad</b><span class="note" style="margin:0">mät frekvenser, inte bb – de visar riktning på 1–2 veckor</span></div>
+<table class="tbl"><tr><th>Månad</th><th class="n">Beslut</th><th class="n">Avvikande spel</th><th class="n">Fold av spelbart</th><th class="n">Solverns snittfrekvens för ditt val</th></tr>
+{% for t in R.trend %}<tr><td>{{ t.month }}</td><td class="n">{{ '{:,}'.format(t.n).replace(',', ' ') }}</td><td class="n">{{ '%.1f'|format(t.dev) }} %</td><td class="n">{{ '%.1f'|format(t.missed) }} %</td><td class="n">{{ '%.1f'|format(t.match) }} %</td></tr>{% endfor %}</table></div>
+
+{% set h = R.h4 %}<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>🧪 H4 – framåttest från {{ h.start }}</b><span class="note" style="margin:0">definition <code>{{ h.hash }}</code> · byts solverfilen börjar testet om</span></div>
+<div>{{ h.text }}.</div>
+<div class="note">Efter {{ h.start }}: {{ h.decisions_after }} beslut i solverlägen{% if h.share is not none %}, varav {{ '%.1f'|format(h.share) }} % avvikande{% endif %} · mätta avvikande spel {{ h.n }} i {{ h.clusters }} pass{% if h.mean is not none %} · {{ '%+.2f'|format(h.mean) }}{% if h.ci is not none %} ± {{ '%.2f'|format(h.ci) }}{% endif %} bb mot fold{% endif %} ·
+<b>{% if h.verdict == 'håller' %}✅ håller{% elif h.verdict == 'håller inte' %}❌ håller inte{% elif h.verdict == 'för få' %}⏳ för få (läses vid 100 beslut och 20 pass){% else %}oklart{% endif %}</b></div>
+<div class="note">Räknas aldrig som regelbrott och rör inte de frysta reglerna eller hypoteserna H1–H3.</div></div>
+{% endif %}
+{% endif %}

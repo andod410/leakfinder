@@ -1,0 +1,175 @@
+<style>
+.dl-ctl{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:4px 14px;align-items:end}
+.dl-ctl .fld{margin:0 0 10px}
+.dl-seg{display:flex;gap:6px;flex-wrap:wrap}
+.dl-seg button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+.dl-wrap{display:flex;justify-content:center;background:var(--chip);border-radius:10px;padding:12px;overflow:hidden}
+.dl-wrap canvas{max-width:100%;height:auto;box-shadow:0 2px 14px rgba(0,0,0,.18);border-radius:6px}
+.dl-wrap.mobile canvas{max-height:78vh;width:auto}
+</style>
+<div class="panel" style="margin-bottom:14px">
+  <div class="dl-ctl">
+    <div class="fld"><div class="lab">Format</div><div class="dl-seg" id="dl-fmt"><button class="btn sm ghost on" type="button" data-v="mobile">📱 Mobil</button><button class="btn sm ghost" type="button" data-v="desktop">🖥 Desktop</button></div></div>
+    <div class="fld"><div class="lab">Visa i</div><div class="dl-seg" id="dl-unit"><button class="btn sm ghost on" type="button" data-v="usd">Dollar</button><button class="btn sm ghost" type="button" data-v="bb">bb</button></div></div>
+    <div class="fld"><label for="dl-start">Startdatum (tomt = hela urvalet)</label><input type="date" id="dl-start" value=""><div class="hint">Med ett startdatum visas före och efter, t.ex. när ett projekt började.</div></div>
+    <div class="fld"><label for="dl-title">Rubrik</label><input type="text" id="dl-title" maxlength="40" value=""></div>
+    <div class="fld"><div class="lab">Rutorna överst</div><div class="dl-seg" id="dl-tiles"><button class="btn sm ghost on" type="button" data-v="std">Utan rakeback</button><button class="btn sm ghost" type="button" data-v="rb">Med rakeback</button></div></div>
+  </div>
+  <div class="fld" style="margin:0 0 10px"><div class="lab">Linjer i grafen (samma som på Översikt)</div><div id="dl-lines" style="display:flex;flex-wrap:wrap;gap:4px 14px"></div></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+    <button class="btn" type="button" id="dl-save">⬇ Ladda ner bilden (PNG)</button>
+    <span class="note" id="dl-msg" style="margin:0"></span>
+  </div>
+</div>
+<div class="dl-wrap mobile" id="dl-wrap"><canvas id="dl-canvas" width="1080" height="1920" aria-label="Delningsbild"></canvas></div>
+<div class="note" style="margin-top:8px">Bilden innehåller inga spelarnamn. Allt räknas efter rake. All-in EV = resultatet om alla all-in avgjorts efter equity.</div>
+<script>
+(function(){
+  const API='/api/dela/{{ vid }}', KEY='plo-dela-v1';
+  const C={surf:'#fcfcfb',ink:'#0b0b0b',ink2:'#52514e',grid:'#e4e3df',tile:'#f0efec',blue:'#2a78d6',orange:'#eb6834',good:'#1baf7a',bad:'#e34948',seq:['#c9dcf3','#7fb0ea','#2a78d6']};
+  const FONT='-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+  const cv=document.getElementById('dl-canvas'), wrap=document.getElementById('dl-wrap'), msg=document.getElementById('dl-msg');
+  let S={fmt:'mobile',unit:'usd',start:'',title:'',tiles:'std',lines:['net','ev']}, D=null;
+  // 2.89: fasta färger på bilden (ljus bakgrund oavsett tema), samma ordning som vinstkurvan på Översikt
+  const LC={net:'#2a78d6',ev:'#eb6834',sd:'#1baf7a',nsd:'#8e6bd1',rake:'#9a9893',net_rb:'#0f4fa8',ev_rb:'#b8461c'};
+  try{ Object.assign(S, JSON.parse(localStorage.getItem(KEY)||'{}')); }catch(e){}
+  document.getElementById('dl-start').value=S.start||''; document.getElementById('dl-title').value=S.title||'';
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){} }
+  function seg(id,k){ const el=document.getElementById(id); el.querySelectorAll('button').forEach(b=>{ b.classList.toggle('on', b.dataset.v===S[k]);
+    b.onclick=()=>{ S[k]=b.dataset.v; el.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b)); save(); draw(); }; }); }
+  seg('dl-fmt','fmt'); seg('dl-unit','unit'); seg('dl-tiles','tiles');
+  function lineBoxes(){ const el=document.getElementById('dl-lines'); el.innerHTML=''; if(!D||!D.lines) return;
+    Object.keys(D.lines).forEach(k=>{ const L=D.lines[k], lab=document.createElement('label'); lab.className='note'; lab.style.margin='0';
+      const i=document.createElement('input'); i.type='checkbox'; i.checked=S.lines.indexOf(k)>=0;
+      i.onchange=()=>{ S.lines=Object.keys(D.lines).filter(x=>x===k?i.checked:S.lines.indexOf(x)>=0); save(); draw(); };
+      const sw=document.createElement('i'); sw.style.cssText='display:inline-block;width:10px;height:10px;border-radius:2px;margin:0 4px;background:'+(LC[k]||'#888');
+      lab.appendChild(i); lab.appendChild(sw); lab.appendChild(document.createTextNode(L.label)); el.appendChild(lab); }); }
+  function chosen(){ if(!D||!D.lines) return []; const ks=S.lines.filter(k=>D.lines[k]); return ks.length?ks:['net'].filter(k=>D.lines[k]); }
+  const sp=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,' ');
+  const sgn=v=>v>0?'+':(v<0?'−':'');
+  const usd=v=>sgn(Math.round(v))+'$'+sp(Math.abs(Math.round(v)));
+  const bbv=v=>sgn(Math.round(v))+sp(Math.abs(Math.round(v)))+' bb';
+  const dec=(v,d)=>sgn(v)+Math.abs(v).toFixed(d).replace('.',',');
+  const money=v=>S.unit==='usd'?usd(v):bbv(v);
+  function font(px,w){ return (w||'400')+' '+px+'px '+FONT; }
+  function txt(c,s,x,y,px,o){ o=o||{}; c.font=font(px,o.w); c.fillStyle=o.col||C.ink; c.textAlign=o.al||'left'; c.textBaseline=o.bl||'alphabetic';
+    String(s).split('\n').forEach((l,i)=>c.fillText(l,x,y+i*px*1.25)); }
+  function rr(c,x,y,w,h,r,col){ c.fillStyle=col; c.beginPath(); c.moveTo(x+r,y); c.arcTo(x+w,y,x+w,y+h,r); c.arcTo(x+w,y+h,x,y+h,r); c.arcTo(x,y+h,x,y,r); c.arcTo(x,y,x+w,y,r); c.closePath(); c.fill(); }
+  function nice(lo,hi,n){ const span=(hi-lo)||1, raw=span/n, p=Math.pow(10,Math.floor(Math.log10(raw))), f=raw/p, st=(f<1.5?1:f<3?2:f<7?5:10)*p; const out=[]; for(let v=Math.ceil(lo/st)*st; v<=hi+1e-9; v+=st) out.push(v); return out; }
+
+  function tiles(c,x,y,w,h,gap){
+    const T=D.total, bw=(w-2*gap)/3, before=(D.periods||[]).find(p=>p.label==='Före');
+    const rbt=S.tiles==='rb'&&T.ev_rb_bb!=null;
+    const items=rbt?[['Resultat inkl. rakeback', S.unit==='usd'?usd(T.money+T.rb_money):bbv(T.net_bb+T.rb_bb), sp(T.hands)+' händer'],
+                 ['All-in EV inkl. rakeback', S.unit==='usd'?usd(T.ev_rb_money):bbv(T.ev_rb_bb), 'tur borträknad'],
+                 ['Verklig winrate', dec(T.ev100_rb,1)+' bb/100', 'rakeback '+dec(T.rb100,1)+' bb/100']]
+                 :[['Resultat', S.unit==='usd'?usd(T.money):bbv(T.net_bb), sp(T.hands)+' händer'],
+                 ['All-in EV', S.unit==='usd'?usd(T.ev_money):bbv(T.ev_bb), 'tur borträknad'],
+                 ['EV per 100 händer', dec(T.ev100,1)+' bb', before&&before.hands?('före: '+dec(before.ev100,1)+' bb'):'efter rake']];
+    items.forEach((it,i)=>{ const bx=x+i*(bw+gap); rr(c,bx,y,bw,h,18,C.tile);
+      txt(c,it[0],bx+24,y+h*0.30,h*0.15,{col:C.ink2}); txt(c,it[1],bx+24,y+h*0.64,h*0.25,{w:'700'}); txt(c,it[2],bx+24,y+h*0.88,h*0.12,{col:C.ink2}); });
+  }
+
+  function lineChart(c,x,y,w,h,fs){
+    // 2.89: valfria linjer (samma som vinstkurvan på Översikt)
+    const s=D.series, N=s.i[s.i.length-1], U=S.unit==='usd'?'m':'b';
+    const Ls=chosen().map(k=>({k:k,label:D.lines[k].label,col:LC[k]||'#888',dash:D.lines[k].dash,v:D.lines[k][U]}));
+    if(!Ls.length) return;
+    let lo=0, hi=0; Ls.forEach(L=>{ lo=Math.min(lo,...L.v); hi=Math.max(hi,...L.v); }); const pad=(hi-lo)*0.12||1; lo-=pad; hi+=pad;
+    const ticks=nice(lo,hi,5), lw=fs*5.6, px=x+lw, pw=w-lw, X=i=>px+pw*(i-1)/Math.max(1,N-1), Y=v=>y+h-(v-lo)/(hi-lo)*h;
+    c.lineWidth=2; ticks.forEach(t=>{ c.strokeStyle=t===0?C.ink2:C.grid; c.lineWidth=t===0?2:1.5; c.beginPath(); c.moveTo(px,Y(t)); c.lineTo(px+pw,Y(t)); c.stroke();
+      txt(c,t===0?(S.unit==='usd'?'$0':'0'):(S.unit==='usd'?usd(t):sgn(t)+sp(Math.abs(t))),px-12,Y(t),fs,{col:C.ink2,al:'right',bl:'middle'}); });
+    c.font=font(fs); let lastR=-1e9; D.marks.forEach((m,k)=>{ const mx=X(m.i), tw=c.measureText(m.label).width; let left=k===0?mx:mx-tw/2;
+      if(left+tw>px+pw) left=px+pw-tw; if(left<lastR+fs*0.8) return; lastR=left+tw; txt(c,m.label,left,y+h+fs*1.6,fs,{col:C.ink2}); });
+    Ls.forEach(L=>{ c.strokeStyle=L.col; c.lineWidth=Math.max(2.5,fs*0.14); c.lineJoin='round'; c.setLineDash(L.dash?[fs*0.5,fs*0.35]:[]); c.beginPath();
+      L.v.forEach((v,k)=>{ const xx=X(s.i[k]), yy=Y(v); k?c.lineTo(xx,yy):c.moveTo(xx,yy); }); c.stroke(); });
+    c.setLineDash([]);
+    // värden i slutet: högsta och lägsta slutvärde (färgade som sin linje)
+    const fin=Ls.map(L=>({L:L,v:L.v[L.v.length-1]})).sort((p,q)=>q.v-p.v), tail=k=>Math.max(1,Math.floor(k.length*0.06));
+    txt(c,money(fin[0].v),px+pw,Y(Math.max(...fin[0].L.v.slice(-tail(fin[0].L.v))))-fs*0.7,fs*1.05,{w:'700',al:'right',col:fin[0].L.col});
+    if(fin.length>1){ const z=fin[fin.length-1]; txt(c,money(z.v),px+pw,Y(Math.min(...z.L.v.slice(-tail(z.L.v))))+fs*1.5,fs*1.05,{w:'700',al:'right',col:z.L.col}); }
+    // förklaring
+    const third=L=>L.v.slice(0,Math.max(1,Math.floor(L.v.length/3)));
+    const up=Math.max(...Ls.map(L=>Math.max(...third(L))))>(lo+hi)/2, step=fs*1.5;
+    const lyy=up?y+h-fs*1.1-step*(Ls.length-1):y+fs*0.6;
+    Ls.forEach((L,k)=>{ const yy=lyy+k*step; c.strokeStyle=L.col; c.lineWidth=fs*0.22; c.setLineDash(L.dash?[fs*0.4,fs*0.3]:[]); c.beginPath(); c.moveTo(px+fs,yy); c.lineTo(px+fs*2.6,yy); c.stroke(); c.setLineDash([]);
+      txt(c,L.label+(S.unit==='usd'?' ($)':' (bb)'),px+fs*3.1,yy,fs,{bl:'middle'}); });
+  }
+
+  function barsMonths(c,x,y,w,h,fs){
+    const B=D.bars, n=B.length, vals=B.map(b=>b.ev100); let lo=Math.min(0,...vals), hi=Math.max(0,...vals); const r=(hi-lo)||1; lo-=r*0.16; hi+=r*0.16;
+    const lab=fs*3.4, ph=h-lab, Y=v=>y+(hi-v)/(hi-lo)*ph, bw=w/n;
+    c.strokeStyle=C.ink2; c.lineWidth=2; c.beginPath(); c.moveTo(x,Y(0)); c.lineTo(x+w,Y(0)); c.stroke();
+    B.forEach((b,i)=>{ const cx=x+bw*(i+0.5), wd=Math.min(bw*0.62,fs*7), v=b.ev100;
+      c.fillStyle=v>=0?C.good:C.bad; const y0=Y(Math.max(v,0)), y1=Y(Math.min(v,0)); c.fillRect(cx-wd/2,y0,wd,Math.max(2,y1-y0));
+      txt(c,dec(v,1),cx,v>=0?y0-fs*0.5:y1+fs*1.2,fs*1.05,{w:'700',al:'center'});
+      txt(c,(b.hands>=10000?Math.round(b.hands/1000)+'k':(b.hands/1000).toFixed(1).replace('.',',')+'k')+' händer',cx,y+h-fs*1.6,fs*0.72,{col:C.ink2,al:'center'});
+      txt(c,b.label,cx,y+h,fs,{col:C.ink2,al:'center'}); });
+  }
+
+  function barsPeriods(c,x,y,w,h,fs){
+    const P=D.periods, gap=fs*2, pw=(w-2*gap)/3;
+    const M=[['All-in EV\nbb/100','ev100',v=>dec(v,1)],['VPIP\n%','vpip',v=>Math.round(v)+' %'],['Regelföljning\n%','follow',v=>Math.round(v)+' %']];
+    M.forEach((m,k)=>{ const px=x+k*(pw+gap), vals=P.map(p=>p[m[1]]);
+      txt(c,m[0],px,y+fs,fs*0.95,{w:'700'});
+      const top=y+fs*3.4, lab=fs*3.0, ph=h-(top-y)-lab, ok=vals.filter(v=>v!=null);
+      if(!ok.length){ txt(c,'–',px+pw/2,top+ph/2,fs,{col:C.ink2,al:'center'}); return; }
+      let lo=Math.min(0,...ok), hi=Math.max(0,...ok); const r=(hi-lo)||1; if(lo<0) lo-=r*0.2; hi+=r*0.2;
+      const Y=v=>top+(hi-v)/(hi-lo)*ph, bw=pw/P.length;
+      c.strokeStyle=C.ink2; c.lineWidth=1.5; c.beginPath(); c.moveTo(px,Y(0)); c.lineTo(px+pw,Y(0)); c.stroke();
+      P.forEach((p,i)=>{ const v=p[m[1]], cx=px+bw*(i+0.5), wd=bw*0.7, col=C.seq[C.seq.length-P.length+i];
+        txt(c,p.short||p.label,cx,y+h-fs*1.25,fs*0.68,{col:C.ink2,al:'center'});
+        if(v==null){ txt(c,'–',cx,Y(0)-fs*0.5,fs*0.9,{col:C.ink2,al:'center'}); return; }
+        const y0=Y(Math.max(v,0)), y1=Y(Math.min(v,0)); c.fillStyle=col; c.fillRect(cx-wd/2,y0,wd,Math.max(2,y1-y0));
+        txt(c,m[2](v),cx,v>=0?y0-fs*0.45:y1+fs*1.1,fs*0.9,{w:'700',al:'center'}); });
+    });
+  }
+
+  function draw(){
+    const mob=S.fmt==='mobile', W=mob?1080:1920, Hh=mob?1920:1080; cv.width=W; cv.height=Hh; wrap.classList.toggle('mobile',mob);
+    const c=cv.getContext('2d'); c.fillStyle=C.surf; c.fillRect(0,0,W,Hh);
+    if(!D){ txt(c,'Hämtar …',W/2,Hh/2,40,{col:C.ink2,al:'center'}); return; }
+    if(D.error){ txt(c,D.error,W/2,Hh/2,36,{col:C.ink2,al:'center'}); return; }
+    const title=(S.title||'').trim()||(D.start?D.game+' sedan '+D.first:D.game+' på GGPoker');
+    const sub=D.first+' – '+D.last+' '+D.year+' · '+sp(D.total.hands)+' händer · efter rake';
+    const periods=D.mode==='periods', bt=periods?'Hur spelet har förändrats':(D.mode==='months'?'All-in EV per månad':'All-in EV per vecka');
+    const bs=periods?D.periods.map(p=>p.label.replace('–\n','–').replace('\n',' ')).join(' · '):'bb/100 händer · grön = plus, röd = minus';
+    const foot='All-in EV = resultatet om alla all-in avgjorts efter equity, alltså utan tur och otur. Allt räknat efter rake.';
+    if(mob){
+      const m=64, fw=W-2*m;
+      txt(c,title,m,118,58,{w:'700'}); txt(c,sub,m,178,32,{col:C.ink2});
+      tiles(c,m,214,fw,166,28);
+      txt(c,'Utveckling '+(S.unit==='usd'?'i dollar':'i bb'),m,470,40,{w:'700'}); txt(c,'Kumulativt, hand för hand',m,514,29,{col:C.ink2});
+      lineChart(c,m,560,fw,440,26);
+      txt(c,bt,m,1150,40,{w:'700'}); txt(c,bs,m,1194,29,{col:C.ink2});
+      (periods?barsPeriods:barsMonths)(c,m,1240,fw,500,28);
+      wrapText(c,foot,m,1820,fw,25);
+    } else {
+      const m=72, fw=W-2*m;
+      txt(c,title,m,104,52,{w:'700'}); txt(c,sub,m,152,28,{col:C.ink2});
+      tiles(c,W-m-900,48,900,140,24);
+      const lw=fw*0.58, rx=m+lw+80, rw=fw-lw-80;
+      txt(c,'Utveckling '+(S.unit==='usd'?'i dollar':'i bb'),m,268,34,{w:'700'}); txt(c,'Kumulativt, hand för hand',m,306,25,{col:C.ink2});
+      lineChart(c,m,350,lw,560,22);
+      txt(c,bt,rx,268,34,{w:'700'}); txt(c,bs,rx,306,25,{col:C.ink2});
+      (periods?barsPeriods:barsMonths)(c,rx,350,rw,610,24);
+      txt(c,foot,m,1040,22,{col:C.ink2});
+    }
+  }
+  function wrapText(c,s,x,y,w,px){ c.font=font(px); const words=s.split(' '); let line='', yy=y;
+    words.forEach(wd=>{ const t=line?line+' '+wd:wd; if(c.measureText(t).width>w){ txt(c,line,x,yy,px,{col:C.ink2}); line=wd; yy+=px*1.35; } else line=t; }); if(line) txt(c,line,x,yy,px,{col:C.ink2}); }
+
+  function load(){ D=null; draw(); msg.textContent='';
+    fetch(API+'?fran='+encodeURIComponent(S.start||'')).then(r=>r.json()).then(j=>{ D=j; lineBoxes(); draw(); }).catch(e=>{ D={error:'Kunde inte hämta siffrorna.'}; draw(); }); }
+  document.getElementById('dl-start').addEventListener('change',e=>{ S.start=e.target.value; save(); load(); });
+  document.getElementById('dl-title').addEventListener('input',e=>{ S.title=e.target.value; save(); draw(); });
+  document.getElementById('dl-save').addEventListener('click',()=>{
+    if(!D||D.error) return;
+    cv.toBlob(b=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b);
+      a.download='plo_utveckling_'+(S.fmt==='mobile'?'mobil':'desktop')+(S.start?'_fran_'+S.start:'')+'.png';
+      document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500);
+      msg.textContent='Bilden är nedladdad.'; },'image/png');
+  });
+  load();
+})();
+</script>

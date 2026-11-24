@@ -1,0 +1,10 @@
+{% if fu %}
+<div class="tabbed">
+{% include "parts/folj.html" %}
+</div>
+{% else %}
+<div class="panel">
+  <div class="card-h"><b>Inga regler att följa upp än</b></div>
+  <p style="margin:0">Uppföljningen bygger på dina egna regler – det programmet har bekräftat i hela din databas för en variant. Välj en variant, töm "Senaste händerna" och perioden i urvalet ovan och tryck Uppdatera, så sparas reglerna. Finns det inget bekräftat att bygga regler på blir listan tom, och det är i så fall rätt svar.</p>
+</div>
+{% endif %}

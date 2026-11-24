@@ -1,0 +1,72 @@
+Poker Hand #PO123456789: PLO ($0.25/$0.5) - 2026/09/01 20:15:03
+Table 'PLO50 Gold 3' 6-max Seat #4 is the button
+Seat 1: a1b2c3 ($48.20 in chips)
+Seat 2: Hero ($50 in chips)
+Seat 3: f9e8d7 ($62.75 in chips)
+Seat 4: 77aa11 ($50 in chips)
+Seat 5: 33cc44 ($31.10 in chips)
+Seat 6: 9z9z9z ($104.30 in chips)
+33cc44: posts small blind $0.25
+9z9z9z: posts big blind $0.5
+*** HOLE CARDS ***
+Dealt to a1b2c3 
+Dealt to Hero [Ah Kd Js Th]
+Dealt to f9e8d7 
+Dealt to 77aa11 
+Dealt to 33cc44 
+Dealt to 9z9z9z 
+a1b2c3: folds
+Hero: raises $1.25 to $1.75
+f9e8d7: folds
+77aa11: calls $1.75
+33cc44: folds
+9z9z9z: raises $5.25 to $7
+Hero: calls $5.25
+77aa11: folds
+*** FLOP *** [Kh 7h 2c]
+9z9z9z: bets $9.75
+Hero: calls $9.75
+*** TURN *** [Kh 7h 2c] [9s]
+9z9z9z: checks
+Hero: bets $12
+9z9z9z: raises $21.25 to $33.25 and is all-in
+Hero: calls $21.25 and is all-in
+*** RIVER *** [Kh 7h 2c 9s] [3h]
+*** SHOWDOWN ***
+9z9z9z: shows [Kc Ks 8d 6c] (Three of a kind, Kings)
+Hero: shows [Ah Kd Js Th] (Flush, Ace high)
+Hero collected $100.95 from pot
+*** SUMMARY ***
+Total pot $102.25 | Rake $1.3 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Kh 7h 2c 9s 3h]
+Seat 1: a1b2c3 folded before Flop
+Seat 2: Hero showed [Ah Kd Js Th] and won ($100.95) with Flush, Ace high
+Seat 3: f9e8d7 folded before Flop
+Seat 4: 77aa11 (button) folded before Flop
+Seat 5: 33cc44 (small blind) folded before Flop
+Seat 6: 9z9z9z (big blind) showed [Kc Ks 8d 6c] and lost with Three of a kind, Kings
+
+
+
+Poker Hand #PO123456790: PLO ($0.25/$0.5) - 2026/09/01 20:16:10
+Table 'PLO50 Gold 3' 6-max Seat #5 is the button
+Seat 1: a1b2c3 ($48.20 in chips)
+Seat 2: Hero ($50 in chips)
+Seat 3: f9e8d7 ($62.75 in chips)
+Seat 5: 33cc44 ($31.10 in chips)
+Seat 6: 9z9z9z ($54 in chips)
+9z9z9z: posts small blind $0.25
+a1b2c3: posts big blind $0.5
+*** HOLE CARDS ***
+Dealt to Hero [9c 8c 7d 2s]
+Hero: calls $0.5
+f9e8d7: raises $2 to $2.5
+33cc44: folds
+9z9z9z: folds
+a1b2c3: folds
+Hero: folds
+Uncalled bet ($2) returned to f9e8d7
+*** SHOWDOWN ***
+f9e8d7 collected $1.75 from pot
+*** SUMMARY ***
+Total pot $1.75 | Rake $0 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0

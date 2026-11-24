@@ -1,0 +1,115 @@
+  <p class="sec-i">Bara det som är säkerställt: starthänder som klarar testet mot fold med korrigering för många tester, och läckor som bevismotorn hittat i ena halvan av dina händer och bekräftat i den andra.</p>
+  {% if confirmed_rules %}
+  <h2>Bekräftat i tabellerna: spela inte de här händerna</h2>
+  <div class="panel">
+    <p style="margin-top:0">Starthänder som säkerställt har gått sämre än att folda direkt – i Öppningsguiden, rundown-tabellen, nöt-egenskaper per position eller range-gränserna. De sparas som dina regler (under Följ upp) när hela databasen för en variant analyseras.</p>
+    <ul class="mini">{% for r in confirmed_rules %}<li><span><span class="t">{{ r.title }}</span><br><span class="note" style="margin:0">{{ r.why }}</span></span><span class="badge Stor">{{ r.cost|signed(2) }} bb</span></li>{% endfor %}</ul>
+  </div>
+  {% endif %}
+  {% if improve %}
+  <h2>Trolig förbättring – inte bevisat</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Det här är <b>inte</b> bevisat, men är det som troligast höjer din bb/100. Varje rad är utvald i ena halvan av dina spelpass och uppmätt i den andra, så att samma händer inte används två gånger. Bara starthandsbeslut prövas, eftersom jämförelsen med fold där är exakt.</p>
+    <table class="tbl">
+      <tr><th>Ändring</th><th class="n">Händer</th><th class="n">Mot fold per hand</th><th class="n">95 %-intervall</th><th class="n">Säkerhet</th><th class="n">Väntad vinst</th></tr>
+      {% for o in improve %}
+      <tr><td>{{ o.title }}</td><td class="n">{{ o.n }}</td><td class="n neg">{{ o.mean|signed(2) }} bb</td>
+        <td class="n">{% if o.lo is not none %}{{ o.lo|signed(1) }} till {{ o.hi|signed(1) }}{% else %}–{% endif %}</td>
+        <td class="n"><b>{{ '%.0f'|format(100 * o.p) }} %</b></td><td class="n pos">{{ o.gain100|signed(1) }} bb/100</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note"><b>Så läser du tabellen:</b> "Mot fold per hand" och "Väntad vinst" är uppmätta i den halva av spelpassen som inte användes för att välja ut raden, så de blir inte uppblåsta av urvalet. Listan är gjord så att i snitt högst var femte rad är fel (falskupptäcktsgrad 20 %), och finns det inga verkliga förluster visas oftast ingenting. "Säkerhet" = 1 − q-värdet; lita mest på de högsta. Raderna kan överlappa, så summera dem inte. Med fler händer flyttas en rad till "Bekräftat" eller försvinner. Raderna sparas som regler med nivån "trolig" under Följ upp när hela databasen för en variant analyseras.</div>
+  </div>
+  {% endif %}
+  {% if holdout and holdout_rules %}
+  <h2>Test på nya händer</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Reglerna letades i dina äldre händer (till {{ holdout.cut }}) och mättes på de {{ '{:,}'.format(holdout.n_new).replace(',', ' ') }} nyaste. <b>✓ = regeln håller även där.</b></p>
+    <table class="tbl"><tr><th>Regel</th><th>Hittad i äldre händer</th><th class="n">Brott (nya)</th><th class="n">Kostnad per brott (nya)</th><th>Resultat</th></tr>
+    {% for r in holdout_rules %}{% set ho = r.holdout %}<tr><td>{{ r.title }}</td><td>{{ '✓' if ho.found_old else '–' }}</td><td class="n">{{ ho.n_new }}</td>
+      <td class="n">{% if ho.mean_new is not none %}{{ ho.mean_new|signed(2) }}{% if ho.se_new %} <span class="note" style="margin:0">±{{ '%.1f'|format(1.96 * ho.se_new) }}</span>{% endif %}{% else %}–{% endif %}</td>
+      <td><span class="tag {{ 'good' if ho.verdict == 'håller' else ('bad' if ho.verdict == 'håller inte' else '') }}">{{ ho.verdict }}</span></td></tr>{% endfor %}
+    </table>
+    <div class="note">Regler som inte håller tas bort. Kostnaden i fokuskön är den försiktigaste av den gamla och den nya mätningen.</div>
+  </div>
+  {% endif %}
+  {% if dropped_rules %}
+  <h2>Regler som tagits bort</h2>
+  <div class="panel">
+    <p style="margin-top:0">Brus eller höll inte på nya händer. <b>Du behöver inte följa dem.</b></p>
+    <ul class="mini">{% for d in dropped_rules %}<li><span class="t">{{ d.title }}{% if d.reason %} <span class="tag">{{ d.reason }}</span>{% endif %}</span><span class="note" style="margin:0">{{ d.n }} brott · {{ d.mean|signed(2) }} ± {{ '%.2f'|format(1.96 * d.se) }} bb mot fold</span></li>{% endfor %}</ul>
+  </div>
+  {% endif %}
+  {% if rule_subs %}
+  <h2>Undantag – bra händer räknas inte som läckor</h2>
+  <div class="panel">
+    <p style="margin-top:0">En regel som "folda händer med 0 nöt-egenskaper" gäller gruppen i snitt. Varje sådan regel delas därför upp efter handens struktur, och varje del prövas för sig mot fold. Med få händer dras skattningen mot regelns snitt (annars blir slumpen för stor); med många händer talar delen för sig själv. <b>Grön = inte sämre än fold → undantag</b>: de händerna räknas inte som regelbrott i fokus, uppföljning eller tränaren.</p>
+    <p class="note" style="margin-top:0">Obs: äkta rundowns från 5 och uppåt (t.ex. 9-8-7-6) och händer med suited ess eller JJ+ har redan en nöt-egenskap och ingår aldrig i "0 nöt-egenskaper".</p>
+    {% for r in rule_subs %}{% set mx = [r.sub|map(attribute='est')|map('abs')|max, 0.5]|max %}
+    <div style="margin:14px 0 4px"><b>{{ r.title }}</b> <span class="tag {{ '' if r.level == 'trolig' else 'bad' }}">{{ r.level or 'bekräftad' }}</span></div>
+    <div class="sg">
+      <div class="h">Del av gruppen</div><div class="h n">Spelade</div><div class="h">Mot fold per hand (skattat)</div><div class="h n">Rått snitt</div><div class="h st">Status</div>
+      {% for x in r.sub %}{% set w = 50 * ([x.est|abs, mx]|min) / mx %}
+      <div>{{ x.name }}</div><div class="n">{{ x.n }}</div>
+      <div class="bar" title="{{ x.estimate_kind|default('skattat') }} {{ '%+.2f'|format(x.est) }} bb per hand"><b></b><i style="{{ 'left:50%' if x.est >= 0 else 'right:50%' }};width:{{ w }}%;background:var({{ '--good' if x.est >= 0 else '--bad' }})"></i></div>
+      <div class="n {{ 'pos' if (x.mean or 0) >= 0 else 'neg' }}">{{ x.mean|signed(2) if x.mean is not none else '–' }}</div>
+      <div class="st">{% if x.exempt %}<span class="tag good">undantag</span>{% elif x.p_pos is none %}<span class="tag">följer regeln</span>{% else %}<span class="tag bad">folda</span>{% endif %}{% if x.p_pos is not none %} <span class="note">{{ '%.0f'|format(100 * x.p_pos) }} % chans +EV</span>{% endif %}</div>
+      {% endfor %}
+    </div>
+    {% if r.sub_tau == 0 %}<div class="note">Delarna skiljer sig inte mer än slumpen förklarar, så alla följer regelns snitt – inga undantag.</div>{% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% if threebet and (threebet.no_sa or threebet.hp_sa or threebet.flats) %}{% set A = threebet.no_sa %}{% set Bq = threebet.hp_sa %}
+  <h2>3-bets mot en öppning</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">👉 <b>Historiska jämförelser av syn och 3-bet – följ evidensnivån i varje rad.</b> Siffror = bb per hand mot fold.</p>
+    <table class="tbl"><tr><th>Händer</th><th>Du gjorde</th><th class="n">Antal</th><th class="n">Mot fold per hand</th><th>Slutsats</th></tr>
+    {% if A %}<tr><td>Utan suited ess</td><td>3-bet</td><td class="n">{{ A.n }}</td><td class="n {{ 'pos' if A.mean >= 0 else 'neg' }}">{{ A.mean|signed(2) }} <span class="note" style="margin:0">±{{ '%.1f'|format(1.96 * A.se) }}</span></td>
+      <td>{% if A.ok %}<span class="tag bad">3-betta inte</span> minus även med felmarginalen och i båda halvorna{% else %}<span class="tag">inte säkert</span>{% endif %}</td></tr>{% endif %}
+    {% if Bq %}<tr><td rowspan="2">Högt par + suited ess</td><td>Syn</td><td class="n">{{ Bq.n_call }}</td><td class="n">{{ Bq.call|signed(2) }}</td>
+      <td rowspan="2">{% if Bq.ok %}<span class="tag bad">3-betta, syna inte</span> 3-bet är bättre även med felmarginalen (minst {{ '%.1f'|format(Bq.diff_lo) }} bb per hand){% else %}<span class="tag">inte säkert</span> skillnad {{ Bq.diff|signed(2) }} bb{% endif %}</td></tr>
+      <tr><td>3-bet</td><td class="n">{{ Bq.n_raise }}</td><td class="n">{{ Bq.raise|signed(2) }}</td></tr>{% endif %}
+    </table>
+    {% if threebet.flats %}
+    <div class="lbl">Syna eller 3-betta – per situation</div>
+    <table class="tbl"><tr><th>Situation</th><th class="n">Du synar</th><th class="n">Syn mot fold</th><th class="n">3-bet mot fold</th><th></th></tr>
+    {% for f in threebet.flats %}<tr><td>{{ f.pos }} – {{ {'mot_hojning': 'mot öppning', 'bb_mot_hojning': 'BB mot öppning', 'sb_mot_hojning': 'SB mot öppning'}.get(f.spot, f.spot) }}</td>
+      <td class="n">{{ '%.0f'|format(f.flat_pct) }} % <span class="note" style="margin:0">({{ f.n_call }})</span></td>
+      <td class="n {{ 'pos' if f.call >= 0 else 'neg' }}">{{ f.call|signed(2) }} <span class="note" style="margin:0">±{{ '%.1f'|format(1.96 * f.call_se) }}</span></td>
+      <td class="n">{% if f.raise is not none %}<span class="{{ 'pos' if f.raise >= 0 else 'neg' }}">{{ f.raise|signed(2) }}</span> <span class="note" style="margin:0">±{{ '%.1f'|format(1.96 * f.raise_se) }}</span>{% else %}–{% endif %}</td>
+      <td>{% if f.raise is not none and f.raise - 1.96 * f.raise_se > 0 and f.call + 1.96 * f.call_se < f.raise - 1.96 * f.raise_se %}<span class="tag">3-betta eller folda oftare</span>{% endif %}</td></tr>{% endfor %}
+    </table>
+    <div class="note">Syn ≈ 0 efter rake tjänar du inget på. Riktning, inte regel (du 3-bettar troligen bättre händer).</div>
+    {% endif %}
+    <div class="note">Jämförelsen syn mot 3-bet kan påverkas av vilka händer du valde att 3-betta (t.ex. bättre kopplade), därför räknas den regeln som trolig och kostnaden per syn som den nedre gränsen för skillnaden. Följ båda under Följ upp och Utveckling.</div>
+  </div>
+  {% endif %}
+  {% if top %}
+  <h2>{{ 'Dina tre största läckor' if strict else 'Din åtgärdsplan' }}</h2>
+  <div class="panel plan">
+    <p style="margin-top:0">{% if strict %}Rangordnade efter vad de kostar dig, räknat på den halva av händerna som användes för att bekräfta dem. Varje läcka är hittad i ena halvan av dina händer och bekräftad i den andra.{% if top|length < 3 %} Bara {{ top|length }} {{ 'läcka' if top|length == 1 else 'läckor' }} klarade kraven – programmet fyller inte på med osäkra.{% endif %} Kostnaderna kan överlappa (samma hand kan ingå i ett preflop- och ett flop-beslut), så summera dem inte.{% else %}Fokusera på en sak i taget. Börja överst:{% endif %}</p>
+    <ol>
+      {% for l in top %}<li style="margin:10px 0"><b>{{ l.title }}</b>{% if strict %} <span class="badge Stor">Bekräftad</span> <span class="badge">ca {{ '%.2f'|format(l.severity) }} bb/100{% if l.severity_low is not none %}, minst {{ '%.2f'|format(l.severity_low) }}{% endif %}</span>{% endif %}<br>{{ l.fix[0] }}</li>{% endfor %}
+    </ol>
+  </div>
+  {% else %}
+  <h2>{{ 'Inga säkerställda läckor från bevismotorn' if confirmed_rules else 'Inga säkerställda läckor' }}</h2>
+  <div class="panel">Inget av det du gör är bevisat sämre än att folda med den säkerhet som krävs. Det betyder inte att du spelar perfekt – bara att inget kan bevisas med dina händer. Med fler händer kan svagare läckor bli synliga.</div>
+  {% endif %}
+
+  {% if strict and power %}
+  <h2>Hur stora läckor ditt urval kan se</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Pokerresultat svänger mycket. Med ditt antal händer kan programmet bara bekräfta läckor som är ungefär så här stora per beslut. Mindre läckor kan finnas utan att synas här – "ingen bekräftad läcka" betyder alltså inte "ingen läcka".</p>
+    <table class="tbl"><tr><th>Beslut</th><th class="n">Tillfällen</th><th class="n">Minsta synliga förlust</th></tr>
+    {% for r in power %}<tr><td>{{ r.label }}</td><td class="n">{{ r.n }}</td><td class="n">ca {{ '%.1f'|format(r.mde) }} bb per gång</td></tr>{% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  {% if leaks %}
+  <h2>{{ 'Säkerställda läckor, sorterade efter vad de kostar' if strict else 'Alla läckor, sorterade efter allvar' }}</h2>
+  {% for l in leaks %}{{ leakcard(l, loop.index) }}{% endfor %}
+  {% endif %}
+

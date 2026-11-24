@@ -1,0 +1,271 @@
+Poker Hand #OM115693387: PLO-6 ($1/$2) - 2026/11/09 01:49:46
+Table 'PLO-6Silver6' 5-max Seat #2 is the button
+Seat 1: Opp14 ($422.21 in chips)
+Seat 2: Hero ($966.79 in chips)
+Seat 3: Opp11 ($328.63 in chips)
+Seat 4: Opp20 ($194 in chips)
+Seat 5: Opp1 ($69 in chips)
+Opp11: posts small blind $1
+Opp20: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Opp14 
+Dealt to Hero [5d 2d Kc 4c 8s 9d]
+Dealt to Opp11 
+Dealt to Opp20 
+Dealt to Opp1 
+Opp1: folds
+Opp14: folds
+Hero: raises $5 to $7
+Opp11: folds
+Opp20: raises $15 to $22
+Hero: calls $15
+*** FLOP *** [Ah 2s 7s]
+Opp20: checks
+Hero: bets $22.5
+Opp20: calls $22.5
+*** TURN *** [Ah 2s 7s] [6d]
+Opp20: bets $67.5
+Hero: calls $67.5
+*** RIVER *** [Ah 2s 7s 6d] [7c]
+Opp20: checks
+Hero: bets $135
+Opp20: calls $82 and is all-in
+Uncalled bet ($53) returned to Hero
+Hero: shows [5d 2d Kc 4c 8s 9d] (two pair, Sevens and Twos)
+Opp20: shows [Jc Td Qh 8h Ac Jh] (two pair, Aces and Sevens)
+*** SHOWDOWN ***
+Opp20 collected $383 from pot
+*** SUMMARY ***
+Total pot $389 | Rake $4 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ah 2s 7s 6d 7c]
+Seat 1: Opp14 folded before Flop (didn't bet)
+Seat 2: Hero (button) showed [5d 2d Kc 4c 8s 9d] and lost with two pair, Sevens and Twos
+Seat 3: Opp11 (small blind) folded before Flop
+Seat 4: Opp20 (big blind) showed [Jc Td Qh 8h Ac Jh] and won ($383) with two pair, Aces and Sevens
+Seat 5: Opp1 folded before Flop (didn't bet)
+
+
+Poker Hand #OM115720351: PLO-6 ($1/$2) - 2026/11/09 03:47:46
+Table 'PLO-6Silver8' 5-max Seat #4 is the button
+Seat 1: Hero ($213.35 in chips)
+Seat 2: Opp21 ($200 in chips)
+Seat 3: Opp18 ($226.29 in chips)
+Seat 4: Opp7 ($249.44 in chips)
+Seat 5: Opp3 ($202.35 in chips)
+Opp3: posts small blind $1
+Hero: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Hero [2c Qs Kc 9h Ks Qc]
+Dealt to Opp21 
+Dealt to Opp18 
+Dealt to Opp7 
+Dealt to Opp3 
+Opp21: folds
+Opp18: raises $5 to $7
+Opp7: calls $7
+Opp3: folds
+Hero: calls $5
+*** FLOP *** [Ac 8c 9s]
+Hero: bets $13.2
+Opp18: calls $13.2
+Opp7: calls $13.2
+*** TURN *** [Ac 8c 9s] [6s]
+Hero: checks
+Opp18: bets $61.6
+Opp7: raises $167.64 to $229.24 and is all-in
+Hero: calls $193.15 and is all-in
+Opp18: calls $144.49 and is all-in
+Uncalled bet ($23.15) returned to Opp7
+Opp7: shows [6c Th Qh Jc 2s Js] (a pair of Jacks)
+Hero: shows [2c Qs Kc 9h Ks Qc] (a pair of Kings)
+Opp18: shows [As 5c Ts Tc 7d 2h] (a straight, Ten to Six)
+*** RIVER *** [Ac 8c 9s 6s] [2d]
+*** SHOWDOWN ***
+Opp18 collected $635.27 from pot
+Opp18 collected $25.67 from pot
+*** SUMMARY ***
+Total pot $666.93 | Rake $3.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ac 8c 9s 6s 2d]
+Seat 1: Hero (big blind) showed [2c Qs Kc 9h Ks Qc] and lost with two pair, Nines and Twos
+Seat 2: Opp21 folded before Flop (didn't bet)
+Seat 3: Opp18 showed [As 5c Ts Tc 7d 2h] and won ($660.94) with a straight, Ten to Six
+Seat 4: Opp7 (button) showed [6c Th Qh Jc 2s Js] and lost with two pair, Sixes and Twos
+Seat 5: Opp3 (small blind) folded before Flop
+
+
+Poker Hand #OM115711244: PLO-6 ($1/$2) - 2026/11/09 04:56:29
+Table 'PLO-6Silver3' 5-max Seat #3 is the button
+Seat 1: Hero ($558.68 in chips)
+Seat 2: Opp10 ($200 in chips)
+Seat 3: Opp9 ($239.6 in chips)
+Seat 5: Opp6 ($318.24 in chips)
+Opp6: posts small blind $1
+Hero: posts big blind $2
+Opp6: straddle $4
+*** HOLE CARDS ***
+Dealt to Hero [Qd Kh 3c 6h 7h Ah]
+Dealt to Opp10 
+Dealt to Opp9 
+Dealt to Opp6 
+Hero: calls $2
+Opp10: folds
+Opp9: raises $12 to $16
+Opp6: calls $12
+Hero: calls $12
+*** FLOP *** [4s 5d Jc]
+Opp6: checks
+Hero: checks
+Opp9: checks
+*** TURN *** [4s 5d Jc] [Qs]
+Opp6: bets $48
+Hero: calls $48
+Opp9: raises $175.6 to $223.6 and is all-in
+Opp6: raises $78.64 to $302.24 and is all-in
+Hero: calls $254.24
+Opp6: shows [9s 5h 6d Ts 5s As] (three of a kind, Fives)
+Hero: shows [Qd Kh 3c 6h 7h Ah] (a pair of Queens)
+Opp9: shows [Qc 3d Qh 8h Ac Td] (three of a kind, Queens)
+*** RIVER *** [4s 5d Jc Qs] [Tc]
+*** SHOWDOWN ***
+Hero collected $714.68 from pot
+Hero collected $156.41 from pot
+*** SUMMARY ***
+Total pot $876.08 | Rake $2.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [4s 5d Jc Qs Tc]
+Seat 1: Hero (big blind) showed [Qd Kh 3c 6h 7h Ah] and won ($871.09) with a straight, Ace to Ten
+Seat 2: Opp10 folded before Flop (didn't bet)
+Seat 3: Opp9 (button) showed [Qc 3d Qh 8h Ac Td] and lost with three of a kind, Queens
+Seat 5: Opp6 (small blind) showed [9s 5h 6d Ts 5s As] and lost with three of a kind, Fives
+
+
+Poker Hand #OM115885731: PLO-6 ($0.5/$1) - 2026/11/10 11:35:03
+Table 'PLO-6Bronze5' 5-max Seat #4 is the button
+Seat 1: Opp13 ($143.49 in chips)
+Seat 2: Opp19 ($204.27 in chips)
+Seat 3: Opp12 ($292.6 in chips)
+Seat 4: Hero ($145.21 in chips)
+Seat 5: Opp4 ($48.13 in chips)
+Opp4: posts small blind $0.5
+Opp13: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Opp13 
+Dealt to Opp19 
+Dealt to Opp12 
+Dealt to Hero [As Kd 7h 8s Ah 5h]
+Dealt to Opp4 
+Opp19: calls $1
+Opp12: raises $3.5 to $4.5
+Hero: raises $11.5 to $16
+Opp4: folds
+Opp13: folds
+Opp19: folds
+Opp12: calls $11.5
+*** FLOP *** [Qd Ac 4h]
+Opp12: checks
+Hero: bets $17.25
+Opp12: calls $17.25
+*** TURN *** [Qd Ac 4h] [8d]
+Opp12: checks
+Hero: bets $69
+Opp12: raises $190.35 to $259.35 and is all-in
+Hero: calls $42.96 and is all-in
+Uncalled bet ($147.39) returned to Opp12
+Opp12: shows [6s 9c Qh Qs 6c 8h] (three of a kind, Queens)
+Hero: shows [As Kd 7h 8s Ah 5h] (three of a kind, Aces)
+*** RIVER *** [Qd Ac 4h 8d] [9d]
+*** SHOWDOWN ***
+Hero collected $289.92 from pot
+*** SUMMARY ***
+Total pot $292.92 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qd Ac 4h 8d 9d]
+Seat 1: Opp13 (big blind) folded before Flop
+Seat 2: Opp19 folded before Flop
+Seat 3: Opp12 showed [6s 9c Qh Qs 6c 8h] and lost with three of a kind, Queens
+Seat 4: Hero (button) showed [As Kd 7h 8s Ah 5h] and won ($289.92) with three of a kind, Aces
+Seat 5: Opp4 (small blind) folded before Flop
+
+
+Poker Hand #OM115916355: PLO-6 ($1/$2) - 2026/11/10 13:07:57
+Table 'PLO-6Silver11' 5-max Seat #3 is the button
+Seat 1: Hero ($323.38 in chips)
+Seat 2: Opp15 ($615.46 in chips)
+Seat 3: Opp8 ($372 in chips)
+Seat 4: Opp5 ($247.08 in chips)
+Opp5: posts small blind $1
+Hero: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Hero [Ac Kd Ah 4d Th Td]
+Dealt to Opp15 
+Dealt to Opp8 
+Dealt to Opp5 
+Opp15: raises $5 to $7
+Opp8: folds
+Opp5: folds
+Hero: raises $15 to $22
+Opp15: raises $45 to $67
+Hero: calls $45
+*** FLOP *** [4c 7s 2d]
+Hero: bets $135
+Opp15: raises $405 to $540
+Hero: calls $121.38 and is all-in
+Uncalled bet ($283.62) returned to Opp15
+Opp15: shows [As Ts Ad Jc 6d Tc] (a pair of Aces)
+Hero: shows [Ac Kd Ah 4d Th Td] (a pair of Aces)
+*** TURN *** [4c 7s 2d] [2h]
+*** RIVER *** [4c 7s 2d 2h] [Jh]
+*** SHOWDOWN ***
+Hero collected $321.38 from pot
+Opp15 collected $321.38 from pot
+*** SUMMARY ***
+Total pot $647.76 | Rake $3 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [4c 7s 2d 2h Jh]
+Seat 1: Hero (big blind) showed [Ac Kd Ah 4d Th Td] and won ($321.38) with two pair, Aces and Twos
+Seat 2: Opp15 showed [As Ts Ad Jc 6d Tc] and won ($321.38) with two pair, Aces and Twos
+Seat 3: Opp8 (button) folded before Flop (didn't bet)
+Seat 4: Opp5 (small blind) folded before Flop
+
+
+Poker Hand #OM115961216: PLO-6 ($1/$2) - 2026/11/10 15:48:40
+Table 'PLO-6Silver1' 5-max Seat #5 is the button
+Seat 1: Opp16 ($200 in chips)
+Seat 2: Hero ($200 in chips)
+Seat 3: Opp2 ($200 in chips)
+Seat 5: Opp17 ($1,505.06 in chips)
+Opp16: posts small blind $1
+Hero: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Opp16 
+Dealt to Hero [Jd As 4h 9s Td 8s]
+Dealt to Opp2 
+Dealt to Opp17 
+Opp2: raises $5 to $7
+Opp17: calls $7
+Opp16: folds
+Hero: raises $22 to $29
+Opp2: calls $22
+Opp17: calls $22
+*** FIRST FLOP *** [5s 6h Ad]
+Hero: bets $88
+Opp2: folds
+Opp17: raises $264 to $352
+Hero: calls $83 and is all-in
+Uncalled bet ($181) returned to Opp17
+Opp17: shows [9c 3c Qh 7h 2c 8d] (Ace high)
+Hero: shows [Jd As 4h 9s Td 8s] (a pair of Aces)
+*** FIRST TURN *** [5s 6h Ad] [5c]
+*** FIRST RIVER *** [5s 6h Ad 5c] [2h]
+*** SECOND TURN *** [5s 6h Ad] [4s]
+*** SECOND RIVER *** [5s 6h Ad 4s] [3s]
+*** FIRST SHOWDOWN ***
+Hero collected $212.5 from pot
+*** SECOND SHOWDOWN ***
+Hero collected $212.5 from pot
+*** SUMMARY ***
+Total pot $430 | Rake $3 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Hand was run two times
+FIRST Board [5s 6h Ad 5c 2h]
+SECOND Board [4s 3s]
+Seat 1: Opp16 (small blind) folded before Flop
+Seat 2: Hero (big blind) showed [Jd As 4h 9s Td 8s] and won ($212.5) with two pair, Aces and Fives, and won ($212.5) with a pair of Fours
+Seat 3: Opp2 folded on the Flop
+Seat 5: Opp17 (button) showed [9c 3c Qh 7h 2c 8d] and lost with two pair, Fives and Twos, and lost with a pair of Threes

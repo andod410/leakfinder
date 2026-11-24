@@ -1,0 +1,16 @@
+# Solverdata – får ALDRIG läggas i repot (PLO Masterminds villkor, privat bruk)
+privat/
+pending_solver/
+solver*.json
+# Databaser, handhistorik, exporter och cache
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.pkl
+*.zip
+.plo_leak_cache/
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/

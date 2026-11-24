@@ -1,0 +1,3 @@
+{% if filters and not filters.model_sel and (filters.latest_on or filters.fran or filters.till) %}<div class="note" style="margin:0 0 10px">ℹ️ Läckor, gränser och river-modellen bygger på alla dina händer i varianten (och vald nivå/bordstyp) – datum och "senaste händerna" ändrar dem inte, och de räknas om först när du trycker 🔬 Analysera urvalet. Vill du analysera bara urvalet: tryck <b>🔬 Analysera urvalet</b>.</div>{% endif %}
+{% if filters and filters.model_sel and (filters.latest_on or filters.fran or filters.till or filters.stake or filters.table) %}<div class="note" style="margin:0 0 10px">ℹ️ Läckor och modeller är räknade på bara det här urvalet ({{ '{:,}'.format(st.hands).replace(',', ' ') }} händer).</div>{% endif %}
+{% include "parts/lackor.html" %}

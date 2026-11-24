@@ -1,0 +1,592 @@
+{
+  "version": "2.70",
+  "database_hands": 273746,
+  "facts_hands": 273746,
+  "plo6": 209539,
+  "net_money": -29827.749999998465,
+  "ev_money": -41015.03104628251,
+  "ev_bb100": -11.09479872820032,
+  "ev_change_usd": -92.37962736042209,
+  "ev_changed_hands": 1209,
+  "newly_adjusted": 91,
+  "no_longer_adjusted": 150,
+  "actual_money_max_difference": 0.0,
+  "seconds": 6.471956014633179,
+  "pages": [
+    {
+      "page": "oversikt",
+      "http": 200,
+      "bytes": 189669
+    },
+    {
+      "page": "resultat",
+      "http": 200,
+      "bytes": 218136
+    },
+    {
+      "page": "hander",
+      "http": 200,
+      "bytes": 65188
+    },
+    {
+      "page": "preflop",
+      "http": 200,
+      "bytes": 335286
+    },
+    {
+      "page": "postflop",
+      "http": 200,
+      "bytes": 90616
+    },
+    {
+      "page": "lackor",
+      "http": 200,
+      "bytes": 80553
+    },
+    {
+      "page": "folj",
+      "http": 200,
+      "bytes": 81040
+    },
+    {
+      "page": "sessioner",
+      "http": 200,
+      "bytes": 417970
+    },
+    {
+      "page": "utveckling",
+      "http": 200,
+      "bytes": 126844
+    },
+    {
+      "page": "tider",
+      "http": 200,
+      "bytes": 61594
+    },
+    {
+      "page": "rakeback",
+      "http": 200,
+      "bytes": 66609
+    },
+    {
+      "page": "dela",
+      "http": 200,
+      "bytes": 70118
+    },
+    {
+      "page": "aggression",
+      "http": 200,
+      "bytes": 69720
+    },
+    {
+      "page": "detaljer",
+      "http": 200,
+      "bytes": 82409
+    },
+    {
+      "page": "/trana",
+      "http": 200,
+      "bytes": 65898
+    },
+    {
+      "page": "/exportera",
+      "http": 200,
+      "bytes": 54740
+    },
+    {
+      "page": "/import",
+      "http": 200,
+      "bytes": 55576
+    },
+    {
+      "page": "/api/hander/b7f2038435",
+      "http": 200,
+      "bytes": 13845
+    },
+    {
+      "page": "/api/dela/b7f2038435",
+      "http": 200,
+      "bytes": 62465
+    }
+  ],
+  "rules": [
+    {
+      "id": "rundown",
+      "type": "rundown",
+      "groups": [
+        "A\u20133",
+        "4"
+      ],
+      "cost": -2.1984741959718477,
+      "title": "Spela inte rena rundowns med l\u00e4gsta kort A\u20133, 4",
+      "why": "Oberoende holdout: inte oberoende. Historiskt underlag: Har gett -2.20 bb per spelad hand j\u00e4mf\u00f6rt med fold. G\u00e4ller ditt f\u00f6rsta beslut preflop, n\u00e4r handen saknar h\u00f6gt par och suited ess.",
+      "level": "trolig",
+      "sub": [
+        {
+          "name": "trippelsuited",
+          "n": 271,
+          "mean": -2.052934184942191,
+          "est": -2.198474195971848,
+          "p_pos": null,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited + sammanh\u00e4ngande",
+          "n": 1398,
+          "mean": -2.2006107727780186,
+          "est": -2.198474195971848,
+          "p_pos": null,
+          "exempt": false
+        },
+        {
+          "name": "sammanh\u00e4ngande (enkelsuited/rainbow)",
+          "n": 511,
+          "mean": -2.269813547466976,
+          "est": -2.198474195971848,
+          "p_pos": null,
+          "exempt": false
+        }
+      ],
+      "sub_tau": 0.0,
+      "careful": 0.0,
+      "holdout": {
+        "found_old": false,
+        "n_new": 509,
+        "mean_new": -2.4150436691143953,
+        "se_new": 0.7880003208764065,
+        "verdict": "inte oberoende",
+        "clusters": 56,
+        "definition_frozen": false,
+        "family_tests": 8
+      }
+    },
+    {
+      "id": "nut|utanf\u00f6r blindarna|0 n\u00f6t-egenskaper",
+      "type": "nut",
+      "positions": [
+        "BTN",
+        "CO",
+        "HJ"
+      ],
+      "nut": "0 n\u00f6t-egenskaper",
+      "pos": "utanf\u00f6r blindarna",
+      "cost": -1.2561008801015545,
+      "level": "trolig",
+      "title": "Utanf\u00f6r blindarna: folda h\u00e4nder med 0 n\u00f6t-egenskaper \u2013 utom 2 undantag",
+      "why": "Oberoende holdout: os\u00e4kert. Historiskt underlag: Har gett -0.71 bb per hand j\u00e4mf\u00f6rt med fold i den halva av spelpassen som inte anv\u00e4ndes f\u00f6r att v\u00e4lja ut den (7158 h\u00e4nder totalt). S\u00e4kerhet ca 90 % \u2013 inte bevisat. Undantag (din data visar inte att de f\u00f6rlorar mot fold): trippelsuited, dubbelsuited + suited kung. Kostnaden per brott \u00e4r omr\u00e4knad utan dem: -1.26 bb.",
+      "sub": [
+        {
+          "name": "trippelsuited",
+          "n": 992,
+          "mean": 0.8097352231750945,
+          "est": 0.3826290119366634,
+          "p_pos": 0.7338606805670578,
+          "exempt": true
+        },
+        {
+          "name": "dubbelsuited + sammanh\u00e4ngande",
+          "n": 928,
+          "mean": -2.579500334444856,
+          "est": -2.1762784649768947,
+          "p_pos": 2.6965332881379034e-05,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited + suited kung",
+          "n": 1327,
+          "mean": 0.3950911529545397,
+          "est": 0.20856449082859532,
+          "p_pos": 0.6699028149974006,
+          "exempt": true
+        },
+        {
+          "name": "dubbelsuited, \u00f6vriga",
+          "n": 2273,
+          "mean": -1.6715094539456312,
+          "est": -1.5834928486076085,
+          "p_pos": 3.3682768466047897e-06,
+          "exempt": false
+        },
+        {
+          "name": "sammanh\u00e4ngande (enkelsuited/rainbow)",
+          "n": 340,
+          "mean": -0.6200054224308684,
+          "est": -0.6511571161138608,
+          "p_pos": 0.1606293850658992,
+          "exempt": false
+        },
+        {
+          "name": "\u00f6vriga",
+          "n": 1298,
+          "mean": -0.04300974401345907,
+          "est": -0.18336909009942787,
+          "p_pos": 0.3643367181652629,
+          "exempt": false
+        }
+      ],
+      "sub_tau": 1.1583394823026383,
+      "except": [
+        "trippelsuited",
+        "dubbelsuited + suited kung"
+      ],
+      "cost_all": -0.7126541257090371,
+      "careful": 0.0,
+      "holdout": {
+        "found_old": true,
+        "n_new": 1039,
+        "mean_new": -0.512603272527046,
+        "se_new": 0.48458925836137295,
+        "verdict": "os\u00e4kert",
+        "clusters": 70,
+        "definition_frozen": true,
+        "family_tests": 8
+      }
+    },
+    {
+      "id": "cut|rfi|HJ",
+      "type": "cutoff",
+      "spot": "rfi",
+      "pos": "HJ",
+      "thr": 0.920468922271785,
+      "weights": [
+        -0.284,
+        0.725,
+        0.747,
+        2.436,
+        0.012,
+        0.711,
+        0.649,
+        -1.018,
+        -1.203,
+        0.361,
+        -0.446,
+        0.27
+      ],
+      "cut_pct": 57.58626764620707,
+      "num_cards": 6,
+      "cost": -0.7221029103175671,
+      "level": "trolig",
+      "title": "HJ: spela bara topp 58 % (\u00f6ppna n\u00e4r det \u00e4r foldat till dig)",
+      "why": "Oberoende holdout: inte oberoende. Historiskt underlag: Har gett -0.72 bb per hand j\u00e4mf\u00f6rt med fold i den halva av spelpassen som inte anv\u00e4ndes f\u00f6r att v\u00e4lja ut den (4285 h\u00e4nder totalt). S\u00e4kerhet ca 85 % \u2013 inte bevisat.",
+      "careful": 0.0,
+      "holdout": {
+        "found_old": false,
+        "n_new": 308,
+        "mean_new": -0.007962025730090048,
+        "se_new": 1.095487584545022,
+        "verdict": "inte oberoende",
+        "clusters": 61,
+        "definition_frozen": false,
+        "family_tests": 8
+      }
+    },
+    {
+      "id": "combo|rfi|HJ|suited ess",
+      "type": "combo",
+      "spot": "rfi",
+      "pos": "HJ",
+      "combo": "suited ess",
+      "cost": -1.1492368531969794,
+      "level": "trolig",
+      "title": "HJ: \u00f6ppna inte h\u00e4nder med suited ess",
+      "why": "Oberoende holdout: inte oberoende. Historiskt underlag: Har gett -1.15 bb per hand j\u00e4mf\u00f6rt med fold i den halva av spelpassen som inte anv\u00e4ndes f\u00f6r att v\u00e4lja ut den (2599 h\u00e4nder totalt). S\u00e4kerhet ca 90 % \u2013 inte bevisat.",
+      "sub": [
+        {
+          "name": "trippelsuited",
+          "n": 425,
+          "mean": -3.318871276790746,
+          "est": -2.546597899352219,
+          "p_pos": 4.1306357612347355e-05,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited + sammanh\u00e4ngande",
+          "n": 311,
+          "mean": -2.3236391333778545,
+          "est": -1.612949443531219,
+          "p_pos": 0.026848786449643336,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited + suited kung",
+          "n": 373,
+          "mean": -0.9462510204784779,
+          "est": -1.036872144830098,
+          "p_pos": 0.10698941923406047,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited, \u00f6vriga",
+          "n": 1374,
+          "mean": -0.2728837112756787,
+          "est": -0.48141620402504404,
+          "p_pos": 0.19044340215482952,
+          "exempt": false
+        },
+        {
+          "name": "sammanh\u00e4ngande (enkelsuited/rainbow)",
+          "n": 33,
+          "mean": -0.16164778414778663,
+          "est": -1.065189121281979,
+          "p_pos": 0.16062011644401236,
+          "exempt": false
+        },
+        {
+          "name": "\u00f6vriga",
+          "n": 167,
+          "mean": -0.5497508555776499,
+          "est": -0.9013483920065464,
+          "p_pos": 0.15118845888423715,
+          "exempt": false
+        }
+      ],
+      "sub_tau": 1.0958658092861255,
+      "careful": 0.0,
+      "holdout": {
+        "found_old": false,
+        "n_new": 794,
+        "mean_new": -1.4607739583560209,
+        "se_new": 0.8744041353503571,
+        "verdict": "inte oberoende",
+        "clusters": 72,
+        "definition_frozen": false,
+        "family_tests": 8
+      }
+    },
+    {
+      "id": "nut|BB|0 n\u00f6t-egenskaper",
+      "type": "nut",
+      "positions": [
+        "BB"
+      ],
+      "nut": "0 n\u00f6t-egenskaper",
+      "pos": "BB",
+      "cost": -1.1019775457703949,
+      "level": "trolig",
+      "title": "BB: folda h\u00e4nder med 0 n\u00f6t-egenskaper",
+      "why": "Oberoende holdout: inte oberoende. Historiskt underlag: Har gett -1.10 bb per hand j\u00e4mf\u00f6rt med fold i den halva av spelpassen som inte anv\u00e4ndes f\u00f6r att v\u00e4lja ut den (2371 h\u00e4nder totalt). S\u00e4kerhet ca 94 % \u2013 inte bevisat.",
+      "sub": [
+        {
+          "name": "trippelsuited",
+          "n": 285,
+          "mean": -0.6150629777226483,
+          "est": -0.9593335153566646,
+          "p_pos": 0.09295247083748054,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited + sammanh\u00e4ngande",
+          "n": 292,
+          "mean": -1.7063457402778563,
+          "est": -1.2555273108646985,
+          "p_pos": 0.047600494119162784,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited + suited kung",
+          "n": 476,
+          "mean": -0.5256730854883755,
+          "est": -0.8205539000573031,
+          "p_pos": 0.09194537664734626,
+          "exempt": false
+        },
+        {
+          "name": "dubbelsuited, \u00f6vriga",
+          "n": 762,
+          "mean": -1.3820752255031914,
+          "est": -1.2469519379072973,
+          "p_pos": 0.02019114749717299,
+          "exempt": false
+        },
+        {
+          "name": "sammanh\u00e4ngande (enkelsuited/rainbow)",
+          "n": 108,
+          "mean": -5.814316573517961,
+          "est": -1.8946442374524561,
+          "p_pos": 0.008335451979478603,
+          "exempt": false
+        },
+        {
+          "name": "\u00f6vriga",
+          "n": 448,
+          "mean": -0.046493685437057106,
+          "est": -0.6148015194713962,
+          "p_pos": 0.1663870609609054,
+          "exempt": false
+        }
+      ],
+      "sub_tau": 0.8672948032893286,
+      "careful": 0.0,
+      "holdout": {
+        "found_old": false,
+        "n_new": 564,
+        "mean_new": -1.4728767600958868,
+        "se_new": 1.1653179700775065,
+        "verdict": "inte oberoende",
+        "clusters": 66,
+        "definition_frozen": false,
+        "family_tests": 8
+      }
+    },
+    {
+      "id": "cut|mot_3bet_oop|CO",
+      "type": "cutoff",
+      "spot": "mot_3bet_oop",
+      "pos": "CO",
+      "thr": 2.332420268745733,
+      "weights": [
+        -0.284,
+        0.725,
+        0.747,
+        2.436,
+        0.012,
+        0.711,
+        0.649,
+        -1.018,
+        -1.203,
+        0.361,
+        -0.446,
+        0.27
+      ],
+      "cut_pct": 32.08366136568769,
+      "num_cards": 6,
+      "cost": -2.7526568955873274,
+      "level": "trolig",
+      "title": "CO: spela bara topp 32 % (mot en 3-bet ur position) \u2013 utom h\u00f6ga rundowns",
+      "why": "Oberoende holdout: inte oberoende. Historiskt underlag: Har gett -2.75 bb per hand j\u00e4mf\u00f6rt med fold i den halva av spelpassen som inte anv\u00e4ndes f\u00f6r att v\u00e4lja ut den (421 h\u00e4nder totalt). S\u00e4kerhet ca 90 % \u2013 inte bevisat.",
+      "careful": 0.0,
+      "holdout": {
+        "found_old": false,
+        "n_new": 156,
+        "mean_new": -1.2110277709946025,
+        "se_new": 2.1272164994385574,
+        "verdict": "inte oberoende",
+        "clusters": 50,
+        "definition_frozen": false,
+        "family_tests": 8
+      }
+    },
+    {
+      "id": "act|3bet_utan_sa",
+      "type": "action",
+      "spots": [
+        "mot_hojning",
+        "bb_mot_hojning",
+        "sb_mot_hojning"
+      ],
+      "cond": "no_sa",
+      "bad_kind": "raise",
+      "cmp": "fold",
+      "cost": -1.8701564567523075,
+      "level": "trolig",
+      "title": "Mot en \u00f6ppning: 3-betta inte utan suited ess",
+      "why": "Oberoende holdout: os\u00e4kert. Historiskt underlag: Dina 3-bets utan suited ess har gett -1.87 bb per g\u00e5ng j\u00e4mf\u00f6rt med att folda (1724 h\u00e4nder, minus \u00e4ven med felmarginalen och i b\u00e5da halvorna av spelpassen). Syna eller folda i st\u00e4llet.",
+      "careful": 0.0,
+      "holdout": {
+        "found_old": true,
+        "n_new": 493,
+        "mean_new": -1.7992141439957,
+        "se_new": 1.3788674594246713,
+        "verdict": "os\u00e4kert",
+        "clusters": 50,
+        "definition_frozen": true,
+        "family_tests": 8
+      }
+    },
+    {
+      "id": "nut3b|mot 3-bet|0 n\u00f6t-egenskaper",
+      "type": "nut",
+      "spots": [
+        "mot_3bet_oop",
+        "mot_3bet_ip"
+      ],
+      "positions": [
+        "BTN",
+        "CO",
+        "HJ",
+        "SB"
+      ],
+      "pos": "mot 3-bet",
+      "nut": "0 n\u00f6t-egenskaper",
+      "cost": -2.636268082681477,
+      "level": "trolig",
+      "except": [
+        "trippelsuited",
+        "dubbelsuited + suited kung"
+      ],
+      "sub": [
+        {
+          "name": "trippelsuited",
+          "n": 154,
+          "mean": 0.6849959974574016
+        },
+        {
+          "name": "dubbelsuited + sammanh\u00e4ngande",
+          "n": 137,
+          "mean": -6.774698693857894
+        },
+        {
+          "name": "dubbelsuited + suited kung",
+          "n": 182,
+          "mean": 4.9487651694458386
+        },
+        {
+          "name": "dubbelsuited, \u00f6vriga",
+          "n": 320,
+          "mean": -3.7404279540975254
+        },
+        {
+          "name": "sammanh\u00e4ngande (enkelsuited/rainbow)",
+          "n": 46,
+          "mean": 1.442935354358566
+        },
+        {
+          "name": "\u00f6vriga",
+          "n": 171,
+          "mean": -0.860644556145979
+        }
+      ],
+      "title": "Mot 3-bet efter din \u00f6ppning: folda h\u00e4nder med 0 n\u00f6t-egenskaper \u2013 utom trippelsuited, dubbelsuited + suited kung",
+      "why": "Oberoende holdout: os\u00e4kert. Historiskt underlag: Korsvaliderat (undantag valda i ena halvan av spelpassen, m\u00e4tt i den andra): syn eller 4-bet med de h\u00e4r h\u00e4nderna har gett -2.64 \u00b1 2.23 bb per g\u00e5ng j\u00e4mf\u00f6rt med att folda (650 h\u00e4nder). H\u00e4nder med minst en n\u00f6t-egenskap (h\u00f6gt par, suited ess, rundown) g\u00e5r plus mot 3-bet.",
+      "careful": 0.0,
+      "holdout": {
+        "found_old": true,
+        "n_new": 143,
+        "mean_new": 2.0507558569606106,
+        "se_new": 2.1520867526063885,
+        "verdict": "os\u00e4kert",
+        "clusters": 47,
+        "definition_frozen": true,
+        "family_tests": 8
+      }
+    }
+  ],
+  "river_scope": 49091,
+  "hourly": {
+    "hands": 209539,
+    "mixed_stakes": true,
+    "hours": 661.3616666666667,
+    "rate_ok": true,
+    "sessions": 246,
+    "hph": 316.82967211586197,
+    "money": -29827.75,
+    "ev_money": -41015.03104628316,
+    "rake_money": 68447.04383635944,
+    "net_bb": -16291.675000000005,
+    "ev_bb": -23247.930307084607,
+    "rake_bb": 45160.82673063707,
+    "bb_usd": 2.0,
+    "start": 1780272654,
+    "end": 1794466616,
+    "rake100": 21.552468385664277,
+    "ev100": -11.094798728200768,
+    "usd_h": -45.100512326840835,
+    "ev_usd_h": -62.016039201369644,
+    "pre_usd_h": 41.47808101478961,
+    "rake_usd_h": 103.49412021615925,
+    "bb_h": -24.633533845576178,
+    "ev_bb_h": -35.151614432473316,
+    "ev_lo": -93.67653556768184,
+    "ev_hi": -30.355542835057445
+  }
+}

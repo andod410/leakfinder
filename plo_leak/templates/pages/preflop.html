@@ -1,0 +1,5 @@
+{% if guidelines %}<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>💡 Riktlinjer</b><span class="note" style="margin:0">säkerställda i holdout-test – räknas inte som regelbrott</span></div>
+{% for g in guidelines if g.area == 'preflop' %}<div style="margin:6px 0"><b>{{ g.title }}</b><div>{{ g.do }}</div><div class="note" style="margin:2px 0 0">{{ g.why }}</div></div>{% endfor %}</div>{% endif %}
+<div class="tabbed">
+{% include "parts/preflop.html" %}
+</div>

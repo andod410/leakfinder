@@ -1,0 +1,76 @@
+[
+  {
+    "name": "bb_initial",
+    "finite": true,
+    "svg_nodes": 30
+  },
+  {
+    "name": "bb_all_series_off",
+    "finite": true,
+    "svg_nodes": 16
+  },
+  {
+    "name": "bb_all_series_on",
+    "finite": true,
+    "svg_nodes": 30
+  },
+  {
+    "name": "bb_tooltip",
+    "finite": true,
+    "svg_nodes": 30
+  },
+  {
+    "name": "bb_hide_tooltip",
+    "finite": true,
+    "svg_nodes": 30
+  },
+  {
+    "name": "bb_mobile_resize",
+    "finite": true,
+    "svg_nodes": 25
+  },
+  {
+    "name": "bb_storage",
+    "saved": [
+      "plo-chart-b"
+    ],
+    "bad": []
+  },
+  {
+    "name": "usd_initial",
+    "finite": true,
+    "svg_nodes": 28
+  },
+  {
+    "name": "usd_all_series_off",
+    "finite": true,
+    "svg_nodes": 16
+  },
+  {
+    "name": "usd_all_series_on",
+    "finite": true,
+    "svg_nodes": 28
+  },
+  {
+    "name": "usd_tooltip",
+    "finite": true,
+    "svg_nodes": 28
+  },
+  {
+    "name": "usd_hide_tooltip",
+    "finite": true,
+    "svg_nodes": 28
+  },
+  {
+    "name": "usd_mobile_resize",
+    "finite": true,
+    "svg_nodes": 25
+  },
+  {
+    "name": "usd_storage",
+    "saved": [
+      "plo-chart-m"
+    ],
+    "bad": []
+  }
+]

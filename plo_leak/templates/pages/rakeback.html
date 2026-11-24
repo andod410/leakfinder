@@ -1,0 +1,131 @@
+<style>
+.rb-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:4px 14px}
+.rb-grid .fld{margin:0 0 10px}
+.rb-res{display:grid;gap:6px;font-size:15px;margin:0 0 12px}
+.rb-lb input{width:90px;height:30px;padding:0 6px;border:1px solid var(--line);border-radius:6px;background:var(--surface2);color:var(--ink);font-family:inherit}
+.rb-sc td.c{border-radius:6px;text-align:center;color:#fff;font-weight:700}
+.rb-src{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 12px}
+</style>
+{% set H = hourly or {} %}
+{% set src = [] %}
+{% if H.total and not H.total.mixed_stakes %}{% set t = H.total %}
+  {% set _ = src.append({"key": "alla", "label": "Hela urvalet", "hands": t.hands, "hours": t.hours, "hph": t.hph, "rake100": t.rake100, "ev100": t.ev100, "bb": t.bb_usd}) %}
+{% endif %}
+{% set ss = H.sessions or [] %}
+{% for k in [1, 5, 10] %}{% if ss|length >= k %}{% set part = ss[:k] %}
+  {% set hands = part|sum(attribute='hands') %}{% set hours = part|sum(attribute='hours') %}
+  {% if hands and hours and not (part|selectattr("mixed_stakes")|list) and (part|map(attribute='bb_usd')|unique|list|length) == 1 %}{% set _ = src.append({"key": "s" ~ k, "label": ("Senaste spelpasset" if k == 1 else "Senaste " ~ k ~ " spelpassen"), "hands": hands, "hours": hours, "hph": hands / hours, "rake100": 100.0 * (part|sum(attribute='rake_bb')) / hands, "ev100": 100.0 * (part|sum(attribute='ev_bb')) / hands, "bb": part[0].bb_usd}) %}{% endif %}
+{% endif %}{% endfor %}
+
+{% if H.total and H.total.mixed_stakes %}<div class="panel note">Urvalet blandar nivåer. Verkligt all-in-justerat resultat vid bordet: {{ H.total.ev_usd_h|signed(2) }} USD/timme (uppskattad speltid, utan bonus). Välj en enskild nivå som kalkylatorunderlag nedan – median-big-blind används inte för att omvandla blandade nivåer.</div>{% endif %}
+{% for t in H.stakes or [] %}{% set _ = src.append({"key": t.stake, "label": "$" ~ t.stake, "hands": t.hands, "hours": t.hours, "hph": t.hph, "rake100": t.rake100, "ev100": t.ev100, "bb": t.bb_usd}) %}{% endfor %}
+<div class="panel" style="margin-bottom:14px">
+  <div class="rb-res" id="rb-out"></div>
+  <div class="note">Allt räknas med all-in EV efter rake. Rakeback och leaderboard är pengar du får utöver resultatet vid bordet, så den winrate du behöver kan vara negativ.</div>
+</div>
+
+<div class="panel" style="margin-bottom:14px">
+  <div class="lbl">Underlag från dina händer (fyll i automatiskt)</div>
+  <div class="rb-src" id="rb-src">{% for s in src %}<button class="btn sm ghost" type="button" data-i="{{ loop.index0 }}">{{ s.label }} · {{ '%.0f'|format(s.hph) }} h/tim · rake {{ '%.1f'|format(s.rake100) }} bb/100</button>{% else %}<span class="note">Ingen speltid i urvalet – fyll i själv. Välj Rush &amp; Cash i urvalet ovan för att få dina siffror.</span>{% endfor %}</div>
+  <div class="rb-grid">
+    <div class="fld"><label for="bb">Big blind ($)</label><input type="number" step="0.05" id="bb" value="1"></div>
+    <div class="fld"><label for="hph">Händer per timme</label><input type="number" step="10" id="hph" value="740"></div>
+    <div class="fld"><label for="rake">Rake (bb/100)</label><input type="number" step="0.1" id="rake" value="13"><div class="hint">Lägre när du spelar tightare.</div></div>
+    <div class="fld"><label for="rbp">Rakeback (%)</label><input type="number" step="1" id="rbp" value="20"><div class="hint">Din nivå i Fish Buffet.</div></div>
+    <div class="fld"><label for="wr">Din winrate (bb/100, EV efter rake)</label><input type="number" step="0.5" id="wr" value="0"></div>
+    <div class="fld"><label for="hh">Timmar i happy hour per dag</label><input type="number" step="0.25" id="hh" value="2"></div>
+    <div class="fld"><label for="hn">Övriga timmar per dag</label><input type="number" step="0.25" id="hn" value="0"></div>
+    <div class="fld"><label for="days">Speldagar per månad</label><input type="number" step="1" id="days" value="20"></div>
+    <div class="fld"><label for="pph">Poäng per timme</label><input type="number" step="50" id="pph" value="1700"></div>
+    <div class="fld"><label for="mult">Happy hour ×</label><input type="number" step="0.5" id="mult" value="2"></div>
+  </div>
+  <details style="margin-top:6px"><summary class="note" style="cursor:pointer">Räkna ut dina poäng per timme från en dag du spelat</summary>
+    <div class="rb-grid" style="margin-top:8px">
+      <div class="fld"><label for="c_pts">Poäng du fick</label><input type="number" id="c_pts" value=""></div>
+      <div class="fld"><label for="c_hh">Timmar i happy hour</label><input type="number" step="0.05" id="c_hh" value=""></div>
+      <div class="fld"><label for="c_hn">Övriga timmar</label><input type="number" step="0.05" id="c_hn" value=""></div>
+      <div class="fld"><label>&nbsp;</label><button class="btn sm" type="button" id="c_go">Använd</button></div>
+    </div>
+  </details>
+</div>
+
+<div class="panel" style="margin-bottom:14px">
+  <div class="lbl">Leaderboard per dag: poäng som brukar krävas och pris</div>
+  <table class="tbl rb-lb" id="rb-lb"><tr><th>Plats</th><th class="n">Poäng</th><th class="n">Pris ($)</th></tr></table>
+  <div class="note">Förifyllt med snittet av två leaderboards. Ändra när du ser nya.</div>
+</div>
+
+<div class="panel">
+  <div class="lbl">Vad du tjänar per timme och månad vid olika winrate</div>
+  <table class="tbl rb-sc" id="rb-sc"></table>
+</div>
+
+<script>
+(function(){
+  var SRC = {{ src|tojson }};
+  var LB0 = [[1,21675,560],[2,20724,450],[3,19761,340],[4,18143,240],[5,16354,240],[6,15028,160],[7,14413,160],[8,13451,160],[9,12024,90],[10,11337,90]];
+  var KEY='plo-rb-v2', ids=['bb','hph','rake','rbp','wr','hh','hn','days','pph','mult'];
+  function $(i){return document.getElementById(i);}
+  function v(i){var x=parseFloat($(i).value);return isFinite(x)?x:0;}
+  function usd(x,d){d=d===undefined?0:d;var s=Math.abs(x).toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (x>0?'+':(x<0?'−':''))+'$'+s;}
+  function sg(x,d){return (x>0?'+':(x<0?'−':''))+Math.abs(x).toFixed(d===undefined?1:d);}
+  var lbBody=$('rb-lb'), LB=LB0;
+  try{var sv=JSON.parse(localStorage.getItem(KEY)||'null'); if(sv){ids.forEach(function(i){if(sv[i]!==undefined)$(i).value=sv[i];}); if(sv.lb)LB=sv.lb;}}catch(e){}
+  LB.forEach(function(r){var tr=document.createElement('tr');tr.innerHTML='<td>'+r[0]+'</td><td class="n"><input type="number" step="100" value="'+r[1]+'"></td><td class="n"><input type="number" step="10" value="'+r[2]+'"></td>';lbBody.appendChild(tr);});
+  function lb(){return Array.prototype.map.call(lbBody.querySelectorAll('tr'),function(tr,i){var x=tr.querySelectorAll('input');return x.length?[i,parseFloat(x[0].value)||0,parseFloat(x[1].value)||0]:null;}).filter(Boolean);}
+  function save(){try{var o={};ids.forEach(function(i){o[i]=$(i).value;});o.lb=lb();localStorage.setItem(KEY,JSON.stringify(o));}catch(e){}}
+  function calc(){
+    var bb=v('bb'),hph=v('hph'),rake=v('rake'),rbp=v('rbp')/100,wr=v('wr'),hh=v('hh'),hn=v('hn'),days=v('days'),pph=v('pph'),mult=v('mult');
+    var hours=hh+hn, pts=pph*(hh*mult+hn), L=lb(), prize=0, place=null;
+    L.forEach(function(r){ if(place===null && pts>=r[1]){place=r[0];prize=r[2];} });
+    var rakeH=rake/100*hph*bb, rbH=rakeH*rbp, lbH=hours>0?prize/hours:0, rewH=rbH+lbH;
+    var bbH=hph/100*bb, rew100=bbH>0?rewH/bbH:0, be=-rew100;
+    var top=L.length?L[0]:null, need1=top?Math.max(0,(top[1]-pph*hh*mult)/Math.max(pph,1)):0;
+    var last=L.length?L[L.length-1]:null, needL=last?Math.max(0,(last[1]-pph*hh*mult)/Math.max(pph,1)):0;
+    var netH=wr*bbH+rewH;
+    var o=[];
+    o.push('<div>'+(place?'🟢':'🔴')+' <b>Poäng per dag: '+Math.round(pts).toLocaleString('sv-SE')+'</b> → '+(place?('plats '+place+' ≈ '+usd(prize)):'utanför prislistan')+' ('+hours.toFixed(1).replace('.',',')+' h, varav '+hh.toFixed(1).replace('.',',')+' i happy hour).</div>');
+    if(top) o.push('<div>🏆 Plats 1 kräver '+(hh+need1).toFixed(1).replace('.',',')+' h per dag ('+hh.toFixed(1).replace('.',',')+' h happy hour + '+need1.toFixed(1).replace('.',',')+' h övrigt). Plats '+last[0]+' kräver '+(hh+needL).toFixed(1).replace('.',',')+' h.</div>');
+    o.push('<div>💸 Rake '+usd(-rakeH,2)+'/h · rakeback '+usd(rbH,2)+'/h · leaderboard '+usd(lbH,2)+'/h = <b>'+usd(rewH,2)+'/h tillbaka</b> ('+sg(rew100)+' bb/100).</div>');
+    o.push('<div>'+(be<0?'🟡':'🔴')+' <b>Break-even: '+sg(be)+' bb/100</b> i EV efter rake. Det motsvarar '+sg(be+rake)+' bb/100 före rake.</div>');
+    o.push('<div>'+(netH>=0?'🟢':'🔴')+' Med din winrate '+sg(wr)+' bb/100: <b>'+usd(netH,2)+' per timme</b>, '+usd(netH*hours*days)+' per månad.</div>');
+    $('rb-out').innerHTML=o.join('');
+    var rows=[-20,-10,-5,0,5,10], h='<tr><th>Winrate (bb/100)</th><th class="n">Vid bordet</th><th class="n">+ rakeback & leaderboard</th><th class="n">Per månad</th></tr>';
+    if(rows.indexOf(Math.round(wr))<0){rows.push(Math.round(wr*2)/2);rows.sort(function(a,b){return a-b;});}
+    var mx=Math.max.apply(null,rows.map(function(w){return Math.abs(w*bbH+rewH);}))||1;
+    rows.forEach(function(w){var t=w*bbH+rewH,k=Math.round(30+70*Math.abs(t)/mx);
+      h+='<tr'+(Math.abs(w-wr)<1e-9?' style="font-weight:700"':'')+'><td>'+sg(w,1)+'</td><td class="n">'+usd(w*bbH,2)+'/h</td><td class="c" style="background:color-mix(in srgb, var('+(t>=0?'--good':'--bad')+') '+k+'%, var(--chip))">'+usd(t,2)+'/h</td><td class="n">'+usd(t*hours*days)+'</td></tr>';});
+    $('rb-sc').innerHTML=h;
+    save();
+  }
+  document.querySelectorAll('#rb-src button').forEach(function(b){b.addEventListener('click',function(){var s=SRC[+b.dataset.i];
+    if(s.bb)$('bb').value=+s.bb.toFixed(2);$('hph').value=Math.round(s.hph);$('rake').value=s.rake100.toFixed(1);$('wr').value=s.ev100.toFixed(1);calc();});});
+  $('c_go').addEventListener('click',function(){var p=v('c_pts'),e=v('c_hh')*v('mult')+v('c_hn');if(p>0&&e>0){$('pph').value=Math.round(p/e);calc();}});
+  document.querySelectorAll('.panel input').forEach(function(i){i.addEventListener('input',calc);});
+  calc();
+})();
+</script>
+
+{% if rbweek is defined %}{% set W = rbweek %}
+<div class="panel" id="vecka" style="margin-top:14px"><div class="card-h"><b>📅 Rakeback per dygn</b><span class="note" style="margin:0">från {{ W.start }} · fyll i en gång per dygn: det dygnets intjänade GEMs, leaderboard och övrigt</span></div>
+{% if W.error %}<div class="verdict bad">{{ W.error }}</div>{% endif %}
+{% if W.rows %}<table class="tbl"><tr><th>Dygn</th><th class="n">Händer</th><th class="n">Rake</th><th class="n">GEMs</th><th class="n">GEM $</th><th class="n">Leaderboard $</th><th class="n">Övrigt $</th><th class="n">Kontant</th><th class="n">Med GEMs</th><th></th></tr>
+{% for r in W.rows|reverse %}<tr><td>{{ r.day }}{% if r.week_entry %} (vecka){% endif %}</td><td class="n">{{ r.hands }}</td><td class="n">${{ '%.2f'|format(r.rake) }}</td><td class="n">{{ '%g'|format(r.gems) }}</td><td class="n">${{ '%.2f'|format(r.gem_val) }}</td><td class="n">${{ '%.2f'|format(r.lb_usd) }}</td><td class="n">${{ '%.2f'|format(r.other_usd) }}</td><td class="n">{{ ('%.1f'|format(r.cash_pct) ~ ' %') if r.cash_pct is not none else '–' }}</td><td class="n"><b>{{ ('%.1f'|format(r.pct) ~ ' %') if r.pct is not none else '–' }}</b></td>
+<td><form method="post" action="/rakeback-vecka" style="margin:0"><input type="hidden" name="vid" value="{{ vid }}"><input type="hidden" name="day" value="{{ r.day }}"><button class="btn sm ghost" name="ta_bort" value="1">Ta bort</button></form></td></tr>{% endfor %}
+<tr style="font-weight:700"><td>Totalt</td><td></td><td class="n">${{ '%.2f'|format(W.rake) }}</td><td></td><td></td><td></td><td></td><td></td><td class="n">{{ ('%.1f'|format(W.pct) ~ ' %') if W.pct is not none else '–' }}</td><td></td></tr></table>
+{% if W.weeks|length > 1 %}<div class="note" style="margin-top:6px">Per vecka: {% for w in W.weeks %}{{ w.week }} {{ ('%.1f'|format(w.pct) ~ ' %') if w.pct is not none else '–' }} ({{ w.days }} dygn){{ ' · ' if not loop.last }}{% endfor %}</div>{% endif %}{% endif %}
+<form method="post" action="/rakeback-vecka" class="rb-lb" style="display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:10px;align-items:end"><input type="hidden" name="vid" value="{{ vid }}">
+  <label>Dygn <input type="date" name="day" required></label>
+  <label>GEMs intjänade <input name="gems" size="7"></label>
+  <label>GEM-värde $ <input name="gem_usd" size="6" placeholder="om du vet"></label>
+  <label>Leaderboard $ <input name="lb_usd" size="6"></label><label>Övrigt $ <input name="other_usd" size="6"></label>
+  <button class="btn sm" type="submit">Spara dygnet</button></form>
+<div class="lbl" style="margin-top:12px">GEM-kurs: <b>${{ '%.4f'|format(W.gem_rate) }} per GEM</b> {{ '(realiserad från dina inlösen)' if W.rate_realized else '(planerad – ingen inlösen än)' }} · osålda GEMs ca {{ '%.0f'|format(W.gems_left) }}</div>
+<form method="post" action="/rakeback-vecka" class="rb-lb" style="display:flex;flex-wrap:wrap;gap:8px 14px;align-items:end;margin-top:6px"><input type="hidden" name="vid" value="{{ vid }}"><input type="hidden" name="redeem" value="1">
+  <label>Inlösen datum <input type="date" name="rday" required></label><label>GEMs <input name="rgems" size="7"></label><label>Värde $ <input name="rusd" size="7"></label>
+  <button class="btn sm" type="submit">Spara inlösen</button></form>
+{% if W.redeem %}<div class="note" style="margin-top:4px">Inlösen: {% for e in W.redeem %}{{ e.day }} {{ '%g'|format(e.gems) }} GEMs = ${{ '%.2f'|format(e.usd) }} (${{ '%.4f'|format(e.usd / e.gems if e.gems else 0) }}/GEM){{ ' · ' if not loop.last }}{% endfor %}</div>{% endif %}
+<form method="post" action="/rakeback-vecka" class="rb-lb" style="display:flex;gap:8px;align-items:end;margin-top:8px"><input type="hidden" name="vid" value="{{ vid }}">
+  <label>Planerad kurs $ per GEM (tills du löst in) <input name="gem_rate" size="7" value="{{ '%g'|format(W.planned_rate) }}"></label><button class="btn sm ghost" type="submit">Spara</button></form>
+<div class="note" style="margin-top:6px">Dygn = GG:s leaderboard-dygn: 09:00–09:00 svensk vintertid, 10:00–10:00 sommartid (08:00 UTC). Datumet = dygnets startdag. Ange dygnet spelet gällde (leaderboarden för det dygnet, även om den betalas ut dagen efter). GEMs = intjänat under dygnet, inte saldot. GEM-värdet räknas med kursen ovan: den blir verklig först när du löser in, så procenten "med GEMs" ändras bakåt när kursen ändras – "kontant" ändras aldrig. Rake räknas på händerna i urvalet – läs in dagens händer och välj hela databasen.</div>
+</div>{% endif %}

@@ -1,0 +1,65 @@
+{% if error %}<div class="alert">{{ error }}</div>{% endif %}
+{% if info %}<div class="panel" style="margin-bottom:14px;border-color:color-mix(in srgb,var(--good) 45%,transparent)">{{ info }}</div>{% endif %}
+{% if last_vid %}
+<div class="panel cta" style="margin-bottom:14px"><div><b>Analysen är öppen.</b> <span class="note">Fortsätt där du var, eller lägg till nya händer nedan.</span></div><a class="btn sm" href="/v/{{ last_vid }}/oversikt">Till översikten</a></div>
+{% elif db and db.n %}
+<form class="panel cta" style="margin-bottom:14px" method="post" action="/analyze" enctype="multipart/form-data" onsubmit="this.querySelector('button').textContent='Startar …'">
+  <div><b>{{ '{:,}'.format(db.n).replace(',', ' ') }} händer i databasen.</b> <span class="note">Öppna analysen av den variant du spelat mest – du kan ändra urval efteråt.</span></div>
+  <button class="btn sm" type="submit">Öppna analysen</button>
+</form>
+{% endif %}
+<form class="panel" method="post" action="/bevaka" autocomplete="off" style="margin-bottom:14px">
+  <div class="card-h"><b>Standardmapp – nya händer läses in automatiskt</b>{% if watch_state and watch_state.last_txt %}<span class="note" style="margin:0">Senast kollad {{ watch_state.last_txt }}{% if watch_state.error %} · <span class="neg">{{ watch_state.error }}</span>{% elif watch_state.new %} · {{ watch_state.new }} nya händer{% endif %}{% if watch_state.note %} · <span class="neg">⚠ {{ watch_state.note }}</span>{% endif %}</span>{% endif %}</div>
+  {% if watch_cfg and watch_cfg.folder %}
+  <p style="margin-top:0">Bevakar <b>{{ watch_cfg.folder }}</b>{% if watch_cfg.is_default %} (standard){% endif %}{% if watch_cfg.auto %} – kollas var {{ watch_cfg.every }}:e sekund medan programmet är öppet, och analysen uppdateras då automatiskt{% else %} – automatisk kontroll är avstängd{% endif %}.</p>
+  {% else %}<p style="margin-top:0">Ingen mapp bevakas.</p>{% endif %}
+  {% if watch_cfg and watch_cfg.problem %}<div class="alert" style="margin-bottom:10px">⚠ {{ watch_cfg.problem }}</div>{% endif %}
+  <p class="note" style="margin-top:0">Programmet hittar själv nya zip- och textfiler med handhistorik i mappen och läser in dem – du behöver inte packa upp något, och filerna lämnas orörda. Filer som redan lästs in hoppas över, liksom zip-filer utan handhistorik och filer som fortfarande laddas ner.</p>
+  <div class="fld" style="margin-bottom:8px"><label for="watch">Byt mapp</label><input type="text" id="watch" name="watch" value="{{ watch_cfg.folder if watch_cfg else '' }}" placeholder="{{ watch_cfg.suggest if watch_cfg and watch_cfg.suggest else 't.ex. /Users/andreas/Downloads' }}">
+    {% if watch_cfg and watch_cfg.suggest and watch_cfg.folder != watch_cfg.suggest %}<div class="hint">Standard: <a href="#" data-folder="{{ watch_cfg.suggest }}" onclick="this.closest('form').watch.value=this.dataset.folder;return false">{{ watch_cfg.suggest }}</a></div>{% endif %}</div>
+  {% if watch_cfg and watch_cfg.suggest and watch_cfg.folder != watch_cfg.suggest %}<label class="chk"><input type="checkbox" name="watch_dl" value="1"{% if watch_cfg.watch_dl %} checked{% endif %}><span>Bevaka även {{ watch_cfg.suggest }} (GG:s nedladdade handhistorik, zip/txt – bara dina egna händer, varje fil läses en gång)</span></label>{% endif %}
+  <label class="chk"><input type="checkbox" name="auto" value="1"{% if not watch_cfg or watch_cfg.auto %} checked{% endif %}><span>Kolla automatiskt en gång i minuten (och när programmet startar)</span></label>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px"><button class="btn sm" type="submit">Spara och läs in nu</button>{% if watch_cfg and watch_cfg.folder %}<button class="btn sm ghost" type="submit" name="off" value="1">Stäng av bevakningen</button>{% endif %}</div>
+  <div class="note">Nya händer läggs i databasen direkt. När du har en analys öppen visas en knapp högst upp för att uppdatera den.</div>
+</form>
+<div class="form-grid">
+  <form class="panel" method="post" action="/analyze" enctype="multipart/form-data" autocomplete="off" onsubmit="this.querySelector('button[type=submit]').textContent='Startar …'">
+    <div class="card-h"><b>Lägg till händer</b></div>
+    <div class="fld"><label for="folder">Mapp med handhistorik</label>
+      <input type="text" id="folder" name="folder" placeholder="{{ 't.ex. ~/Downloads eller ~/PLO/export' if watch_cfg and watch_cfg.mac else 't.ex. C:\\PLO\\drivehud-export' }}" value="{{ folder }}">
+      <div class="hint">T.ex. en DriveHUD-export ("Export All Hands") eller GG-exporter. Undermappar och zip-filer (även zip i zip) läses direkt – inget behöver packas upp. Händer som redan finns hoppas över.</div></div>
+    <div class="fld"><label for="files">eller ladda upp filer</label><input type="file" id="files" name="files" multiple accept=".zip,.txt,application/zip,text/plain"><div class="hint">Zip-filerna från GG kan laddas upp som de är.</div></div>
+    {% for g in (carry.games_sel if carry else []) %}<input type="hidden" name="games" value="{{ g }}">{% endfor %}
+    {% if carry %}<input type="hidden" name="table" value="{{ carry.table }}"><input type="hidden" name="stake" value="{{ carry.stake }}">
+    {% if carry.latest_on %}<input type="hidden" name="latest_on" value="1"><input type="hidden" name="latest" value="{{ carry.latest }}">{% endif %}
+    <input type="hidden" name="fran" value="{{ carry.fran }}"><input type="hidden" name="till" value="{{ carry.till }}">{% endif %}
+    <details style="margin:4px 0 6px"><summary>Fler val</summary>
+      <div class="fld" style="margin-top:10px"><label for="hero">Ditt spelarnamn</label><input type="text" id="hero" name="hero" placeholder="Lämna tomt för att hitta automatiskt" value="{{ carry.hero if carry else '' }}"></div>
+      {% if not carry %}<div class="fld"><label for="game">Variant</label><select id="game" name="game"><option value="">Den jag spelat mest</option><option>PLO6</option><option>PLO5</option><option>PLO4</option></select></div>{% endif %}
+      <label class="chk"><input type="checkbox" name="no_db" value="1"><span>Använd inte databasen<span class="hint" style="display:block;font-weight:400;color:var(--muted);font-size:12.5px">Analysera bara mappen/filerna ovan, utan att spara dem.</span></span></label>
+      <label class="chk"><input type="checkbox" name="simulera" value="1"><span>Kör om simuleringen av rundowns<span class="hint" style="display:block;font-weight:400;color:var(--muted);font-size:12.5px">Ett färdigt resultat följer med programmet. Att köra om tar några minuter.</span></span></label>
+    </details>
+    <button class="btn" type="submit" style="margin-top:8px">{{ 'Läs in och uppdatera analysen' if carry else 'Läs in och analysera' }}</button>
+    {% if carry %}<div class="note">Analysen öppnas med samma urval som nu.</div>{% endif %}
+  </form>
+  <div class="panel">
+    <div class="card-h"><b>Databasen</b></div>
+    {% if db_error %}<div class="err">Databasen kunde inte öppnas: {{ db_error }}</div>
+    {% elif db and db.n %}
+    <div class="big-n">{{ '{:,}'.format(db.n).replace(',', ' ') }}</div><div class="note" style="margin:0 0 10px">händer{% if db.first %}, {{ db.first[:10] }} – {{ db.last[:10] }}{% endif %}</div>
+    {% else %}<p style="margin-top:0"><b>Databasen är tom.</b> Ange en mapp – händerna sparas så att du nästa gång bara behöver lägga till nya.</p>{% endif %}
+    {% if db and db.stale %}<p class="neg"><b>{{ '{:,}'.format(db.stale).replace(',', ' ') }} händer är sparade av en äldre version</b> och behöver läsas in igen: ange mappen med dina händer en gång.</p>{% endif %}
+    {% if db %}<div class="note" style="word-break:break-all">Fil: {{ db.path }}</div>{% endif %}
+    <div class="note">Allt körs på din dator – inga händer skickas någonstans.</div>
+    <form method="post" action="/rensa" style="margin-top:14px" onsubmit="return confirm('Tömma databasen? Alla sparade händer tas bort från programmet (dina originalfiler påverkas inte).')">
+      <button class="btn sm ghost" type="submit">Töm databasen</button>
+    </form>
+  </div>
+</div>
+
+<form class="panel" id="utveckling" method="post" action="/utvecklingslage" style="margin-top:14px">
+  <div class="card-h"><b>🧪 Utvecklingsläge</b><span class="note" style="margin:0">{{ 'PÅ' if dev_on else 'AV' }}</span></div>
+  <p class="note" style="margin-top:0">PÅ: Leakfinder, inläsning, analys, sessioner och nattkörning fungerar även när GG-klienten är igång. Solverns frekvenser (Solver-sidan, 🧮-träningen, träningsrutan) är ändå dolda medan GG körs – det vore realtidshjälp. Din egen risk: GG förbjuder pokerprogram som körs samtidigt med klienten och börjar leta efter dem 1 december 2026. Stäng av senast 30 november.</p>
+  <label><input type="checkbox" name="on" value="1" {{ 'checked' if dev_on }}> Utvecklingsläge på</label>
+  <button class="btn sm" type="submit">Spara</button>
+</form>

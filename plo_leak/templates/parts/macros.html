@@ -1,0 +1,58 @@
+{% macro chartpanel(c, cid, title, note="", tab="") %}
+  <div class="panel chart" id="{{ cid }}" style="margin-bottom:16px"{% if tab %} data-tab="{{ tab }}"{% endif %}>
+    <div class="lbl" style="margin-top:0">{{ title }}</div>
+    <div class="legend" data-r="legend" role="group" aria-label="Visa eller dölj linjer">{% for x in c.s %}<button type="button" class="lg{{ ' off' if not x.on }}" data-k="{{ x.k }}" aria-pressed="{{ 'true' if x.on else 'false' }}"><i style="--c:var({{ x.color }})"{% if x.dash %} class="dash"{% endif %}></i>{{ x.label }}</button>{% endfor %}</div>
+    <div class="plot" data-r="plot"><svg role="img" aria-label="{{ title }} över {{ c.n }} händer"></svg><div class="tip" data-r="tip"></div></div>
+    <script type="application/json" data-r="cfg">{{ c|tojson }}</script>
+    {% if c.luck is defined %}<div class="note" style="margin:4px 0 0"><b>Tur i all-ins: {{ '%+.2f'|format(c.luck) if c.unit == '$' else '%+.1f'|format(c.luck) }} {{ c.unit }}</b> (faktiskt resultat − all-in EV; plus = du har vunnit mer än din equity){% if c.rb_on %} · linjerna utan rakeback är avslagna – tryck för att visa dem{% endif %}</div>{% endif %}
+    {% if note %}<div class="note">{{ note }}</div>{% endif %}
+  </div>
+{% endmacro %}
+{% macro leakcard(l, idx) %}
+  <div class="leak {{ l.level }}">
+    <div class="leak-head">
+      <h3>{{ idx }}. {{ l.title }}</h3>
+      <div class="badges">
+        <span class="badge {{ l.level }}">{{ l.level }} läcka</span>
+        <span class="badge">{{ l.category }}</span>
+        <span class="badge">{{ 'Säkerställd' if l.confidence == 'Säkerställd' else 'Säkerhet: ' ~ l.confidence }} ({{ l.opps }} tillfällen)</span>
+      </div>
+    </div>
+    <div class="nums"><span>Ditt värde: <b>{{ l.value }}</b></span><span>{{ 'Krav' if l.confidence == 'Säkerställd' else 'Riktvärde' }}: <b>{{ l.target }}</b></span></div>
+    {% if l.source %}<div class="note" style="margin-top:0">{{ 'Underlag' if l.confidence == 'Säkerställd' else 'Riktvärdet kommer från' }}: {{ l.source }}</div>{% endif %}
+    <div class="lbl">Vad du gör fel</div><div>{{ l.what }}</div>
+    <div class="lbl">Varför det kostar</div><div>{{ l.why }}</div>
+    <div class="lbl">Gör så här istället</div>
+    <ul class="fix">{% for f in l.fix %}<li>{{ f }}</li>{% endfor %}</ul>
+    <div class="drill"><b>Övning:</b> {{ l.drill }}</div>
+    {% if l.spot_note %}<div class="note">{{ l.spot_note }}</div>{% endif %}
+    {% if l.examples %}
+    <details><summary>{{ l.example_label }} ({{ l.examples|length }})</summary>
+      {% for hid, net in l.examples %}
+      <div class="ex">
+        <span>#{{ hid }}</span><span class="badge">{{ hero_pos.get(hid, '') }}</span>{{ hero_cards.get(hid)|cards }}
+        <span class="{{ 'pos' if net >= 0 else 'neg' }}">{{ net|signed }} bb</span>{% if live_replay %} <button type="button" class="rpl-open" data-hid="{{ hid }}">▶ Spela upp</button>{% endif %}
+      </div>
+      <details><summary>Visa handen</summary><pre>{{ raw.get(hid, '') }}</pre></details>
+      {% endfor %}
+    </details>
+    {% endif %}
+  </div>
+{% endmacro %}
+  {% macro devrow(d) %}{% set rp = fu.replays.get(d.id) %}
+  <tr><td style="white-space:nowrap">{{ d.date }}</td><td>{{ d.pos }}</td><td style="white-space:nowrap">{{ d.hole|cards }}</td><td>{{ d.rule }}</td>
+    <td class="n {{ 'pos' if d.delta >= 0 else 'neg' }}">{{ d.delta|signed(1) }} bb</td></tr>
+  {% if rp %}<tr><td colspan="5" style="border-top:0;padding-top:0"><button type="button" class="rpl-open">▶ Spela upp handen</button>
+    <script type="application/json" class="rpl-data">{{ rp|tojson }}</script></td></tr>{% elif live_replay %}<tr><td colspan="5" style="border-top:0;padding-top:0"><button type="button" class="rpl-open" data-hid="{{ d.id }}">▶ Spela upp handen</button></td></tr>{% endif %}
+  {% endmacro %}
+  {% macro bigrow(d, rps) %}{% set rp = rps.get(d.id) %}
+  <tr><td style="white-space:nowrap">{{ d.date }}</td><td>{{ d.pos }}</td><td style="white-space:nowrap">{{ d.hole|cards }}</td>
+    <td class="n">{{ '%.0f'|format(d.pot) }} bb</td><td class="n {{ 'pos' if d.net >= 0 else 'neg' }}">{{ d.net|signed(1) }} bb</td></tr>
+  {% if rp %}<tr><td colspan="5" style="border-top:0;padding-top:0"><button type="button" class="rpl-open">▶ Spela upp handen</button>
+    <script type="application/json" class="rpl-data">{{ rp|tojson }}</script></td></tr>{% elif live_replay %}<tr><td colspan="5" style="border-top:0;padding-top:0"><button type="button" class="rpl-open" data-hid="{{ d.id }}">▶ Spela upp handen</button></td></tr>{% endif %}
+  {% endmacro %}
+{% macro unitcharts(c_bb, c_usd, prefix, title, note="") %}
+  {% if c_usd %}<div class="unitsw" role="group" aria-label="Visa i bb eller dollar"><button type="button" class="btn sm ghost" data-u="bb">bb</button><button type="button" class="btn sm ghost" data-u="usd">Dollar</button></div>{% endif %}
+  <div data-unit="bb">{{ chartpanel(c_bb, prefix, title ~ " (bb)", note=note) }}</div>
+  {% if c_usd %}<div data-unit="usd">{{ chartpanel(c_usd, prefix ~ "-money", title ~ " (dollar)", note=note) }}</div>{% endif %}
+{% endmacro %}

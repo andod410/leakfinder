@@ -1,0 +1,74 @@
+{% if deep %}
+<div class="panel cta" style="margin-bottom:14px">
+  <div><b>Djupanalysen är klar</b> ({{ deep.size_mb }} MB){% if deep.saved %} · sparad i <b>{{ deep.saved }}</b>{% endif %}.
+    <div class="note" style="margin:4px 0 0">Ladda upp filerna i chatten med Claude. Packar Safari upp zip-filen automatiskt: ladda upp alla filer i mappen (ingen är större än 20 MB).</div></div>
+  <a class="btn sm" href="/djupanalys/fil/{{ deep.name }}">Ladda ner {{ deep.name }}</a>
+</div>
+{% endif %}
+{% if error %}<div class="alert">{{ error }}</div>{% endif %}
+{% if done %}
+<div class="panel cta" style="margin-bottom:14px">
+  <div><b>Klart: {{ '{:,}'.format(done.hands).replace(',', ' ') }} händer</b> i {{ done.files }} {{ 'fil' if done.files == 1 else 'filer' }} ({{ done.first }} – {{ done.last }}, {{ done.size_mb }} MB){% if done.missing %} · <span class="neg">{{ done.missing }} kunde inte skrivas ut</span>{% endif %}.
+    {% if not done.own %}<div style="margin:4px 0 0">Sparad i <b>{{ done.folder }}</b>{% if done.fmt == 'zip' %} som <b>{{ done.name }}</b>{% else %} som textfiler som börjar med "PLO_export_"{% endif %}.</div>{% endif %}
+    {% if done.rebuilt %}<div class="note" style="margin:4px 0 0">{{ '{:,}'.format(done.rebuilt).replace(',', ' ') }} av händerna lästes in av en äldre version, innan originaltexten sparades. De är återskapade i GG:s format med samma kort, handlingar, belopp, vinster och rake. Bara handbeskrivningar som "two pair" saknas. Vill du ha den exakta originaltexten: läs in dina GG-filer igen under Import & databas.</div>{% endif %}
+    <div class="note" style="margin:4px 0 0">Importera i DriveHUD (Import → {{ 'Import File' if done.fmt == 'zip' else 'Import Folder' }}) eller HoldemManager 3 (Import → {{ 'Import Files' if done.fmt == 'zip' else 'Import Folder' }}). Händer som redan finns där hoppas över.</div></div>
+  {% if done.own %}<a class="btn sm" href="/exportera/fil/{{ done.name }}">Ladda ner {{ done.name }}</a>{% endif %}
+</div>
+{% endif %}
+{% if night and night.v3 %}{% set V3 = night.v3 %}
+<div class="panel" style="max-width:820px;margin-bottom:14px">
+  <div class="card-h"><b>🌙 Skuggmodell v3 (förregistrerad, ger inga råd)</b><span class="note" style="margin:0">{% if V3.hash %}modell <code>{{ V3.hash }}</code> · β = {{ '%.2f'|format(V3.beta) }}{% endif %}</span></div>
+  <p class="note" style="margin-top:0">Motståndarens range efter hans linje, lärd från visade händer, med solverns preflop-ranges breddade mot poolen. Anpassas en gång på händer före 19 nov och fryses. Prövas på dina heads-up river-beslut som går till showdown (check bakom, syn) efter 19 nov: A bättre än v2, B kalibrering inom ±5 pe, C bättre än slumpade händer. Avläsning vid 20, 40 och 80 pass – före 20 pass visas inga siffror.</p>
+  <div class="verdict {{ 'good' if V3.status == 'godkänd' else ('bad-soft' if V3.status == 'underkänd' else '') }}">Status: <b>{{ V3.status }}</b>{% if V3.clusters is defined %} · {{ V3.n }} beslut i {{ V3.clusters }} pass{% if V3.status == 'väntar' %} (avläsning vid {{ V3.need }}){% endif %}{% endif %}{% if V3.look is defined %} · avläst vid {{ V3.look }} pass: avvikelse {{ '%+.1f'|format(100 * V3.bias) }} pe, Brier {{ '%.3f'|format(V3.brier) }} (slump {{ '%.3f'|format(V3.brier_rand) }}{% if V3.brier_v2 is defined %}, v2 {{ '%.3f'|format(V3.brier_v2) }}{% endif %}){% endif %}</div>
+  {% if V3.status == 'ingen modell' %}<div class="note">Modellen anpassas vid nästa nattkörning (tar ca 20–40 min första gången).</div>{% endif %}
+</div>{% endif %}
+{% if night %}{% set N = night %}{% set A = N.acceptance or {} %}{% set P = A.parts or {} %}
+<div class="panel" style="max-width:820px;margin-bottom:14px">
+  <div class="card-h"><b>🌙 Nattberäkning v2 (hypotes)</b><span class="note" style="margin:0">{{ '{:,}'.format(N.done).replace(',', ' ') }} av {{ '{:,}'.format(N.total).replace(',', ' ') }} händer klara{% if N.lam is not none %} · λ = {{ N.lam }}{% endif %}</span></div>
+  {% if night_msg %}<div class="verdict good-soft" style="margin-bottom:8px">{{ night_msg }}</div>{% endif %}
+  <p class="note" style="margin-top:0">Motståndarens range byggs från poolens frekvenser per linje (gata × vad han mötte × position × nivå, fryst på händer före 13 nov), equity räknas tills medelfelet är högst 0,5 procentenheter, och varje hand får ett turjusterat resultat. Den <b>används bara om den klarar acceptanstestet</b> på händer efter frysdatum (plan 2.73): bättre än v1 <i>och</i> liten absolut avvikelse mot all-ins, bättre fold-prognos, tur med medel visat inom ±0,05 bb/hand och minst 20 % lägre varians. Avläses bara vid 20, 40 och 80 spelpass – inga mellanresultat. Nattkörningen gör också säkerhetskopia, läser in nya händer och skriver en kort morgonrapport. <b>Nattkörningen startar inte om GG körs, om det inte går att kontrollera om GG körs, eller om ny handhistorik kommit de senaste 10 minuterna.</b> (Programmets sidor går att öppna även när GG är igång – det är ditt eget val; använd dem inte som hjälp under spel.)</p>
+  {% if A.text %}<div class="verdict {{ 'good' if A.status == 'godkänd' else ('bad-soft' if A.status == 'underkänd' else '') }}" style="margin-bottom:8px">{{ A.text }}</div>
+  <table class="tbl" style="margin-bottom:8px"><tr><th>Del</th><th class="n">Underlag</th><th>Siffror</th><th>Klarar</th></tr>
+  {% set c = P.kalibrering or {} %}<tr><td>Kalibrering mot all-ins</td><td class="n">{{ c.n or 0 }}</td><td>{% if c.mse_v2 is defined %}MSE v1 {{ '%.4f'|format(c.mse_v1) }} → v2 {{ '%.4f'|format(c.mse_v2) }} · avvikelse {{ '%+.1f'|format(100 * c.bias) }} ± {{ '%.1f'|format(196 * c.bias_se) }} pe (krav inom ±5){% else %}–{% endif %}</td><td>{{ '✅' if c.ok else ('❌' if c.ok is sameas false else '⏳') }}</td></tr>
+  {% set f = P.fold or {} %}<tr><td>Fold-prognos (river-bets, linjefrekvenserna)</td><td class="n">{{ f.n or 0 }}</td><td>{% if f.brier_v2 is defined %}Brier {{ '%.3f'|format(f.brier_v1) }} → {{ '%.3f'|format(f.brier_v2) }} · prognos {{ '%.0f'|format(f.pred) }} % mot faktisk {{ '%.0f'|format(f.actual) }} % (krav inom ±10){% else %}–{% endif %}</td><td>{{ '✅' if f.ok else ('❌' if f.ok is sameas false else '⏳') }}</td></tr>
+  {% set u = P.tur or {} %}<tr><td>Tur: medel inom ±0,05 bb/hand och varians minst 20 % lägre</td><td class="n">{{ u.n or 0 }}</td><td>{% if u.mean is defined %}{{ '%+.3f'|format(u.mean) }} ± {{ '%.3f'|format(1.96 * u.se) }} bb/hand · varians {{ '%.0f'|format(100 * (u.var_gain or 0)) }} % lägre{% if A.status == 'godkänd' %} · all-in EV {{ '%+.1f'|format(u.ev100) }} → turjusterat {{ '%+.1f'|format(u.adj100) }} bb/100{% endif %}{% else %}–{% endif %}</td><td>{{ '✅' if u.ok else ('❌' if u.ok is sameas false else '⏳') }}</td></tr>
+  </table>{% endif %}
+  {% if N.running %}<form method="post" action="/natt/stopp"><button class="btn ghost" type="submit">⏸ Pausa</button></form>
+  {% else %}<form method="post" action="/natt" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="btn" type="submit">🌙 Kör nattkörningen nu</button><label class="note" style="margin:0" title="Hoppar över väntan på 10 minuter efter ny handhistorik. GG måste vara stängt – programmet stänger sig ändå om GG startas."><input type="checkbox" name="direkt" value="1" checked> Starta direkt (GG är stängt)</label><label class="note" style="margin:0">Processer <input type="number" name="procs" min="1" max="24" value="{{ N.procs }}" style="width:56px"></label></form>{% endif %}
+  {% set S = N.schedule or {} %}{% if S.supported %}
+  <form method="post" action="/natt/schema" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px">
+    <span class="note" style="margin:0">{% if S.on %}⏰ Schemalagd{% if S.text %} – {{ S.text }}{% endif %}{% else %}Inte schemalagd{% endif %}</span>
+    <label class="note" style="margin:0">Start <input type="text" name="at" value="03:30" style="width:60px"></label>
+    <label class="note" style="margin:0">Sluta senast <input type="text" name="stop" value="07:00" style="width:60px"></label>
+    <button class="btn sm" type="submit">⏰ Schemalägg varje natt</button>{% if S.on %}<button class="btn sm ghost" type="submit" name="off" value="1">Ta bort schemat</button>{% endif %}
+  </form>{% endif %}
+  {% if N.receipt %}{% set R = N.receipt %}<div class="note">Senaste körningen: {{ R.start }} – {{ R.end or '' }} · {{ R.status }}{% if R.reason %} ({{ R.reason }}){% endif %}{% if R.new_hands is defined %} · {{ R.new_hands }} nya händer{% endif %}{% if R.backup %} · säkerhetskopia sparad{% endif %}</div>{% endif %}
+  {% if N.report %}<div style="margin-top:6px"><a class="btn sm ghost" href="/natt/rapport">📄 Ladda ner {{ N.report }}</a></div>{% endif %}
+</div>
+{% endif %}
+<form class="panel cta" method="post" action="/exportera/allt" style="max-width:820px;margin-bottom:14px" onsubmit="this.querySelector('button').textContent='Exporterar …'">
+  <div><b>📦 Exportera hela databasen</b><div class="note" style="margin:4px 0 0">Alla händer (alla varianter, hela perioden) i en zip-fil i programmets exportmapp ({{ own_dir }}). Bra som säkerhetskopia och för analyser med Claude.</div></div>
+  <button class="btn" type="submit">Exportera allt</button>
+</form>
+<form class="panel" method="post" action="/exportera" autocomplete="off" style="max-width:820px" onsubmit="this.querySelector('button[type=submit]').textContent='Exporterar …'">
+  <div class="card-h"><b>Välj händer</b></div>
+  {% if carry %}<p class="note" style="margin-top:0">2.81: fälten är förifyllda med ditt aktiva urval (variant, bord, nivå, period och antal) – exporten ger samma händer som sidan Händer visar. Ändra fälten för ett annat uttag.</p>{% endif %}
+  <p class="note" style="margin-top:0">Händerna sparas med exakt den text de hade i filerna du läste in (t.ex. GG:s zip-filer), i tidsordning. Alla händer kommer med: de som lästes in av en äldre version återskapas i GG:s format.{% if missing_raw %} ({{ '{:,}'.format(missing_raw).replace(',', ' ') }} händer i databasen saknar originaltext – läser du in dina GG-filer igen under Import &amp; databas får de tillbaka den.){% endif %}</p>
+  <div class="fld"><div class="lab">Variant</div>
+    <div class="row" style="display:flex;gap:6px;flex-wrap:wrap">{% for g in (carry.games if carry else ['PLO4', 'PLO5', 'PLO6']) %}<label class="pill"><input type="checkbox" name="games" value="{{ g }}"{% if carry and g in carry.games_sel %} checked{% endif %}><span>{{ g }}</span></label>{% endfor %}</div>
+    <div class="hint">Ingen vald = alla varianter.</div></div>
+  <div class="form-grid" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:0 14px">
+    <div class="fld"><label for="table">Bord</label><select id="table" name="table"><option value="">Alla bord</option><option value="vanliga"{% if carry and carry.table == 'vanliga' %} selected{% endif %}>Vanliga bord</option><option value="rush"{% if carry and carry.table == 'rush' %} selected{% endif %}>Rush &amp; Cash</option></select></div>
+    <div class="fld"><label for="stake">Nivå</label>{% if carry and carry.stakes %}<select id="stake" name="stake"><option value="">Alla nivåer</option>{% for k in carry.stakes %}<option value="{{ k }}"{% if carry.stake == k %} selected{% endif %}>${{ k.replace('/', '/$') }}</option>{% endfor %}</select>{% else %}<input type="text" id="stake" name="stake" placeholder="Alla nivåer (t.ex. 0.5/1)">{% endif %}</div>
+    <div class="fld"><label for="fran">Från</label><input type="date" id="fran" name="fran" value="{{ carry.fran if carry else '' }}"></div>
+    <div class="fld"><label for="till">Till</label><input type="date" id="till" name="till" value="{{ carry.till if carry else '' }}"></div>
+    <div class="fld"><div class="lab">&nbsp;</div><button type="button" class="btn sm ghost" style="height:36px" onclick="this.form.fran.value='';this.form.till.value=''">✕ Rensa datum</button></div>
+    <div class="fld"><label for="latest">Antal händer</label><input type="number" id="latest" name="latest" min="1" step="1" placeholder="Alla" value="{{ carry.latest if carry and carry.latest_on else '' }}"><div class="hint">De senaste, efter övriga val.</div></div>
+    <div class="fld" style="grid-column:1/-1"><label for="mapp">Spara i mapp</label><input type="text" id="mapp" name="mapp" value="{{ exp_dir }}" placeholder="Tomt = ladda ner i webbläsaren">
+      <div class="hint">Skriv hela sökvägen, t.ex. <code>~/Documents/PLO-export</code> (Mac) eller <code>C:\Users\Andreas\Documents\PLO-export</code> (Windows). Tips på Mac: dra mappen från Finder in i rutan. Mappen skapas om den inte finns. Programmet kommer ihåg den till nästa gång.</div></div>
+    <div class="fld"><label for="fmt">Format</label><select id="fmt" name="fmt"><option value="zip"{% if exp_fmt != 'txt' %} selected{% endif %}>En zip-fil</option><option value="txt"{% if exp_fmt == 'txt' %} selected{% endif %}>Vanliga textfiler (.txt)</option></select><div class="hint">Textfiler kräver en mapp.</div></div>
+    <div class="fld"><label for="split">Filer</label><select id="split" name="split"><option value="dag">En fil per dag och nivå</option><option value="en">Alla händer i en fil</option></select></div>
+  </div>
+  <button class="btn" type="submit">Exportera</button>
+  <div class="note">Vill du exportera t.ex. dina största förluster eller alla regelbrott? Använd knappen "Exportera listan" på sidan Händer – den tar med just de händer som listan visar.</div>
+</form>

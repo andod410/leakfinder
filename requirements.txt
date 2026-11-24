@@ -1,0 +1,6 @@
+# 2.81: övre gränser så att en ny huvudversion av ett paket inte installeras automatiskt utan att ha prövats.
+# Prövat med: Flask 3.1.3, Jinja2 3.1.6, NumPy 2.3.5 och 2.5.3, SciPy 1.17.0 och 1.18.1 (Python 3.12).
+flask>=3.0,<3.2
+jinja2>=3.1,<3.2
+numpy>=1.24,<2.6
+scipy>=1.10,<1.19

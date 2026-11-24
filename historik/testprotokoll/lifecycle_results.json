@@ -1,0 +1,46 @@
+[
+  {
+    "round": 0,
+    "version": {
+      "app": "plo-leak-finder",
+      "version": "2.70"
+    }
+  },
+  {
+    "round": 0,
+    "import_http": 200
+  },
+  {
+    "round": 0,
+    "shutdown_http": 200,
+    "body": {
+      "ok": true
+    }
+  },
+  {
+    "round": 0,
+    "exit": 0
+  },
+  {
+    "round": 1,
+    "version": {
+      "app": "plo-leak-finder",
+      "version": "2.70"
+    }
+  },
+  {
+    "round": 1,
+    "import_http": 200
+  },
+  {
+    "round": 1,
+    "shutdown_http": 200,
+    "body": {
+      "ok": true
+    }
+  },
+  {
+    "round": 1,
+    "exit": 0
+  }
+]

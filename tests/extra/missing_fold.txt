@@ -1,0 +1,19 @@
+Poker Hand #OM777: PLO-6 ($1/$2) - 2026/09/03 10:00:00
+Table 'X' 6-max Seat #1 is the button
+Seat 1: v1 ($200 in chips)
+Seat 2: v2 ($200 in chips)
+Seat 3: v3 ($200 in chips)
+Seat 4: Hero ($200 in chips)
+v2: posts small blind $1
+v3: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Hero [As Ks 9d 8d 7h 6c]
+Hero: raises $5 to $7
+v1: folds
+v2: folds
+v3: raises $17 to $24
+Uncalled bet ($17) returned to v3
+*** SHOWDOWN ***
+v3 collected $15 from pot
+*** SUMMARY ***
+Total pot $15 | Rake $0

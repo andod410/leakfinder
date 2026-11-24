@@ -1,0 +1,1173 @@
+--- a/.pytest_cache/README.md
++++ b/.pytest_cache/README.md
+@@ -0,0 +1,8 @@
++# pytest cache directory #
++
++This directory contains data from the pytest's cache plugin,
++which provides the `--lf` and `--ff` options, as well as the `cache` fixture.
++
++**Do not** commit this to version control.
++
++See [the docs](https://docs.pytest.org/en/stable/how-to/cache.html) for more information.
+--- a/ANDRINGAR_2.70.md
++++ b/ANDRINGAR_2.70.md
+@@ -0,0 +1,69 @@
++# Leakfinder 2.70 – ändrings- och verifieringsrapport
++
++Byggd för Andreas Ödman från den uppladdade versionen 2.69. Datum: 13 november 2026.
++Detta är en fristående ändring av källkoden. Originalfilerna i 2.69 har inte ändrats.
++
++## Start och uppgradering
++
++1. Stäng den tidigare versionen.
++2. Packa upp denna zip till en egen mapp.
++3. Starta med den vanliga Mac- eller Windows-startfilen.
++4. Låt programmet räkna om hela databasen och öppna en fullständig PLO6-analys innan du använder uppföljning eller tränaren.
++
++Originalhänderna i din befintliga databas behålls. Beräkningscache, faktaversion, analysnycklar, snapshots och regler är versionsändrade. Första omräkningen kan ta några minuter. Äldre regler återanvänds inte som om de validerats med den rättade metoden. Gamla sparade rakebackkalkylatorvärden återläses inte automatiskt, eftersom de kan bygga på den felaktiga konverteringen av blandade nivåer.
++
++Inga nya produktberoenden har lagts till. `python tools/run_tests.py` kör testsviten utan pytest. Med pytest installerat fungerar även `python -m pytest -q`.
++
++## Rättningar
++
++| Ärende från granskningen | Ändring i 2.70 | Avgränsning |
++|---|---|---|
++| LF-01: Läckor kraschar | Ett adapterlager ger undergrupper ett konsekvent visningsschema. Rått snitt märks som rått, inte som en påhittad krympt skattning. | Originalregelns data ändras inte av visningsadaptern. |
++| LF-02: blandade riverunderlag | Riversituationer och avgiftsmodell filtreras med modellens faktiska handindex. | Datum kan fortfarande använda programmets uttryckliga större modellbas; PLO4 och PLO5 blandas inte in i en PLO6-modell. |
++| LF-03: kända kort i sidopott | Alla kända kort förblir blockerade även om deras ägare inte får vinna just den potten. | Samma proportionella fördelning av observerad pottavgift används som tidigare. |
++| LF-04: täckande stackar | Varje pott får sin egen låsningstidpunkt från bidragen. Senare checks bestämmer inte EV-gatan. | Händer med senare folds eller pottlager som inte säkert låsts före river behåller konservativt faktiskt utfall. |
++| LF-05: holdout | Regler måste ha identisk exekverbar definition. Delning sker mellan hela sessioner. Bekräftelse kräver minst 20 kluster, korrigerat intervall och bootstrap. Valideringsfel sänker säkerheten. | En jämförelse mellan historiska syn- och höjningshänder blir inte oberoende kausal bekräftelse. |
++| LF-06: beslutsfält | Spelare och relativ position uppdateras efter varje fold. Position avser dem som fortfarande kan agera. | Spelare kvar i potten inkluderar all-in-spelare; detta dokumenteras separat. |
++| LF-07: felräknade nöt-outs | Unika träffkort räknas utan överlapp. Ett separat mått kontrollerar nästa gatas nöt-hand mot alla lagliga tvåkortskombinationer. | Detta är inte range-equity till river. De tidigare automatiska 9/12/13-outsreglerna för jam/syn/fold har dragits tillbaka. |
++| LF-08: fel SPR | Exporten får pott vid beslut, pott efter syn och korrekt effektiv stack efter syn. | Äldre exportfält pot_bb och spr fortsätter betyda gatans start, för kompatibilitet. |
++| LF-09: singulär regression | Tomma kolumner hanteras och bara identifierbara koefficienter visas. Kollinearitet mellan förlust och tid får inte godtyckligt räknas som förlusteffekt. | Icke identifierbara effekter märks uttryckligen; de betyder inte att effekten är noll. |
++| LF-10: blandad nivå i kalkylator | Blandade urval visar direkt beräknad USD/timme separat. Kalkylatorns underlagsknappar använder enskilda nivåer. | Ingen omräkning av ett blandat bb-medel med median-big-blind. |
++
++Ytterligare rättningar:
++
++- Flop-/turnstyrka beräknas med heros egna kort borttagna ur motståndarens möjliga lek.
++- Hela pottens avgift sparas separat för avgiftsmodellen; heros tilldelade rake används inte som om den vore pottens hela avgift.
++- Kandidatbets på river begränsas till pott och effektiv stack. Överbet-inmatningar används inte som träningsdata för vanliga PLO-riverbets.
++- River-modellens showdownselektion kvarstår som en metodbegränsning. Därför märks dess råd som hypoteser och promoveras inte till säkra fel bara för att modellkalibreringen är godkänd.
++- Historiska hårdkodade riktlinjer markeras som historiska hypoteser, inte som ny oberoende validering av aktuellt urval.
++- ”Upp till tio procent av slumpade händer slår dig” kallas inte längre nöten.
++- Paus- och tidsanalyser beskriver samband. En mekanisk ny session efter 30 minuter är inte ett påstående om säker återhämtning.
++- Testköraren upptäcker både gamla och nya testfiler och hanterar projektets använda fixtures utan extra testberoenden.
++
++## Vad som inte har byggts
++
++Ingen GTO-solver eller modell som kan bevisa det optimala beslutet i varje hand har lagts till. Rättningen gör inte historiska gruppmedel till kausala vinster. Osäkra råd har sänkts i säkerhetsgrad eller ersatts av uppgifter att granska; de har inte ersatts med andra obestyrkta facit.
++
++All-in EV är fortsatt en blandning av justerade all-ins och faktiskt utfall i andra händer. Preflop används fortfarande Monte Carlo, normalt 1 500 eller 6 000 utfall. Flop och turn räknas exakt för de kända händerna. Varje pott använder sin egen låsningstidpunkt, medan handens etikett anger den tidigaste av dessa tidpunkter och equityfältet den första potten hero deltar i.
++
++Run-it-twice kan behålla samma all-in-förväntan som ett runout: medelvärdet över två runouts har samma marginala förväntan. Det finns ett uttryckligt regressionstest för detta. Mer komplicerade händer kan fortfarande lämnas ojusterade på grund av senare actions eller okända kort.
++
++## Verifiering
++
++Den slutliga körningen, antal godkända tester och ekonomiska differenser redovisas i `VERIFIERING_2.70.md` och `testprotokoll/`. Full rå handhistorik och den lokala databasen ingår inte i leveransen.
++
++Verifiering sker i Linux med Python 3.12. Mac-startfilens shellsyntax kontrolleras, men Mac-/Windows-installation har inte körts på respektive system. Rutter och mallar kontrolleras med hela PLO6-underlaget. Klientlogik för tränare, listor, replayer, grafer och bildreglage testas separat med DOM-/canvas-stubbar. Dessa ersätter inte en riktig webbläsare: visuell layout och faktisk PNG-nedladdning måste fortfarande kontrolleras lokalt.
++
++## Export och kompatibilitet
++
++Postfloptabellen behåller befintliga kolumner och lägger till:
++
++- `pot_at_decision_bb`
++- `pot_after_call_bb`
++- `spr_after_call`
++- `draw_outs`
++- `nut_outs`
++
++Tomma outsfält betyder inte beräknat. `draw_outs` är unionen av möjliga nästa kort som gör stege/färg. `nut_outs` betyder att ingen möjlig motståndarkombination slår handen på nästa synliga bord; delad nöt är möjlig. Måttet säger inte hur ofta handen vinner till river mot en actionsrange.
++
++CSV-paketet innehåller en separat metodbeskrivning. JSON-exporten anger program- och metodversioner. Mottagande AI-agent bör använda kolumnnamn och metodbeskrivning, och skilja observerat utfall från bevisat beslut-EV.
+--- a/README.md
++++ b/README.md
+@@ -1,6 +1,18 @@
+-# PLO-läckfinnare 2.15
+-
+-Analyserar din handhistorik i PLO6 (även PLO4/PLO5), hittar dina största läckor och säger rakt ut **vad du gör fel**, **varför det kostar** och **vad du ska göra istället**, med exempelhänder ur ditt eget spel. Allt körs lokalt på din dator.
++# PLO-läckfinnare 2.70
++
++## Version 2.70 – rättningar efter granskning
++
++Den här versionen bygger på 2.69. Börja med `ANDRINGAR_2.70.md` för rättningar, tester och kända begränsningar.
++
++- Databasens originalhänder behålls. Första starten räknar om fakta och analyser eftersom EV, blockerhantering och beslutsfält har ändrats. Det kan ta några minuter.
++- Gamla snapshots och regler återanvänds inte som bekräftade resultat. Kör en full analys av PLO6 innan du följer upp eller tränar regler.
++- River-coachen och fasta historiska riktlinjer visar hypoteser. Deras förslag är inte bevisat optimala pokerbeslut.
++- Fasta 9/12/13-outsregler för jam/syn/fold har dragits tillbaka. Exporten ger i stället unika träffkort och tydligt definierade beslutstidsfält.
++- Rakebackkalkylatorn tar underlag från en enskild nivå; blandade nivåer visar sitt faktiska dollarresultat separat. Äldre kalkylatorvärden återläses inte automatiskt.
++- Testa: `python tools/run_tests.py` (inga extra testberoenden). Med pytest installerat fungerar även `python -m pytest -q`.
++
++
++Analyserar din handhistorik i PLO6 (även PLO4/PLO5), sammanställer resultat och identifierar möjliga läckor med tydliga evidensnivåer, med exempelhänder ur ditt eget spel. Allt körs lokalt på din dator.
+ 
+ ## Starta (Mac och Windows)
+ 
+--- a/plo_leak/__init__.py
++++ b/plo_leak/__init__.py
+@@ -1 +1 @@
+-__version__ = "2.69"
++__version__ = "2.70"
+--- a/plo_leak/board.py
++++ b/plo_leak/board.py
+@@ -123,11 +123,8 @@
+     def strength_u(self, hole) -> float:
+         """Andel slumpade händer (med lika många kort) som slår handen på det här bordet.
+         0 = slår allt. Jämförbart mellan bord oavsett hur 'farligt' bordet är."""
+-        v = self.hand_value(hole)
+-        rv = self.random_hand_values(len(hole))
+-        lo = np.searchsorted(rv, v, side="left")
+-        hi = np.searchsorted(rv, v, side="right")
+-        return float((len(rv) - hi) + 0.5 * (hi - lo)) / len(rv)
++        return self.beat_n(hole, samples=600)
++
+ 
+ 
+ def texture(board) -> str:
+--- a/plo_leak/dataexport.py
++++ b/plo_leak/dataexport.py
+@@ -195,6 +195,15 @@
+         files["postflop.csv"] = _csv(post, HEADER)
+         files["preflop_context.csv"] = _csv(ctx, CTX_HEADER)
+         files["opponents.csv"] = _csv(opp, OPP_HEADER)
++    files["METOD_2.70.txt"] = (
++        "Version 2.70: pot_bb/spr = gatans start. pot_at_decision_bb/pot_after_call_bb/spr_after_call = beslutstid.\n"
++        "players = kvar i potten, inklusive all-in; ip = sist bland dem som kan agera.\n"
++        "draw_outs = unika kort som ger stege/färg nästa gata, nut_outs = inga möjliga tvåkortskombinationer slår då handen.\n"
++        "Detta är inte equity mot en actionsrange. Tomma fält = ej beräknat.\n"
++        "All-in EV ersätter bara modellerbara all-ins; övriga händer behåller faktiskt utfall.\n"
++        "Holdout 'håller' kräver fryst identisk regel, sessionsseparerat test, minst 20 kluster och korrigerad osäkerhet.\n"
++        "River-coachen är en hypotes baserad på selekterade showdownhänder, inte säkert strategifacit.\n"
++    ).encode("utf-8")
+     files.update(extra_files or {})
+     files["sessions.csv"] = _csv(srows, ["session", "start", "end", "minutes", "hands", "net_bb", "ev_bb", "money",
+                                          "ev_money", "rule_opps", "rule_breaks", "follow_pct", "follow_pct_before",
+--- a/plo_leak/db.py
++++ b/plo_leak/db.py
+@@ -23,7 +23,7 @@
+ 
+ from .parser import (PARSER_VERSION, _decode, find_files, looks_like_hh, parse_hand, split_hands)
+ 
+-CALC_VERSION = 1  # höj när en sparad beräkning ändras
++CALC_VERSION = 3  # höj när en sparad beräkning ändras
+ RE_ID = re.compile(r"Hand #([^\s:]+)")
+ 
+ 
+--- a/plo_leak/ev.py
++++ b/plo_leak/ev.py
+@@ -158,20 +158,7 @@
+     acts = [a for a in h.actions if not a.kind.startswith("post") and not a.inferred]
+     if not acts:
+         return None
+-    hero_allin = h.stacks.get(hero, 0.0) - h.contrib(hero) <= 1e-6
+-    if hero_allin:
+-        # Gatan där hero:s sista marker gick in. Fortsätter andra spelare om en sidopott
+-        # efteråt räknas EV ändå från hero:s all-in, men om någon foldar på en senare
+-        # gata vet vi inte vad den spelaren hade – då hoppas handen över.
+-        chip = [a for a in h.actions if a.player == hero and a.added > 0]
+-        if not chip:
+-            return None
+-        last = STREET_IDX.get(chip[-1].street, 3)
+-        if any(a.kind == "fold" and STREET_IDX.get(a.street, 3) > last for a in h.actions):
+-            return None
+-    else:
+-        last = max(STREET_IDX.get(a.street, 3) for a in acts)
+-    if last >= 3 or len(h.board) < 5:
++    if len(h.board) < 5:
+         return None
+     holes = {}
+     for p in live:
+@@ -179,27 +166,58 @@
+         if not cards or len(cards) < 4:
+             return None
+         holes[p] = cards
+-    board = h.board[:BOARD_AT[last]]
+     contrib = {p: h.contrib(p) for p in h.seats}
+     total = sum(contrib.values())
+     if total <= 0:
+         return None
+     fee_rate = min(max(h.rake / total, 0.0), 0.5)
+-    if last == 0 and h.bb and total / h.bb >= 100:
+-        samples = max(samples, 6000)  # stora preflop-all-ins: fler slumpade bord ger mindre brus i EV
+     ev_won = 0.0
+     eq_cache = {}
+     hero_eq_main = None
++    frozen = []
++    # Known cards remain unavailable even when their owner cannot win a side pot.
++    all_known = dict(holes)
++    all_known.update({p: cs for p, cs in h.shown.items() if cs})
+     for amount, elig in _pots(contrib, live):
+         if hero not in elig:
+             continue
+-        key = tuple(sorted(elig))
++        if len(elig) == 1:
++            ev_won += amount * (1 - fee_rate)
++            continue
++        cap = min(contrib[p] for p in elig)
++        if not any(h.stacks.get(p, 0.0) - contrib[p] <= 1e-6 for p in elig):
++            return None  # no all-in locking this pot
++        paid = {p: 0.0 for p in elig}
++        lock = None
++        for ai, a in enumerate(h.actions):
++            if a.player in paid:
++                paid[a.player] += max(a.added, 0.0)
++            if all(v >= cap - 1e-6 for v in paid.values()):
++                lock = (ai, STREET_IDX.get(a.street, 3))
++                break
++        if lock is None:
++            return None
++        ai, last = lock
++        if last >= 3:
++            return None  # preserve actual result when a hero pot remains unlocked until river
++        if any(a.kind == "fold" and STREET_IDX.get(a.street, 3) > last
++               and contrib.get(a.player, 0) > 0 for a in h.actions[ai + 1:]):
++            return None  # later folding ranges cannot be retrospectively treated as known all-ins
++        board = h.board[:BOARD_AT[last]]
++        dead = [c for p, cs in all_known.items() if p not in elig for c in cs]
++        key = (tuple(sorted(elig)), last, tuple(sorted(dead)))
+         if key not in eq_cache:
+-            eq_cache[key] = equities({p: holes[p] for p in elig}, board, samples=samples, seed=zlib.crc32(h.id.encode()) & 0xFFFF)
++            n = max(samples, 6000) if last == 0 and h.bb and total / h.bb >= 100 else samples
++            eq_cache[key] = equities({p: holes[p] for p in elig}, board, dead=dead, samples=n,
++                                     seed=zlib.crc32(h.id.encode()) & 0xFFFF)
+         eq = eq_cache[key][hero]
+         if hero_eq_main is None:
+             hero_eq_main = eq
++        frozen.append(last)
+         ev_won += eq * amount * (1 - fee_rate)
++    if not frozen:
++        return None
++    last = min(frozen)
+     # EV räknas utan GG:s EV Cashout (premien och utbetalningen är en försäkring, inte en del av potten)
+     ev_net = ev_won - contrib[hero]
+     return ev_net, hero_eq_main, ["preflop", "flop", "turn"][last]
+--- a/plo_leak/export.py
++++ b/plo_leak/export.py
+@@ -118,6 +118,12 @@
+     return {
+         "format": "plo-leak-finder-export",
+         "version": __version__,
++        "method_versions": {"facts": __import__("plo_leak.facts", fromlist=["FACTS_VERSION"]).FACTS_VERSION,
++                            "calculations": __import__("plo_leak.db", fromlist=["CALC_VERSION"]).CALC_VERSION,
++                            "rules": __import__("plo_leak.practice", fromlist=["RULES_VERSION"]).RULES_VERSION},
++        "method_notes": ["All-in EV är inte en kontrafaktisk värdering av alla beslut.",
++                         "River-coachens modellråd är hypoteser från selekterade showdownhänder.",
++                         "Historiska riktlinjer räknas inte automatiskt om för ett nytt urval."],
+         "generated": datetime.now().isoformat(timespec="seconds"),
+         "profile": profile,
+         "hero_name_in_file": "Hero" if anon else hero,
+--- a/plo_leak/facts.py
++++ b/plo_leak/facts.py
+@@ -31,7 +31,7 @@
+ 
+ import numpy as np
+ 
+-FACTS_VERSION = 10  # höj när innehållet i en faktatabell ändras – då byggs fakta om automatiskt
++FACTS_VERSION = 11  # höj när innehållet i en faktatabell ändras – då byggs fakta om automatiskt
+ NUT_MIN_POT_BB = 20.0
+ EPOCH = datetime(1970, 1, 1)
+ SUIT_IDX = {"c": 0, "d": 1, "h": 2, "s": 3}
+@@ -43,7 +43,7 @@
+ # kolumner per tabell: namn -> dtype (hidx = radnummer i hands-tabellen)
+ SCHEMA = {
+     "hands": {"ts": "i8", "nh": "i1", "sb": "f8", "bb": "f8", "ttype": "i1", "nplay": "i1", "pos": "i2",
+-              "stake": "i2", "game": "i2", "hs": "i2", "net": "f8", "money": "f8", "rake": "f8", "rake_m": "f8",
++              "stake": "i2", "game": "i2", "hs": "i2", "net": "f8", "money": "f8", "rake": "f8", "rake_m": "f8", "pot_fee": "f8",
+               "ev": "f8", "ev_m": "f8", "ai_st": "i1", "ai_eq": "f8", "clu": "i8", "bucket": "i2", "nut": "i2",
+               "combo": "i2", "vpip": "?", "agg": "i2", "pas": "i2", "t_pre": "?", "t_vpip": "?", "corrupt": "?",
+               "cat": "i1", "fold_st": "i1", "won": "?", "sd": "?", "pot": "f8", "rdlow": "i1", "hp": "?", "sa": "?",
+@@ -165,6 +165,7 @@
+         H["money"].append(st.net_money)
+         H["rake"].append(st.rake_paid_bb)
+         H["rake_m"].append(st.rake_paid_money)
++        H["pot_fee"].append(h.rake / h.bb if h.bb else 0.0)
+         H["ev"].append(st.ev_net_bb)
+         H["ev_m"].append(st.ev_net_money)
+         if st.allin:
+--- a/plo_leak/fatigue.py
++++ b/plo_leak/fatigue.py
+@@ -273,18 +273,27 @@
+         return v - (np.bincount(inv, weights=v, minlength=k) / cnt)[inv]
+     yd = dm(y)
+     Xd = np.column_stack([dm(X[:, j]) for j in range(X.shape[1])])
+-    XtX = Xd.T @ Xd
+-    try:
+-        inv_x = np.linalg.inv(XtX)
+-    except np.linalg.LinAlgError:
+-        return [float("nan")] * X.shape[1], [float("nan")] * X.shape[1]
+-    b = inv_x @ (Xd.T @ yd)
+-    e = yd - Xd @ b
+-    S = np.zeros((k, X.shape[1]))
+-    for j in range(X.shape[1]):
+-        S[:, j] = np.bincount(inv, weights=Xd[:, j] * e, minlength=k)
+-    V = inv_x @ (S.T @ S) @ inv_x * (k / max(k - 1, 1))
+-    return [float(v) for v in b], [float(math.sqrt(max(V[j, j], 0))) for j in range(X.shape[1])]
++    p = X.shape[1]
++    active = np.flatnonzero(np.linalg.norm(Xd, axis=0) > 1e-10)
++    beta, se = np.full(p, np.nan), np.full(p, np.nan)
++    if not len(active) or k < 2:
++        return beta.tolist(), se.tolist()
++    A = Xd[:, active]
++    # A coefficient is identified only if every null-space vector is zero there.
++    # Never attribute a time effect to "back" by arbitrarily dropping a collinear control.
++    _, singular, vh = np.linalg.svd(A, full_matrices=A.shape[0] < A.shape[1])
++    tol = max(A.shape) * np.finfo(float).eps * singular[0]
++    rank = int((singular > tol).sum())
++    null = vh[rank:]
++    identifiable = np.ones(len(active), bool) if not len(null) else np.linalg.norm(null, axis=0) < 1e-8
++    inv_x = np.linalg.pinv(A.T @ A)
++    b = np.linalg.lstsq(A, yd, rcond=None)[0]
++    e = yd - A @ b
++    S = np.column_stack([np.bincount(inv, weights=A[:, j] * e, minlength=k) for j in range(A.shape[1])])
++    V = inv_x @ (S.T @ S) @ inv_x * (k / (k - 1))
++    beta[active[identifiable]] = b[identifiable]
++    se[active[identifiable]] = np.sqrt(np.maximum(np.diag(V), 0))[identifiable]
++    return beta.tolist(), se.tolist()
+ 
+ 
+ def down_table(st, rules_doc, down_bb: float = DOWN_BB) -> dict:
+@@ -338,5 +347,5 @@
+     hour_sig = bool(np.isfinite(hsv[0]) and hv[0] - 1.96 * hsv[0] > 0)
+     loss_sig = bool(np.isfinite(tsb[0]) and tb[0] - 1.96 * tsb[0] > 0)
+     return {"rows": rows, "eff": eff, "hours_eq": hours_eq, "significant": sig, "hour_sig": hour_sig, "loss_sig": loss_sig,
+-            "down_bb": down_bb,
++            "estimable": bool(np.isfinite(bv[0]) and np.isfinite(sv[0])), "down_bb": down_bb,
+             "hands": int(len(r)), "sessions": int(sess.max() + 1)}
+--- a/plo_leak/guidelines.py
++++ b/plo_leak/guidelines.py
+@@ -127,9 +127,9 @@
+             "och två par på parat bord +12 till +23 bb per syn."},
+     {"id": "pf_flop_draw_vs_cr", "area": "postflop", "per100": 0.3, "rank": 14, "level": "trolig", "gain": "~0,3 bb/100",
+      "title": "Drag mot höjning på floppen (inte all-in): räkna nöt-outs",
+-     "do": "Nöt-outs = nötfärgdrag 9 + stegouts. Under 9: folda. 9–12: syna bara om SPR efter synen är högst 2,5, annars folda. "
+-           "13 eller fler: få in pengarna nu (jamma, eller pott-3-betta) – syn är lika bra bara när SPR efter synen är under 0,8. "
+-           "Synade du: turn parar bordet → folda; träff → betta själv (han checkar ofta); blank → syna pottbet med minst 12 nöt-outs.",
++     "do": "Räkna unika träffkort med överlapp borttaget. Nästa gatas nöthand är inte samma sak som equity till river. "
++           "Jämför pris, beslutstidens pott, SPR och motståndarens range innan syn, höjning eller fold. "
++           "Tidigare fasta 9/12/13-outsregler är indragna i 2.70.",
+      "why": "Granskning 2026-11-12 (792 beslut, holdout): poolen foldar aldrig mot jam (0 av 81) – men jam/höjning är ändå "
+             "minst lika bra som syn (+2,4 ± 4,0 bb, samma i båda halvorna). Under 9 outs −9,0 ± 4,6. Blank turn med 12–13 outs "
+             "+5,0 ± 2,0 (413). Tidigare råd \"syna och planera turn i stället för att jamma\" är struket."},
+@@ -238,8 +238,8 @@
+             return "💡 #7 svag hand/drag efter din flop-bet: barrel oftare (trolig)"
+         if st == "river" and fac == "ingen" and not hu and act == "check" and bf is not None and bf > 0.6:
+             return "💡 #8 luft multiway på river: bluffa ibland, ¾–pott"
+-        if st == "river" and fac == "ingen" and ip and act == "check" and bf is not None and bf <= 0.10:
+-            return "💡 #9 nöten i position på river: betta alltid"
++        if st == "river" and fac == "ingen" and ip and act == "check" and bf is not None and bf == 0.0:
++            return "💡 #9 ingen slumpad hand slog din: granska värdebet (stickprovet bevisar inte nöten)"
+         paired = str(r.get("board_paired") or "0") in ("1", "1.0", "True")
+         fsize = float(r["facing_size_pct"]) if r.get("facing_size_pct") not in ("", None) else None
+         if st == "river" and fac == "raise" and ip and paired and act == "call" and mf is not None and mf > 0 \
+@@ -248,21 +248,24 @@
+         if st == "river" and fac in ("bet", "raise") and act == "call" and fsize is not None and fsize >= 66 and mf is not None \
+                 and ((hand == "kåk" and mf > 0.16) or (hand == "färg" and paired) or (hand == "två par" and not paired)):
+             return "💡 #11 stor river-bet: folda svag kåk, färg på parat bord och två par på oparat bord"
+-        nut_outs = outs + (9 if fd == "nöt" else 0)
++        raw_nut = r.get("nut_outs")
++        nut_outs = int(raw_nut) if raw_nut not in ("", None) else None
+         eff = float(r["eff_stack_bb"]) if r.get("eff_stack_bb") not in ("", None) else None
+         pot = float(r["pot_bb"]) if r.get("pot_bb") not in ("", None) else None
+         tc = float(r["to_call_bb"]) if r.get("to_call_bb") not in ("", None) else 0.0
+-        spr_after = ((eff - tc) / (pot + 2 * tc)) if eff is not None and pot else None
+-        if st == "flop" and fac == "raise" and fa in (0, "0", 0.0) and hand in WEAK and (fd or outs >= 4):
+-            if act == "call" and nut_outs < 9:
+-                return "💡 #10 drag mot flop-höjning med färre än 9 nöt-outs: folda"
+-            if act == "call" and 9 <= nut_outs <= 12 and spr_after is not None and spr_after > 2.5:
+-                return "💡 #10 9–12 nöt-outs och djupt (SPR över 2,5): folda"
+-            if act == "call" and nut_outs >= 13 and spr_after is not None and spr_after >= 0.8:
+-                return "💡 #10 13+ nöt-outs mot flop-höjning: få in pengarna nu (jamma)"
+-        if st == "turn" and fac == "bet" and r.get("prev_aggressor") == "annan" and act == "fold" and hand in WEAK \
+-                and not paired and nut_outs >= 12 and need is not None and need <= 0.34:
+-            return "💡 #10 blank turn med minst 12 nöt-outs mot pottbet: syna"
++        spr_raw = r.get("spr_after_call")
++        spr_after = float(spr_raw) if spr_raw not in ("", None) else None
++        if st in ("flop", "turn") and fac in ("raise", "bet") and act in ("call", "fold") and hand in WEAK and (fd or outs >= 4):
++            return ("💡 #10 drag: " + (f"{nut_outs} unika kort ger nöten på nästa gata; " if nut_outs is not None else "nöt-outs inte beräknade; ")
++                    + "granska equity mot hans range, pris och SPR. Ingen automatisk jam-/foldregel.")
+     except Exception:
+         return ""
+     return ""
++
++
++# Fixed historical heuristics are not recomputed or independently validated for a new selection.
++for _guide in GUIDELINES:
++    _guide["historical_level"] = _guide.get("level")
++    _guide["level"] = "trolig"
++    _guide["source"] = "historisk riktlinje; inte omtestad för aktuellt urval i 2.70"
++    _guide["why"] = "Historisk riktlinje, inte aktuell oberoende validering. " + _guide.get("why", "")
+--- a/plo_leak/holdout.py
++++ b/plo_leak/holdout.py
+@@ -8,9 +8,10 @@
+ kan inte bli bekräftad. Sökningen i de äldre händerna sparas, så den görs om bara när nya händer kommer in.
+ 
+ Utfall per regel:
+-* "håller"       – brotten har förlorat även på de nya händerna.
+-* "osäkert"      – åt fel håll, men mindre än en felmarginal (kan vara slump).
+-* "håller inte"  – åt fel håll med minst en felmarginal: regeln tas bort.
++* "håller"       – identisk fryst regel, minst 20 sessioner, korrigerat 95 %-intervall och bootstrap stöder förlust.
++* "osäkert"      – testets osäkerhet tillåter både vinst och förlust.
++* "håller inte"  – korrigerat intervall visar vinst i testperioden: regeln tas bort.
++* "inte oberoende" – ändrad/ny regel eller observationsjämförelse mellan olika actions.
+ * "för få"       – färre än MIN_NEW brott bland de nya händerna.
+ 
+ Kostnaden per brott blir försiktig: den som är minst negativ av den tidigare försiktiga kostnaden och
+@@ -48,7 +49,10 @@
+     from .analyses import REGISTRY, Ctx
+     from .practice import build_rules
+     order = rows[np.argsort(ft.H["ts"][rows], kind="stable")]
+-    k = int(len(order) * OLD_SHARE)
++    target = int(len(order) * OLD_SHARE)
++    # Entire sessions must lie on only one side of the split.
++    boundaries = np.flatnonzero(np.diff(ft.H["clu"][order])) + 1
++    k = int(boundaries[np.argmin(abs(boundaries - target))]) if len(boundaries) else target
+     mask = np.zeros(ft.n, bool)
+     mask[order[:k]] = True
+     st_old = build_stats(ft, mask, hero, getattr(st.hands_by_id, "_lookup", None))
+@@ -74,24 +78,35 @@
+     return tuple(r.get("spots") or ())
+ 
+ 
++def _definition(r):
++    """Only executable rule semantics, never fitted costs or display text."""
++    import json
++    keys = ("type", "spot", "spots", "pos", "positions", "nut", "combo", "thr", "weights", "cut_pct",
++            "num_cards", "groups", "cond", "bad_kind", "cmp", "except", "except_combo")
++    d = {k: r[k] for k in keys if k in r and r[k] is not None}
++    for k in ("spots", "positions", "groups", "except", "except_combo"):
++        if k in d:
++            d[k] = sorted(d[k])
++    return json.dumps(d, sort_keys=True, ensure_ascii=False)
++
++
+ def _match(r, old_rules):
+-    """Motsvarande regel i de äldre händerna (samma sorts händer i samma situation), eller None."""
+-    for o in old_rules:
+-        if o["id"] == r["id"]:
+-            return o
+-    for o in old_rules:
+-        if r["type"] != o["type"]:
+-            continue
+-        if r["type"] == "rundown" and set(r["groups"]) & set(o["groups"]):
+-            return o
+-        if r["type"] == "nut" and r["nut"] == o["nut"] and _spots(r) == _spots(o) and \
+-                set(r.get("positions") or [r["pos"]]) & set(o.get("positions") or [o["pos"]]):
+-            return o
+-        if r["type"] == "cutoff" and (r["spot"], r["pos"]) == (o["spot"], o["pos"]):
+-            return o
+-        if r["type"] == "action" and r.get("cond") == o.get("cond") and r.get("bad_kind") == o.get("bad_kind"):
+-            return o
+-    return None
++    signature = _definition(r)
++    return next((o for o in old_rules if _definition(o) == signature), None)
++
++
++def _verdict(mean, se, n, found, families=1, clusters=20):
++    from statistics import NormalDist
++    if not found:
++        return "inte oberoende"
++    if n < MIN_NEW or clusters < 20 or not np.isfinite(mean) or not np.isfinite(se):
++        return "för få"
++    z = NormalDist().inv_cdf(1 - 0.05 / (2 * max(families, 1)))
++    if mean + z * se < 0:
++        return "håller"
++    if mean - z * se > 0:
++        return "håller inte"
++    return "osäkert"
+ 
+ 
+ def _same(r, old_rules) -> bool:
+@@ -105,8 +120,13 @@
+     from .practice import broke_mask, first_rows, violation_index
+     from .threebet import strat_diff
+     rules = (doc or {}).get("rules") or []
+-    if not rules or st is None or len(st.rows) < MIN_TOTAL or not getattr(st, "decisions", None):
++    if not rules:
+         return doc
++    if st is None or len(st.rows) < MIN_TOTAL or not getattr(st, "decisions", None):
++        out = dict(doc)
++        out["rules"] = [{**r, "level": "trolig", "holdout": {"found_old": False, "verdict": "för få",
++                          "n_new": 0, "mean_new": None, "se_new": None}} for r in rules]
++        return out
+     old_doc, cut_ts, n_old, n_new = _discover_old(st, hero, cache_key, cache_dir)
+     old_rules = old_doc.get("rules") or []
+     pre = st.decisions.pre
+@@ -132,17 +152,21 @@
+             mean, se, n = strat_diff(pre, new)
+             bad = mean > 0          # 3-bet bättre än syn = regeln håller
+             mean = -mean            # visas som kostnad per brott (negativ = brott kostar)
+-        if n < MIN_NEW or not np.isfinite(mean):
+-            verdict = "för få"
+-        elif bad:
+-            verdict = "håller"
+-        elif np.isfinite(se) and abs(mean) >= se:
+-            verdict = "håller inte"
+-        else:
+-            verdict = "osäkert"
++        nc = int(len(np.unique(pre.clu[m]))) if r.get("cmp", "fold") == "fold" else 0
++        verdict = _verdict(mean, se, n, found, len(rules), nc)
++        # Alternative-action contrasts have selection bias; do not promote them to confirmed.
++        if r.get("cmp", "fold") != "fold":
++            verdict = "inte oberoende"
++        if verdict == "håller":
++            from .statlib import bootstrap_t_p
++            if bootstrap_t_p(pre.delta[m], pre.clu[m]) > 0.05 / max(len(rules), 1):
++                verdict = "osäkert"
+         r = dict(r)
++        if verdict != "håller":
++            r["why"] = "Oberoende holdout: " + verdict + ". Historiskt underlag: " + r.get("why", "")
+         r["holdout"] = {"found_old": found, "n_new": n, "mean_new": float(mean) if np.isfinite(mean) else None,
+-                        "se_new": float(se) if np.isfinite(se) else None, "verdict": verdict}
++                        "se_new": float(se) if np.isfinite(se) else None, "verdict": verdict, "clusters": nc,
++                        "definition_frozen": found, "family_tests": len(rules)}
+         if verdict == "håller inte":
+             dropped.append({"id": r["id"], "title": r["title"], "n": n, "mean": float(mean), "se": float(se),
+                             "reason": "höll inte på nya händer"})
+@@ -150,10 +174,8 @@
+         c = float(r.get("careful", r.get("cost") or 0.0))
+         if verdict == "håller":
+             c = max(c, min(float(mean), 0.0))
+-        elif verdict == "osäkert":
+-            c = 0.5 * c
+-        else:  # för få
+-            c = 0.65 * c
++        else:
++            c = 0.0  # uncertain historical costs are not a demonstrated recoverable gain
+         r["careful"] = c
+         if not found or verdict != "håller":
+             r["level"] = "trolig"
+--- a/plo_leak/hourly.py
++++ b/plo_leak/hourly.py
+@@ -44,7 +44,7 @@
+     n = len(r)
+     money, ev_m, rake_m = H["money"][r], H["ev_m"][r], H["rake_m"][r]
+     net, ev = H["net"][r], H["ev"][r]
+-    out = {"hands": n, "hours": hours, "rate_ok": hours >= MIN_HOURS, "sessions": sessions, "hph": n / hours if hours > 0 else None,
++    out = {"hands": n, "mixed_stakes": len(np.unique(H["bb"][r])) > 1, "hours": hours, "rate_ok": hours >= MIN_HOURS, "sessions": sessions, "hph": n / hours if hours > 0 else None,
+            "money": float(money.sum()), "ev_money": float(ev_m.sum()), "rake_money": float(rake_m.sum()),
+            "net_bb": float(net.sum()), "ev_bb": float(ev.sum()), "rake_bb": float(H["rake"][r].sum()),
+            "bb_usd": float(np.median(H["bb"][r])) if n else 0.0,
+--- a/plo_leak/postflop_rows.py
++++ b/plo_leak/postflop_rows.py
+@@ -18,7 +18,7 @@
+ HEADER = ["hand_id", "street", "players", "ip", "pfa", "pot_bb", "spr", "facing", "facing_pct", "action",
+           "size_pct", "hand", "flush_draw", "board_paired", "board_suits", "prev_aggressor", "order",
+           "hero_in_bb", "to_call_bb", "from_here_bb", "villain_hand", "villain_better", "facing_size_pct", "beat_frac", "straight_outs",
+-          "pot_type", "hero_pos", "facing_allin", "hero_allin", "eff_stack_bb", "made_frac", "from_here_pot"]
++          "pot_type", "hero_pos", "facing_allin", "hero_allin", "eff_stack_bb", "made_frac", "from_here_pot", "pot_at_decision_bb", "pot_after_call_bb", "spr_after_call", "draw_outs", "nut_outs"]
+ 
+ 
+ def _cat(hole, board) -> str:
+@@ -93,6 +93,40 @@
+         return 0
+     seen = Counter(hr + br)
+     return sum(4 - seen[r] for r in range(2, 15) if _has_straight(hr, br + [r]))
++
++
++def draw_outs_info(hole, board):
++    """Distinct next cards making a straight/flush; nuts means no legal opponent pair beats it now.
++    Not showdown equity, not a promise that the hand survives the following street.
++    """
++    from itertools import combinations
++    from .fastev import best_values, codes
++    import numpy as np
++    if len(board) not in (3, 4):
++        return {"draw_outs": 0, "nut_outs": 0}
++    board = list(board)
++    used = set(hole) | set(board)
++    rest = [(r, s) for r in range(2, 15) for s in "cdhs" if (r, s) not in used]
++    rc, bc, hc = np.array(codes(rest)), np.array(codes(board)), np.array(codes(hole))
++    boards = np.concatenate([np.broadcast_to(bc, (len(rc), len(bc))), rc[:, None]], axis=1)
++    values = best_values(np.broadcast_to(hc, (len(rc), len(hc))), boards)
++    hit = np.array([_has_straight([x[0] for x in hole], [x[0] for x in board + [c]])
++                    or any(sum(x[1] == ss for x in hole) >= 2 and sum(x[1] == ss for x in board + [c]) >= 3
++                           for ss in "cdhs") for c in rest])
++    runs = np.flatnonzero(hit)
++    if not len(runs):
++        return {"draw_outs": 0, "nut_outs": 0}
++    pairs = np.array(list(combinations(rc.tolist(), 2)))
++    hs, bs, counts = [], [], []
++    for i in runs:
++        legal = pairs[(pairs != rc[i]).all(axis=1)]
++        hs.append(legal)
++        bs.append(np.broadcast_to(boards[i], (len(legal), boards.shape[1])))
++        counts.append(len(legal))
++    opponent_values = best_values(np.concatenate(hs), np.concatenate(bs))
++    starts = np.r_[0, np.cumsum(counts)[:-1]]
++    strongest = np.maximum.reduceat(opponent_values, starts)
++    return {"draw_outs": int(hit.sum()), "nut_outs": int((values[runs] >= strongest).sum())}
+ 
+ 
+ def _board_suits(board) -> str:
+@@ -166,7 +200,14 @@
+                 made = round(float(cached(f"mf6|{h.id}|{hero}|{st}", lambda: BoardTable(board).strength_u(hole))), 4)
+             except Exception:
+                 made = ""
++        draw_info = {"draw_outs": "", "nut_outs": ""}
++        if not light and st != "river" and cat in ("högt kort", "par") and (fd or so):
++            from .db import cached
++            draw_info = cached(f"draw270|{h.id}|{hero}|{st}", lambda: draw_outs_info(hole, board))
+         for a in sacts:
++            active = [p for p in h.seats if p not in folded]
++            can_act = [p for p in active if h.stacks.get(p, 0.0) - put[p] > 1e-9]
++            ip = bool(can_act) and max(can_act, key=lambda p: order.get(h.positions.get(p, ""), -1)) == hero
+             cur_pot = pot + sum(contrib.values())
+             if a.player == hero and not a.kind.startswith("post"):
+                 k += 1
+@@ -190,7 +231,10 @@
+                             bfrac, so, pot_type, hpos,
+                             int(bool(last_aggr_allin)) if to_call > 1e-9 else "", int(bool(getattr(a, "allin", False))),
+                             round(eff_now / bb, 1), made if st != "river" else bfrac,
+-                            round(fh / (cur_pot / bb), 3) if fh != "" and cur_pot > 0 else ""])
++                            round(fh / (cur_pot / bb), 3) if fh != "" and cur_pot > 0 else "",
++                            round(cur_pot / bb, 4), round((cur_pot + max(to_call, 0)) / bb, 4),
++                            max(min(hero_left - max(to_call, 0), opp_left), 0) / (cur_pot + max(to_call, 0)) if cur_pot + max(to_call, 0) > 0 else "",
++                            draw_info["draw_outs"], draw_info["nut_outs"]])
+             contrib[a.player] += a.added
+             put[a.player] += a.added
+             if a.kind == "fold":
+--- a/plo_leak/practice.py
++++ b/plo_leak/practice.py
+@@ -132,7 +132,7 @@
+             "last": last.strftime("%Y-%m-%d") if last else None, "rules": rules}
+ 
+ 
+-RULES_VERSION = 9  # 9 = granskning 2.54 (korsvalidering mot 3-bet, brusfilter, holdout) · 8 = undantag kräver 100 händer · 7 = mot 3-bet: folda 0 nöt-egenskaper · 2 = bootstrap-test med korrigering för många tester, 3 = undantag för bra undergrupper, 4 = 3-bet-regler,
++RULES_VERSION = 10  # 9 = granskning 2.54 (korsvalidering mot 3-bet, brusfilter, holdout) · 8 = undantag kräver 100 händer · 7 = mot 3-bet: folda 0 nöt-egenskaper · 2 = bootstrap-test med korrigering för många tester, 3 = undantag för bra undergrupper, 4 = 3-bet-regler,
+ # 5 = krympta kostnader, skyddade lönsamma kombinationer, brusregler borttagna, 6 = höga rundowns undantas mot 3-bet
+ 
+ 
+--- a/plo_leak/report.py
++++ b/plo_leak/report.py
+@@ -214,6 +214,9 @@
+         except Exception:
+             import traceback
+             traceback.print_exc()
++            own_rules = {**own_rules, "rules": [{**r, "level": "trolig", "careful": 0.0,
++                         "holdout": {"verdict": "valideringsfel", "found_old": False, "n_new": 0,
++                                     "mean_new": None, "se_new": None}} for r in own_rules.get("rules", [])]}
+     conf_rules = [r for r in (own_rules or {}).get('rules', []) if r.get('level') != 'trolig']
+     from .likely import covered
+     improve = [o for o in improve if not covered(o, conf_rules)]
+@@ -287,7 +290,7 @@
+         points=key_points(st, money_summary(st), stake_rows, [] if mixed else nut_rows, guide, river_tbl, leaks, turn_tbl,
+                           nut_fold={} if mixed else nut_fold,
+                           confirmed=conf_rules, likely=improve, pots=R.get('potsize'), hourly=R.get('hourly')) + _fatigue_point(fatigue) + _stake_point(stakes_chk) if strict else [],
+-        focus_all=focus, pots=R.get('potsize') or {}, hourly=R.get('hourly') or {}, confirmed_rules=conf_rules, improve=improve, sessions=sessions, fatigue=fatigue, down=down, stake_check=stakes_chk, blocks=blocks, threebet=_threebet(st, mixed), dropped_rules=(own_rules or {}).get('dropped', []), holdout=(rules_doc or {}).get('holdout'), holdout_rules=[r for r in (rules_doc or {}).get('rules', []) if r.get('holdout')], rule_subs=[r for r in (own_rules or {}).get('rules', []) if r.get('sub')], nut_fold=nut_fold, nut_fold_by={r['name']: r for r in nut_fold.get('rows', [])},
++        focus_all=focus, pots=R.get('potsize') or {}, hourly=R.get('hourly') or {}, confirmed_rules=conf_rules, improve=improve, sessions=sessions, fatigue=fatigue, down=down, stake_check=stakes_chk, blocks=blocks, threebet=_threebet(st, mixed), dropped_rules=(own_rules or {}).get('dropped', []), holdout=(rules_doc or {}).get('holdout'), holdout_rules=[r for r in (rules_doc or {}).get('rules', []) if r.get('holdout')], rule_subs=_display_subgroups((own_rules or {}).get('rules', [])), nut_fold=nut_fold, nut_fold_by={r['name']: r for r in nut_fold.get('rows', [])},
+         strict=strict, strict_text=STRICT_RULES_TEXT, live_replay=live, tests=R["leaks"]["tests"],
+         candidates=R["leaks"]["candidates"],
+         power=R["power"]["rows"] if R["power"] else [],
+@@ -399,3 +402,26 @@
+                       f"händer än du brukar i samma läge och bryter oftare mot dina regler. {F['late_share']:.0f} % av dina "
+                       f"händer spelas efter {h}. En paus på minst 30 minuter efter {h} är värd ca "
+                       f"{save:.1f} bb/100. Se Sessioner → Tid i sessionen.")}]
++
++
++def _display_subgroups(rules):
++    """Display-only adapter; raw means are identified explicitly, never fabricated as shrinkage."""
++    out = []
++    for r in rules:
++        if not r.get("sub"):
++            continue
++        rr = dict(r)
++        rr["sub"] = []
++        for x in r["sub"]:
++            if x.get("est") is None and x.get("mean") is None:
++                continue
++            y = dict(x)
++            if y.get("est") is None:
++                y["est"] = y.get("mean")
++            y.setdefault("p_pos", None)
++            y.setdefault("exempt", y.get("name") in (r.get("except") or []))
++            y["estimate_kind"] = "skattat" if "est" in x else "rått snitt"
++            rr["sub"].append(y)
++        if rr["sub"]:
++            out.append(rr)
++    return out
+--- a/plo_leak/river.py
++++ b/plo_leak/river.py
+@@ -216,6 +216,8 @@
+ def build_pool(spots: list[dict], hero: str) -> Pool:
+     pool = Pool()
+     for s in spots:
++        if s.get("kind") == "bet" and s.get("frac", 0) > 1.000001:
++            continue
+         pool.n_spots += 1
+         if hero in (s.get("oop"), s.get("ip")):
+             continue  # hero:s egna händer används bara för kontrollen, aldrig för att bygga modellen
+@@ -465,7 +467,7 @@
+         if r_counts is None or call_arr is None or not sizes or len(sizes) < 30:
+             continue
+         frac = float(np.median(sizes))
+-        b = min(frac * pot, s["eff"])  # kan inte betta mer än vad som finns kvar
++        b = min(frac * pot, s["eff"], pot)  # kan inte betta mer än vad som finns kvar
+         if b <= 0:
+             continue
+         dr = rng.dirichlet(r_counts + 0.5, size=DRAWS)
+--- a/plo_leak/rivercoach.py
++++ b/plo_leak/rivercoach.py
+@@ -24,12 +24,15 @@
+ SIZE_SHORT = {name: short for (_, name), short in zip(SIZE_BUCKETS, ["liten", "medel", "pott", "överbet"])}
+ 
+ 
+-def _spots(ft) -> list:
++def _spots(ft, rows=None) -> list:
+     R = ft.t.get("rsp")
+     if R is None or "obj" not in R or not len(R["hidx"]):
+         return []
+     out = []
+-    for o in R["obj"]:
++    allowed = None if rows is None else set(np.asarray(rows, dtype=int).tolist())
++    for hi, o in zip(R["hidx"], R["obj"]):
++        if allowed is not None and int(hi) not in allowed:
++            continue
+         try:
+             out.append(pickle.loads(o))
+         except Exception:
+@@ -50,19 +53,21 @@
+     ft = getattr(st, "ft", None)
+     if ft is None:
+         return {}
+-    spots = _spots(ft)
++    rows = np.asarray(st.rows if st.rows is not None else np.arange(ft.n), dtype=int)
++    spots = _spots(ft, rows)
+     if len(spots) < 500:
+         return {"too_few": len(spots)}
+     H = ft.H
+-    fees = FeeModel().fit_arrays(H["pot"], H["rake"], H["bb"])
++    fees = FeeModel().fit_arrays(H["pot"][rows], H["pot_fee"][rows], H["bb"][rows])
+     total = int(len(st.rows)) if getattr(st, "rows", None) is not None else ft.n
+     res = analyze_spots(spots, hero, fees, max(total, 1))
+-    ok = {"mot_bet": component_ok(res, "mot_bet"), "ip_efter_check": component_ok(res, "ip_efter_check")}
++    calibrated = {"mot_bet": component_ok(res, "mot_bet"), "ip_efter_check": component_ok(res, "ip_efter_check")}
++    ok = {k: False for k in calibrated}  # showdown selection is not counterfactual validation
+     by_id = {}
+     for d in res.decisions:
+         det = d.detail
+         e = {"kind": d.kind, "chosen": d.chosen, "best": d.best, "gain": round(float(d.gain), 2),
+-             "sure": bool(d.gain_q05 > 0), "hb": round(float(det.get("hb", -1)), 3), "ok": ok[d.kind]}
++             "sure": False, "model_interval_positive": bool(d.gain_q05 > 0), "hb": round(float(det.get("hb", -1)), 3), "ok": ok[d.kind]}
+         if d.kind == "mot_bet":
+             e.update(p_win=round(float(det["p_win"]), 3), need=round(float(det["need"]), 3),
+                      pot=round(float(det["pot"]), 1), bet=round(float(det["bet"]), 1),
+@@ -76,11 +81,12 @@
+     cal = {k: {"n": v["n"], "pred": v["pred"], "actual": v["actual"], "ok": v["ok"]} for k, v in res.calibration.items()}
+     finds = [{"kind": f["kind"], "sub": SIZE_SHORT.get(f["sub"], f["sub"]), "n": f["n"],
+               "cost100": round(f["cost100"], 2), "cost100_cons": round(f["cost100_cons"], 2),
+-              "validated": f["validated"], "best": f["best_counts"]} for f in res.findings]
++              "validated": False, "calibrated": f["validated"], "best": f["best_counts"]} for f in res.findings]
+     queue = [{"id": d.id, "kind": d.kind, "chosen": SIZE_SHORT.get(d.chosen, d.chosen),
+               "best": SIZE_SHORT.get(d.best, d.best), "gain": round(float(d.gain), 1)} for d in review_queue(res, 30)]
+     return {"decisions": by_id, "ok": ok, "cal": cal, "findings": finds, "queue": queue,
+-            "n_spots": res.spots, "n_dec": len(res.decisions)}
++            "n_spots": res.spots, "n_dec": len(res.decisions), "calibrated": calibrated,
++            "validation": "hypotes – showdownurval, inte validerad på foldade händer"}
+ 
+ 
+ KIND_TEXT = {
+--- a/plo_leak/templates/pages/rakeback.html
++++ b/plo_leak/templates/pages/rakeback.html
+@@ -8,15 +8,17 @@
+ </style>
+ {% set H = hourly or {} %}
+ {% set src = [] %}
+-{% if H.total %}{% set t = H.total %}
++{% if H.total and not H.total.mixed_stakes %}{% set t = H.total %}
+   {% set _ = src.append({"key": "alla", "label": "Hela urvalet", "hands": t.hands, "hours": t.hours, "hph": t.hph, "rake100": t.rake100, "ev100": t.ev100, "bb": t.bb_usd}) %}
+ {% endif %}
+ {% set ss = H.sessions or [] %}
+ {% for k in [1, 5, 10] %}{% if ss|length >= k %}{% set part = ss[:k] %}
+   {% set hands = part|sum(attribute='hands') %}{% set hours = part|sum(attribute='hours') %}
+-  {% if hands and hours %}{% set _ = src.append({"key": "s" ~ k, "label": ("Senaste spelpasset" if k == 1 else "Senaste " ~ k ~ " spelpassen"), "hands": hands, "hours": hours, "hph": hands / hours, "rake100": 100.0 * (part|sum(attribute='rake_bb')) / hands, "ev100": 100.0 * (part|sum(attribute='ev_bb')) / hands, "bb": part[0].bb_usd}) %}{% endif %}
++  {% if hands and hours and not (part|selectattr("mixed_stakes")|list) %}{% set _ = src.append({"key": "s" ~ k, "label": ("Senaste spelpasset" if k == 1 else "Senaste " ~ k ~ " spelpassen"), "hands": hands, "hours": hours, "hph": hands / hours, "rake100": 100.0 * (part|sum(attribute='rake_bb')) / hands, "ev100": 100.0 * (part|sum(attribute='ev_bb')) / hands, "bb": part[0].bb_usd}) %}{% endif %}
+ {% endif %}{% endfor %}
+ 
++{% if H.total and H.total.mixed_stakes %}<div class="panel note">Urvalet blandar nivåer. Verkligt all-in-justerat resultat vid bordet: {{ H.total.ev_usd_h|signed(2) }} USD/timme (uppskattad speltid, utan bonus). Välj en enskild nivå som kalkylatorunderlag nedan – median-big-blind används inte för att omvandla blandade nivåer.</div>{% endif %}
++{% for t in H.stakes or [] %}{% set _ = src.append({"key": t.stake, "label": "$" ~ t.stake, "hands": t.hands, "hours": t.hours, "hph": t.hph, "rake100": t.rake100, "ev100": t.ev100, "bb": t.bb_usd}) %}{% endfor %}
+ <div class="panel" style="margin-bottom:14px">
+   <div class="rb-res" id="rb-out"></div>
+   <div class="note">Allt räknas med all-in EV efter rake. Rakeback och leaderboard är pengar du får utöver resultatet vid bordet, så den winrate du behöver kan vara negativ.</div>
+@@ -62,7 +64,7 @@
+ (function(){
+   var SRC = {{ src|tojson }};
+   var LB0 = [[1,21675,560],[2,20724,450],[3,19761,340],[4,18143,240],[5,16354,240],[6,15028,160],[7,14413,160],[8,13451,160],[9,12024,90],[10,11337,90]];
+-  var KEY='plo-rb-v1', ids=['bb','hph','rake','rbp','wr','hh','hn','days','pph','mult'];
++  var KEY='plo-rb-v2', ids=['bb','hph','rake','rbp','wr','hh','hn','days','pph','mult'];
+   function $(i){return document.getElementById(i);}
+   function v(i){var x=parseFloat($(i).value);return isFinite(x)?x:0;}
+   function usd(x,d){d=d===undefined?0:d;var s=Math.abs(x).toFixed(d).replace(/\B(?=(\d{3})+(?!\d))/g,' ');return (x>0?'+':(x<0?'−':''))+'$'+s;}
+--- a/plo_leak/templates/pages/sessioner.html
++++ b/plo_leak/templates/pages/sessioner.html
+@@ -81,7 +81,7 @@
+   <table class="tbl"><tr><th></th><th class="n">Händer</th><th class="n">VPIP</th><th class="n">Mot ditt snitt</th><th class="n">Regelbrott / 100</th><th class="n">All-in EV</th></tr>
+   {% for lbl, x in [('Före gränsen', S.before), ('Efter gränsen', S.after)] %}<tr><td>{{ lbl }}</td><td class="n">{{ x.hands }}</td><td class="n">{{ '%.0f'|format(x.vpip) ~ ' %' if x.vpip is not none else '–' }}</td><td class="n {{ 'neg' if x.vdev and x.vdev > 2 else '' }}">{{ '%+.1f'|format(x.vdev) ~ ' %-enh.' if x.vdev is not none else '–' }}</td><td class="n">{{ '%.1f'|format(x.brk100) if x.brk100 is not none else '–' }}</td><td class="n {{ 'pos' if x.ev >= 0 else 'neg' }}">{{ x.ev|signed(1) }} bb</td></tr>{% endfor %}
+   </table>
+-  <div class="note">EV för en enskild session svänger mycket – titta mest på VPIP och regelbrott. I hela databasen blir du lösare och bryter fler regler ju längre du spelar. Efter gränsen: pausa minst 30 minuter – då är du tillbaka på din vanliga nivå.</div>
++  <div class="note">EV för en enskild session svänger mycket – titta mest på VPIP och regelbrott. I hela databasen blir du lösare och bryter fler regler ju längre du spelar. Stoppgränsen är en vald rutin, inte en bevisat optimal gräns. En paus på 30 minuter startar en ny statistisk session; den bevisar inte återhämtning.</div>
+   {% endif %}{% endif %}
+ </div>
+ {% endif %}
+@@ -206,8 +206,8 @@
+ <div class="panel" id="back" style="margin-bottom:14px">
+   <div class="card-h"><b>📉 När det går dåligt – spelar du sämre när du ligger back i passet?</b></div>
+   {% set e = D.eff %}
+-  {% if D.significant %}<div class="verdict bad" style="margin-bottom:10px">Ja. När du ligger mer än {{ '%g'|format(D.down_bb) }} bb back spelar du <b>{{ '%.1f'|format(e.vpip_back) }} procentenheter</b> fler händer än vid samma tid i andra pass. Sluta när du når −{{ '%g'|format(D.down_bb) }} bb.</div>
+-  {% else %}<div class="verdict {{ 'bad-soft' if D.hour_sig else 'good-soft' }}" style="margin-bottom:10px">{% if D.hour_sig %}<b>Det är tiden, inte förlusterna.</b> Vid samma tid i passet spelar du inte säkert lösare när du ligger back ({{ '%+.1f'|format(e.vpip_back) }} ± {{ '%.1f'|format(1.96 * e.vpip_back_se) }} procentenheter) – men varje timme vid bordet gör dig {{ '%.1f'|format(e.vpip_hour) }} procentenheter lösare och ger {{ '%.2f'|format(e.brk_hour) }} fler regelbrott/100. Stoppa efter 2 timmar (tidigare vid −150 bb) och pausa minst 30 minuter.{% else %}Inget säkert tecken på att du spelar sämre när du ligger back eller när passet blir långt.{% endif %}</div>{% endif %}
++  {% if not D.estimable %}<div class="note">Förlusteffekten kan inte skattas för detta urval (för lite variation). Det är inte bevis för att effekten saknas.</div>{% elif D.significant %}<div class="verdict bad" style="margin-bottom:10px">Ja. När du ligger mer än {{ '%g'|format(D.down_bb) }} bb back spelar du <b>{{ '%.1f'|format(e.vpip_back) }} procentenheter</b> fler händer än vid samma tid i andra pass. Sluta när du når −{{ '%g'|format(D.down_bb) }} bb.</div>
++  {% else %}<div class="verdict {{ 'bad-soft' if D.hour_sig else 'good-soft' }}" style="margin-bottom:10px">{% if D.hour_sig %}<b>Tidssambandet är tydligare än förlustsambandet.</b> Vid samma tid i passet spelar du inte säkert lösare när du ligger back ({{ '%+.1f'|format(e.vpip_back) }} ± {{ '%.1f'|format(1.96 * e.vpip_back_se) }} procentenheter) – men varje timme vid bordet är förknippad med att du är {{ '%.1f'|format(e.vpip_hour) }} procentenheter lösare och ger {{ '%.2f'|format(e.brk_hour) }} fler regelbrott/100. Stoppa efter 2 timmar (tidigare vid −150 bb) och pausa minst 30 minuter.{% else %}Inget säkert tecken på att du spelar sämre när du ligger back eller när passet blir långt.{% endif %}</div>{% endif %}
+   {% if D.loss_sig %}<div class="verdict bad-soft" style="margin-bottom:10px">Efter en förlorad pott på mer än 100 bb bryter du mot reglerna {{ '%.1f'|format(e.brk_after_loss) }} gånger oftare per 100 händer de närmaste 50 händerna. Ta 2 minuter och läs dina tre viktigaste preflop-regler.</div>{% endif %}
+   <div class="scroll"><table class="tbl"><tr><th>Läge i passet (före handen)</th><th class="n">Händer</th><th class="n">Spelar fler än du brukar</th><th class="n">Regelbrott / 100</th><th class="n hide-m">All-in EV / 100</th><th class="n hide-m">Snitt tid in</th></tr>
+   {% for x in D.rows %}{% if x.hands %}<tr><td>{{ x.label }}</td><td class="n">{{ '{:,}'.format(x.hands).replace(',', ' ') }}</td><td class="n {{ 'neg' if x.vdev > 2 else '' }}">{{ '%+.1f'|format(x.vdev) }} %-enh.</td><td class="n">{{ '%.1f'|format(x.brk100) }}</td><td class="n hide-m {{ 'pos' if x.ev100 >= 0 else 'neg' }}">{{ x.ev100|signed(1) }}</td><td class="n hide-m">{{ ('%.1f'|format(x.hours)).replace('.', ',') }} h</td></tr>{% endif %}{% endfor %}
+--- a/plo_leak/templates/pages/trana.html
++++ b/plo_leak/templates/pages/trana.html
+@@ -52,7 +52,7 @@
+   <button class="btn sm ghost" type="button" id="hclear" style="width:100%;margin-top:8px">Rensa listan</button>
+ </aside>
+ </div>
+-<p class="note">Facit visar om regeln är <span class="tag bad">bekräftad</span> eller <span class="tag">trolig</span> (inte bevisad, men troligast bättre för din bb/100). <span class="tag">ditt val</span> = ingen av dina regler säger något om handen – båda svaren räknas som rätt. Regler från analysen {{ rules_created }} ({{ rules_hands }} händer).</p>
++<p class="note">Facit visar om regeln är <span class="tag bad">bekräftad</span> eller <span class="tag">trolig</span> (inte bevisad; en hypotes att pröva på nya händer). <span class="tag">ditt val</span> = ingen av dina regler säger något om handen – båda svaren räknas som rätt. Regler från analysen {{ rules_created }} ({{ rules_hands }} händer).</p>
+ <script>
+ (function(){
+   let cur=null, right=0, total=0, timer=null, retrain=null, shownIdx=-1;
+--- a/plo_leak/templates/parts/lackor.html
++++ b/plo_leak/templates/parts/lackor.html
+@@ -51,7 +51,7 @@
+       <div class="h">Del av gruppen</div><div class="h n">Spelade</div><div class="h">Mot fold per hand (skattat)</div><div class="h n">Rått snitt</div><div class="h st">Status</div>
+       {% for x in r.sub %}{% set w = 50 * ([x.est|abs, mx]|min) / mx %}
+       <div>{{ x.name }}</div><div class="n">{{ x.n }}</div>
+-      <div class="bar" title="Skattat {{ '%+.2f'|format(x.est) }} bb per hand"><b></b><i style="{{ 'left:50%' if x.est >= 0 else 'right:50%' }};width:{{ w }}%;background:var({{ '--good' if x.est >= 0 else '--bad' }})"></i></div>
++      <div class="bar" title="{{ x.estimate_kind|default('skattat') }} {{ '%+.2f'|format(x.est) }} bb per hand"><b></b><i style="{{ 'left:50%' if x.est >= 0 else 'right:50%' }};width:{{ w }}%;background:var({{ '--good' if x.est >= 0 else '--bad' }})"></i></div>
+       <div class="n {{ 'pos' if (x.mean or 0) >= 0 else 'neg' }}">{{ x.mean|signed(2) if x.mean is not none else '–' }}</div>
+       <div class="st">{% if x.exempt %}<span class="tag good">undantag</span>{% elif x.p_pos is none %}<span class="tag">följer regeln</span>{% else %}<span class="tag bad">folda</span>{% endif %}{% if x.p_pos is not none %} <span class="note">{{ '%.0f'|format(100 * x.p_pos) }} % chans +EV</span>{% endif %}</div>
+       {% endfor %}
+@@ -63,7 +63,7 @@
+   {% if threebet and (threebet.no_sa or threebet.hp_sa or threebet.flats) %}{% set A = threebet.no_sa %}{% set Bq = threebet.hp_sa %}
+   <h2>3-bets mot en öppning</h2>
+   <div class="panel scroll">
+-    <p style="margin-top:0">👉 <b>3-betta högt par + suited ess. 3-betta inte utan suited ess.</b> Siffror = bb per hand mot fold.</p>
++    <p style="margin-top:0">👉 <b>Historiska jämförelser av syn och 3-bet – följ evidensnivån i varje rad.</b> Siffror = bb per hand mot fold.</p>
+     <table class="tbl"><tr><th>Händer</th><th>Du gjorde</th><th class="n">Antal</th><th class="n">Mot fold per hand</th><th>Slutsats</th></tr>
+     {% if A %}<tr><td>Utan suited ess</td><td>3-bet</td><td class="n">{{ A.n }}</td><td class="n {{ 'pos' if A.mean >= 0 else 'neg' }}">{{ A.mean|signed(2) }} <span class="note" style="margin:0">±{{ '%.1f'|format(1.96 * A.se) }}</span></td>
+       <td>{% if A.ok %}<span class="tag bad">3-betta inte</span> minus även med felmarginalen och i båda halvorna{% else %}<span class="tag">inte säkert</span>{% endif %}</td></tr>{% endif %}
+--- a/tests/test_core.py
++++ b/tests/test_core.py
+@@ -1898,7 +1898,7 @@
+     ids = [r["id"] for r in out["rules"]]
+     assert "act|3bet_utan_sa" not in ids and any(d["id"] == "act|3bet_utan_sa" for d in out["dropped"])
+     hp = next(r for r in out["rules"] if r["id"] == "act|3bet_hp_sa")
+-    assert hp["holdout"]["verdict"] == "håller" and hp["careful"] <= 0
++    assert hp["holdout"]["verdict"] == "inte oberoende" and hp["level"] == "trolig" and hp["careful"] == 0  # action contrasts remain observational
+     assert out["holdout"]["n_new"] > 30000
+ 
+ 
+@@ -2195,7 +2195,7 @@
+     assert "#5" in postflop_note({**base, "street": "turn", "facing": "bet", "action": "fold", "facing_allin": 1, "flush_draw": "ja",
+                                   "facing_pct": 40})
+     assert "#6" in postflop_note({**base, "street": "flop", "facing": "ingen", "action": "check", "pfa": 1, "ip": 1, "made_frac": 0.5})
+-    assert "#9" in postflop_note({**base, "street": "river", "facing": "ingen", "action": "check", "beat_frac": 0.05, "players": 3})
++    assert postflop_note({**base, "street": "river", "facing": "ingen", "action": "check", "beat_frac": 0.05, "players": 3}) == ""  # top 10% is not nuts
+     assert postflop_note({**base, "street": "turn", "facing": "ingen", "action": "check", "prev_aggressor": "hero", "hand": "färg",
+                           "made_frac": 0.05}) == ""  # turn-barrel med färdig färg höll inte i omgång 2
+     # 2.67: tre nya riktlinjer
+@@ -2209,9 +2209,9 @@
+                           "board_paired": 0, "facing_size_pct": 80, "made_frac": 0.1}) == ""  # stegar: syna
+     # 2.69: #10 omskriven efter granskningen
+     assert postflop_note({**base, "street": "flop", "facing": "raise", "action": "raise", "hand": "par", "flush_draw": "nöt"}) == ""
+-    assert "färre än 9" in postflop_note({**base, "street": "flop", "facing": "raise", "action": "call", "hand": "par",
++    assert "Ingen automatisk" in postflop_note({**base, "street": "flop", "facing": "raise", "action": "call", "hand": "par",
+                                           "flush_draw": "ja", "straight_outs": 4, "facing_allin": 0})
+-    assert "13+" in postflop_note({**base, "street": "flop", "facing": "raise", "action": "call", "hand": "par", "flush_draw": "nöt",
++    assert "nöt-outs inte beräknade" in postflop_note({**base, "street": "flop", "facing": "raise", "action": "call", "hand": "par", "flush_draw": "nöt",
+                                    "straight_outs": 8, "facing_allin": 0, "eff_stack_bb": 80, "pot_bb": 30, "to_call_bb": 10})
+     assert "#11" in postflop_note({**base, "street": "river", "facing": "bet", "action": "call", "hand": "kåk",
+                                    "board_paired": 1, "facing_size_pct": 80, "made_frac": 0.2})
+--- a/tests/test_v270.py
++++ b/tests/test_v270.py
+@@ -0,0 +1,218 @@
++"""Regression tests for independently reproduced failures from the 2.69 audit."""
++from datetime import datetime
++from types import SimpleNamespace
++import pickle
++import numpy as np
++from plo_leak.parser import Hand, Action
++from plo_leak.cards import parse_cards
++
++
++def _cover():
++    h = Hand('cover', 'PLO-6', .5, 1, datetime(2026, 1, 1), seats={'H':1, 'V':2},
++             stacks={'H':100,'V':20}, hole={'H':parse_cards('As Ah Kd Qd 8c 7c')},
++             shown={'V':parse_cards('Ks Kh Jd Td 9c 6c')}, board=parse_cards('Ac 2d 3h 4s 5s'),
++             invested={'H':20,'V':20})
++    h.actions=[Action('preflop','H','call',1,1),Action('preflop','V','post_bb',1,1),
++               Action('flop','V','bet',19,19,True),Action('flop','H','call',19,19),
++               Action('turn','H','check'),Action('river','H','check')]
++    return h
++
++
++def test_covering_stack_ignores_later_checks():
++    from plo_leak.ev import allin_ev
++    got = allin_ev(_cover(),'H')
++    assert got is not None and got[2]=='flop'
++    assert abs(got[0]-18.01801801801802)<1e-9
++
++
++def test_no_allin_does_not_become_ev_adjusted():
++    from plo_leak.ev import allin_ev
++    h=_cover();h.stacks['V']=100
++    assert allin_ev(h,'H') is None
++
++
++def test_sidepot_known_short_stack_cards_remain_dead():
++    from plo_leak.ev import allin_ev
++    h=Hand('sidepot','PLO-6',.5,1,datetime(2026,1,1),seats={'H':1,'V':2,'S':3},
++           stacks={'H':100,'V':100,'S':20},hole={'H':parse_cards('8c 6d 9d Qc 7s 4h')},
++           shown={'V':parse_cards('Ks 7h 5d Qh Ah 3c'),'S':parse_cards('Jh Kh Th 5s Js Ad')},
++           board=parse_cards('As Qd 5h 7d Ts'),invested={'H':100,'V':100,'S':20})
++    h.actions=[Action('turn','S','bet',20,20,True),Action('turn','H','raise',100,100,True),Action('turn','V','call',100,100,True)]
++    assert abs(allin_ev(h,'H')[0]-39.333333333333314)<1e-9
++
++
++def test_each_pot_uses_its_own_lock_street():
++    from plo_leak.ev import allin_ev,equities
++    h=Hand('locks','PLO-6',.5,1,datetime(2026,1,1),seats={'H':1,'V':2,'S':3},
++           stacks={'H':100,'V':100,'S':20},hole={'H':parse_cards('8c 6d 9d Qc 7s 4h')},
++           shown={'V':parse_cards('Ks 7h 5d Qh Ah 3c'),'S':parse_cards('Jh Kh Th 5s Js Ad')},
++           board=parse_cards('As Qd 5h 7d Ts'),invested={'H':100,'V':100,'S':20})
++    h.actions=[Action('flop',p,'call',20,20,p=='S') for p in ('S','H','V')]+[Action('turn',p,'call',80,80,True) for p in ('H','V')]
++    holes={**h.shown,**h.hole}
++    expected=60*equities(holes,h.board[:3])['H']+160*equities({p:holes[p] for p in ('H','V')},h.board[:4],dead=holes['S'])['H']-100
++    assert abs(allin_ev(h,'H')[0]-expected)<1e-9
++
++
++def test_river_coach_filters_exact_hand_indices():
++    from plo_leak.rivercoach import _spots
++    ft=SimpleNamespace(t={'rsp':{'hidx':np.array([0,1,2]),'obj':[pickle.dumps({'id':str(i)}) for i in range(3)]}})
++    assert [s['id'] for s in _spots(ft,np.array([0,2]))]==['0','2']
++    assert _spots(ft,np.array([],int))==[]
++
++
++def test_sparse_subgroups_have_a_display_schema():
++    from plo_leak.report import _display_subgroups
++    raw={'title':'test','sub':[{'name':'a','n':10,'mean':-2.0}],'except':['a']}
++    got=_display_subgroups([raw])[0]['sub'][0]
++    assert got['est']==-2 and got['exempt'] and got['p_pos'] is None
++    assert got['estimate_kind']=='rått snitt' and 'est' not in raw['sub'][0]
++
++
++def test_holdout_small_negative_is_uncertain():
++    from plo_leak.holdout import _verdict
++    assert _verdict(-.01,10,1000,True)=='osäkert'
++    assert _verdict(-3,.1,1000,True)=='håller'
++    assert _verdict(-3,.1,1000,False)=='inte oberoende'
++    assert _verdict(-3,.1,1000,True,clusters=1)=='för få'
++    assert _verdict(3,.1,1000,True)=='håller inte'
++
++
++def test_holdout_multiplicity_and_frozen_definitions():
++    from plo_leak.holdout import _match,_verdict
++    r={'id':'x','type':'cutoff','spot':'rfi','pos':'CO','thr':1,'weights':[1,2]}
++    assert _match(r,[{**r,'cost':-5,'title':'different display'}]) is not None
++    assert _match(r,[{**r,'thr':2}]) is None
++    assert _match(r,[{**r,'except':['good']}]) is None
++    assert _verdict(-2.1,1,1000,True,1)=='håller'
++    assert _verdict(-2.1,1,1000,True,10)=='osäkert'
++
++
++def test_decision_players_ip_and_pot_update_after_fold():
++    from plo_leak.postflop_rows import HEADER,rows_for_hand
++    h=Hand('dec','PLO-6',.5,1,datetime(2026,1,1),seats={'V':1,'H':2,'A':3},
++           stacks={'V':100,'H':100,'A':100},positions={'V':'SB','H':'BB','A':'BTN'},
++           hole={'H':parse_cards('As 5s Kh Qd 4c 3c')},board=parse_cards('Js 9s 2d'))
++    h.actions=[Action('preflop',p,'call',10,10) for p in h.seats]+[Action('flop','V','bet',10,10),Action('flop','H','call',10,10),Action('flop','A','fold'),Action('flop','V','raise',30,40),Action('flop','H','call',30,40)]
++    rr=[dict(zip(HEADER,r)) for r in rows_for_hand(h,'H',0,light=True)]
++    assert [r['players'] for r in rr]==[3,2]
++    assert [r['ip'] for r in rr]==[0,1]
++    assert rr[1]['pot_at_decision_bb']==80 and rr[1]['pot_after_call_bb']==110
++    assert abs(rr[1]['spr_after_call']-50/110)<1e-9
++
++
++def test_draw_outs_are_distinct_and_not_all_nuts():
++    from plo_leak.postflop_rows import draw_outs_info
++    got=draw_outs_info(parse_cards('As 5s Kh Qd 4c 3c'),parse_cards('Js 9s 2d'))
++    assert got=={'draw_outs':12,'nut_outs':6}
++
++
++def test_old_exports_do_not_trigger_outs_action_rules():
++    from plo_leak.guidelines import postflop_note
++    r={'street':'flop','facing':'raise','action':'call','hand':'högt kort','flush_draw':'nöt','straight_outs':4,'facing_allin':0,'eff_stack_bb':80,'pot_bb':30,'to_call_bb':10}
++    note=postflop_note(r)
++    assert 'nöt-outs inte beräknade' in note and 'jamma' not in note and '13+' not in note
++
++
++def test_blocker_correct_strength_uses_same_sampling_as_beat_n():
++    from plo_leak.board import BoardTable
++    bt=BoardTable(parse_cards('Js 9s 2d'));h=parse_cards('As 5s Kh Qd 4c 3c')
++    assert bt.strength_u(h)==bt.beat_n(h,samples=600)
++
++
++def test_empty_time_columns_do_not_destroy_identified_regression():
++    from plo_leak.fatigue import _fe_coef
++    c=np.repeat(np.arange(20),100);t=np.tile(np.linspace(0,.9,100),20);x=(np.tile(np.arange(100),20)>50).astype(float)
++    y=4*x+np.random.default_rng(1).normal(size=len(c));blk=(t*2).astype(int)
++    X=np.column_stack([x]+[(blk==k).astype(float) for k in range(1,9)])
++    b,se=_fe_coef(y,X,c)
++    assert abs(b[0]-4)<.5 and np.isfinite(se[0]) and np.isnan(b[-1])
++
++
++def test_mixed_stakes_are_identified_in_hourly_data():
++    from plo_leak.hourly import _block
++    n=100;H={'ts':np.arange(n)*60,'clu':np.zeros(n,int),'money':np.ones(n),'ev_m':np.ones(n),'rake_m':np.ones(n),'net':np.ones(n),'ev':np.ones(n),'rake':np.ones(n),'bb':np.tile([1,2],50)}
++    assert _block(H,np.arange(n))['mixed_stakes']
++    assert not _block(H,np.arange(0,n,2))['mixed_stakes']
++
++
++def test_running_twice_keeps_the_same_allin_expectation():
++    # Average payout over two runouts has the same expectation as one runout.
++    from plo_leak.ev import allin_ev
++    h = _cover()
++    single = allin_ev(h, 'H')
++    h.run_twice = True
++    assert allin_ev(h, 'H') == single
++
++
++def test_vector_outs_match_an_exhaustive_board_pair_reference():
++    import random
++    from plo_leak.postflop_rows import draw_outs_info, _has_straight
++    from plo_leak.board import BoardTable
++    rnd = random.Random(270)
++    deck = [(r, s) for r in range(2, 15) for s in 'cdhs']
++    for k in range(12):
++        cs = rnd.sample(deck, 10 if k % 2 else 9)
++        hole, board = cs[:6], cs[6:]
++        hits = []
++        for c in deck:
++            if c in cs:
++                continue
++            b = board + [c]
++            if _has_straight([x[0] for x in hole], [x[0] for x in b]) or any(sum(x[1] == s for x in hole) >= 2 and sum(x[1] == s for x in b) >= 3 for s in 'cdhs'):
++                hits.append(c)
++        expected_nuts = sum(BoardTable(board + [c]).beat_frac(hole) == 0 for c in hits)
++        assert draw_outs_info(hole, board) == {'draw_outs': len(hits), 'nut_outs': expected_nuts}
++
++
++def test_coach_uses_selected_total_fees_and_keeps_advice_hypothetical(monkeypatch):
++    import plo_leak.rivercoach as rc
++    seen = {}
++    class Fees:
++        def fit_arrays(self, pot, fee, bb):
++            seen['fees'] = np.asarray(fee)
++            return self
++    def analyze(spots, hero, fees, total):
++        seen['spots'] = spots
++        seen['total'] = total
++        return SimpleNamespace(spots=len(spots), decisions=[], calibration={}, findings=[])
++    monkeypatch.setattr(rc, 'FeeModel', Fees)
++    monkeypatch.setattr(rc, 'analyze_spots', analyze)
++    monkeypatch.setattr(rc, 'component_ok', lambda *a: True)
++    ft = SimpleNamespace(n=1000, H={'pot':np.ones(1000)*100,'pot_fee':np.ones(1000)*3,
++                                  'rake':np.zeros(1000),'bb':np.ones(1000)},
++                         t={'rsp':{'hidx':np.arange(1000),'obj':[pickle.dumps({'id':str(i)}) for i in range(1000)]}})
++    got = rc.coach(SimpleNamespace(ft=ft, rows=np.arange(500)), 'H')
++    assert len(seen['spots']) == 500 and seen['total'] == 500
++    assert seen['fees'].tolist() == [3.0]*500
++    assert got['calibrated']['mot_bet'] and not any(got['ok'].values())
++
++
++def test_holdout_split_is_between_whole_sessions(monkeypatch):
++    import plo_leak.holdout as ho
++    import plo_leak.aggregate as aggregate
++    import plo_leak.analyses as analyses
++    import plo_leak.practice as practice
++    H = {'ts':np.arange(6), 'clu':np.array([0,0,0,1,1,1])}
++    ft = SimpleNamespace(H=H, n=6)
++    st = SimpleNamespace(ft=ft, rows=np.arange(6), hands_by_id=None)
++    selected = {}
++    def stats(ft, mask, hero, lookup):
++        selected['mask'] = mask
++        return SimpleNamespace()
++    monkeypatch.setattr(aggregate, 'build_stats', stats)
++    monkeypatch.setattr(analyses, 'REGISTRY', {k:{'fn':lambda *a: {}} for k in ho.DISCOVERY})
++    monkeypatch.setattr(practice, 'build_rules', lambda *a: {'rules':[]})
++    doc, cut, old, new = ho._discover_old(st, 'H', None, None)
++    assert (cut, old, new) == (3, 3, 3)
++    assert selected['mask'].tolist() == [True,True,True,False,False,False]
++
++
++def test_collinear_time_and_loss_cannot_be_claimed_as_separate_effects():
++    from plo_leak.fatigue import _fe_coef
++    c = np.repeat(np.arange(20),100)
++    x = (np.tile(np.arange(100),20) >= 50).astype(float)
++    z = (np.tile(np.arange(100),20) % 7 == 0).astype(float)
++    y = 2*x + 3*z + np.random.default_rng(5).normal(0,.1,len(c))
++    beta, se = _fe_coef(y,np.column_stack([x,x,z]),c)
++    assert np.isnan(beta[0]) and np.isnan(beta[1])
++    assert abs(beta[2]-3)<.1 and np.isfinite(se[2])
+--- a/tools/run_tests.py
++++ b/tools/run_tests.py
+@@ -1,4 +1,5 @@
+-"""Kör alla tester utan att pytest behöver vara installerat:  python tools/run_tests.py"""
++"""Run the full test suite without requiring pytest: python tools/run_tests.py."""
++import importlib
+ import inspect
+ import pathlib
+ import sys
+@@ -7,20 +8,40 @@
+ 
+ root = pathlib.Path(__file__).resolve().parents[1]
+ sys.path.insert(0, str(root))
+-import tests.test_core as t  # noqa: E402
+ 
+-failed = 0
+-for name in sorted(n for n in dir(t) if n.startswith("test_")):
+-    f = getattr(t, name)
+-    try:
+-        if "tmp_path" in inspect.signature(f).parameters:
+-            f(pathlib.Path(tempfile.mkdtemp()))
+-        else:
+-            f()
+-        print(f"OK    {name}")
+-    except Exception:
+-        failed += 1
+-        print(f"FEL   {name}")
+-        traceback.print_exc()
+-print(f"\n{'Alla tester godkända' if not failed else f'{failed} test(er) misslyckades'}")
+-sys.exit(1 if failed else 0)
++class MonkeyPatch:
++    def __init__(self):
++        self.items = []
++    def setattr(self, obj, name, value):
++        original = inspect.getattr_static(obj, name) if isinstance(obj, type) else getattr(obj, name)
++        self.items.append((obj, name, original))
++        setattr(obj, name, value)
++    def undo(self):
++        for obj, name, value in reversed(self.items):
++            setattr(obj, name, value)
++
++failed = total = 0
++for path in sorted((root / 'tests').glob('test_*.py')):
++    module = importlib.import_module('tests.' + path.stem)
++    for name in sorted(n for n in dir(module) if n.startswith('test_')):
++        f = getattr(module, name)
++        total += 1
++        mp = MonkeyPatch()
++        with tempfile.TemporaryDirectory() as td:
++            kwargs = {}
++            for param in inspect.signature(f).parameters:
++                if param == 'tmp_path':
++                    kwargs[param] = pathlib.Path(td)
++                elif param == 'monkeypatch':
++                    kwargs[param] = mp
++            try:
++                f(**kwargs)
++                print('OK   ', path.stem + '.' + name)
++            except Exception:
++                failed += 1
++                print('FEL  ', path.stem + '.' + name)
++                traceback.print_exc()
++            finally:
++                mp.undo()
++print(f'{total - failed}/{total} tests passed')
++sys.exit(bool(failed))

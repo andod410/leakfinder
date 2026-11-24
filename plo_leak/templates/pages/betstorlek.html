@@ -1,0 +1,27 @@
+{% set B = betsize or {} %}
+{% if not B or not B.table %}<div class="panel empty">För få bets i urvalet för en betstorleksrapport (kräver faktatabell från 2.72 – kör en full analys).</div>
+{% else %}
+<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>🎚 Är du för polariserad?</b><span class="note" style="margin:0">första bet på gatan · extrem = under {{ B.small }} % eller över {{ B.big }} % av potten</span></div>
+{% if B.ext_hero is not none and B.ext_pool is not none %}<div class="verdict {{ 'bad-soft' if B.ext_hero > B.ext_pool + 10 else ('good-soft' if B.ext_hero <= B.ext_pool + 3 else '') }}" style="margin-bottom:10px">Du: {{ '%.0f'|format(B.ext_hero) }} % av dina bets är extrema · poolen: {{ '%.0f'|format(B.ext_pool) }} %. {% if B.ext_hero > B.ext_pool + 10 %}Du är mer polariserad än poolen – använd mellanstorleken (⅔–¾) oftare.{% elif B.ext_hero <= B.ext_pool + 3 %}Inte mer polariserad än poolen.{% else %}Något mer polariserad än poolen.{% endif %}</div>{% endif %}
+<table class="tbl"><tr><th>Gata</th><th></th>{% for s in B.sizes %}<th class="n">{{ s }}</th>{% endfor %}<th class="n">Extrema</th></tr>
+{% for d in B.dist %}<tr><td rowspan="2">{{ d.street }}</td><td>Du ({{ d.n_hero }})</td>{% for v in d.hero %}<td class="n">{{ '%.0f'|format(v) }} %</td>{% endfor %}<td class="n"><b>{{ '%.0f'|format(d.ext_hero) ~ ' %' if d.ext_hero is not none else '–' }}</b></td></tr>
+<tr><td class="note">Poolen ({{ d.n_pool }})</td>{% for v in d.pool %}<td class="n note">{{ '%.0f'|format(v) }} %</td>{% endfor %}<td class="n note">{{ '%.0f'|format(d.ext_pool) ~ ' %' if d.ext_pool is not none else '–' }}</td></tr>{% endfor %}
+</table>
+<div class="note">Ingen solver: jämförelsen är poolens egen fördelning, inte GTO. Andelen per gata summerar till 100 %.</div></div>
+
+<div class="panel scroll" style="margin-bottom:14px"><div class="card-h"><b>💰 Poolens svar per storlek (heads-up) – med rake</b><span class="note" style="margin:0">break-even för en ren bluff: fold ≥ b / (b + 1 − rake)</span></div>
+<table class="tbl"><tr><th>Gata</th><th>Storlek</th><th class="n">Poolen mot poolen</th><th class="n">Fold</th><th class="n">Höjer</th><th class="n">Break-even</th><th class="n">Fold − BE</th><th class="n">Mot dig: antal</th><th class="n">Fold mot dig</th></tr>
+{% for r in B.table %}{% if r.n_pool or r.n_hero %}<tr><td>{{ r.street }}</td><td>{{ r.size }}</td><td class="n">{{ r.n_pool }}</td>
+<td class="n">{{ '%.0f'|format(r.fold_pool) ~ ' %' if r.fold_pool is defined else '–' }}</td><td class="n">{{ '%.0f'|format(r.raise_pool) ~ ' %' if r.raise_pool is defined else '–' }}</td>
+<td class="n">{{ '%.0f'|format(r.be) ~ ' %' if r.be is defined else '–' }}</td>
+<td class="n {{ 'pos' if r.edge is not none and r.edge > 0 else ('neg' if r.edge is not none else '') }}">{{ '%+.0f'|format(r.edge) ~ ' pe' if r.edge is not none else '–' }}</td>
+<td class="n">{{ r.n_hero }}</td><td class="n">{{ '%.0f'|format(r.fold_hero) ~ ' %' if r.fold_hero is defined else '–' }}</td></tr>{% endif %}{% endfor %}
+</table>
+<div class="note">Fold − BE &gt; 0 betyder att en ren bluff i den storleken hade gått plus mot poolen i snitt (före hans höjningar och utan hänsyn till vilka kort som kommer). Rake: 5 % med nivåns tak ({% for k, v in B.caps.items() %}${{ k }}: ~{{ v }} bb{{ ', ' if not loop.last }}{% endfor %}). Rutor med färre än 30 bets är brus. Samband, inte bevis – poolen svarar på dina bets utifrån din image också.</div></div>
+
+{% if B.matrix %}<div class="panel scroll" style="margin-bottom:14px"><div class="card-h"><b>🧩 Polariseringsmatris – dina bets per handgrupp</b><span class="note" style="margin:0">andel per storlek · siffran under = resultat i andel av potten (minst 30 bets)</span></div>
+<table class="tbl"><tr><th>Gata</th><th>Hand</th><th class="n">Bets</th>{% for s in B.sizes %}<th class="n">{{ s }}</th>{% endfor %}<th class="n">Extrema</th></tr>
+{% for g in B.matrix %}{% if g.n %}<tr><td>{{ g.street }}</td><td>{{ g.group }}</td><td class="n">{{ g.n }}</td>{% for c in g.cells %}<td class="n" style="background:color-mix(in srgb,var(--accent) {{ (c.pct * 0.6)|round(0) }}%,transparent)">{{ '%.0f'|format(c.pct) }} %{% if c.res is not none %}<div class="note {{ 'pos' if c.res >= 0 else 'neg' }}" style="margin:0">{{ '%+.2f'|format(c.res) }}</div>{% endif %}</td>{% endfor %}<td class="n">{{ '%.0f'|format(g.ext) ~ ' %' if g.ext is not none else '–' }}</td></tr>{% endif %}{% endfor %}
+</table>
+<div class="note">Läs radvis: ett balanserat spel använder samma storlekar med värde och bluffar på samma bordtyp. Står luften bara i en storlek och nöten i en annan är du läsbar. Resultatet per ruta påverkas av att du själv väljer storlek – se det som riktning.</div></div>{% endif %}
+{% endif %}

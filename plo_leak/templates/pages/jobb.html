@@ -1,0 +1,35 @@
+<div class="panel" style="max-width:640px">
+  <div class="card-h"><b>{{ page_title }}</b></div>
+  <div id="stage" style="font-weight:600">Startar</div>
+  <div class="bar"><div id="fill"></div></div>
+  <div class="note" id="info" style="margin:0"></div>
+  <div style="margin-top:10px"><button type="button" class="btn sm ghost" id="cancel">⏹ Avbryt</button> <span class="note" id="cmsg" style="margin:0"></span></div>
+  <p class="note">Sidan uppdateras av sig själv. Första gången efter en uppdatering räknas fakta fram för alla händer – därefter bara för nya.</p>
+</div>
+<script>
+(function(){
+  const id={{ job_id|tojson }};
+  async function poll(){
+    try{
+      const r=await fetch('/jobb/'+id+'/status'); const j=await r.json();
+      if(j.status==='klar'){location.replace('/jobb/'+id+'/rapport');return;}
+      if(j.status==='fel'||j.status==='saknas'){location.replace('/jobb/'+id+'/fel');return;}
+      if(j.status==='avbruten'){document.getElementById('stage').textContent='Avbrutet';document.getElementById('fill').style.width='0%';
+        document.getElementById('info').innerHTML='Jobbet avbröts. <a href="javascript:history.back()">Tillbaka</a>';document.getElementById('cancel').style.display='none';return;}
+      document.getElementById('stage').textContent=j.stage;
+      const pct=j.total?Math.round(100*j.done/j.total):0;
+      document.getElementById('fill').style.width=(j.total?pct:5)+'%';
+      let t=j.total?(j.done.toLocaleString('sv-SE')+' av '+j.total.toLocaleString('sv-SE')+' ('+pct+' %)'):'';
+      if(j.eta) t+=' · cirka '+(j.eta>90?Math.round(j.eta/60)+' min':j.eta+' s')+' kvar';
+      t+=(t?' · ':'')+Math.round(j.elapsed)+' s totalt';
+      document.getElementById('info').textContent=t;
+    }catch(e){}
+    setTimeout(poll,1000);
+  }
+  document.getElementById('cancel').addEventListener('click',function(){
+    this.disabled=true;document.getElementById('cmsg').textContent='Avbryter … (sker vid nästa steg, oftast inom några sekunder)';
+    fetch('/jobb/'+id+'/avbryt',{method:'POST',headers:{'X-Requested-With':'fetch'}});
+  });
+  poll();
+})();
+</script>

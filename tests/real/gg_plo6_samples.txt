@@ -1,0 +1,3907 @@
+Poker Hand #OM89894633: PLO-6 ($0.5/$1) - 2026/06/01 00:10:54
+Table 'PLO-6Bronze12' 5-max Seat #2 is the button
+Seat 1: P1 ($40 in chips)
+Seat 2: P2 ($106.27 in chips)
+Seat 3: P3 ($127.93 in chips)
+Seat 4: Hero ($100 in chips)
+Seat 5: P4 ($101.6 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [9s 4h Js 3d Qh 3h]
+Dealt to P4
+P4: folds
+P1: raises $2.5 to $3.5
+P2: raises $8.5 to $12
+P3: folds
+Hero: folds
+P1: raises $25.5 to $37.5
+P2: raises $25.5 to $63
+P1: calls $2.5 and is all-in
+Uncalled bet ($23) returned to P2
+P2: shows [Ad 7s 5h Tc 9d Jc] (Ace high)
+P1: shows [6h Ac 6s As 8h 9h] (a pair of Aces)
+*** FLOP *** [Qd 7h Td]
+*** TURN *** [Qd 7h Td] [Th]
+*** RIVER *** [Qd 7h Td Th] [Ks]
+*** SHOWDOWN ***
+P2 collected $78.5 from pot
+*** SUMMARY ***
+Total pot $81.5 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qd 7h Td Th Ks]
+Seat 1: P1 showed [6h Ac 6s As 8h 9h] and lost with two pair, Aces and Tens
+Seat 2: P2 (button) showed [Ad 7s 5h Tc 9d Jc] and won ($78.5) with a full house, Tens full of Sevens
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: Hero (big blind) folded before Flop
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM89894665: PLO-6 ($0.5/$1) - 2026/06/01 00:13:13
+Table 'PLO-6Bronze12' 5-max Seat #2 is the button
+Seat 1: P1 ($41.5 in chips)
+Seat 2: P2 ($146.27 in chips)
+Seat 3: P3 ($126.43 in chips)
+Seat 4: Hero ($100 in chips)
+Seat 5: P4 ($100.1 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Th 5s 2h 9c 6c Qd]
+Dealt to P4
+P4: folds
+P1: raises $2 to $3
+P2: folds
+P3: raises $7 to $10
+Hero: folds
+P1: calls $7
+*** FLOP *** [4d 9h 4c]
+P3: checks
+P1: checks
+*** TURN *** [4d 9h 4c] [Qc]
+P3: checks
+P1: checks
+*** RIVER *** [4d 9h 4c Qc] [4s]
+P3: bets $10.5
+P1: folds
+Uncalled bet ($10.5) returned to P3
+*** SHOWDOWN ***
+P3 collected $19.95 from pot
+*** SUMMARY ***
+Total pot $21 | Rake $1.05 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [4d 9h 4c Qc 4s]
+Seat 1: P1 folded on the River
+Seat 2: P2 (button) folded before Flop (didn't bet)
+Seat 3: P3 (small blind) won ($19.95)
+Seat 4: Hero (big blind) folded before Flop
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM89845430: PLO-6 ($0.5/$1) - 2026/06/01 00:51:15
+Table 'PLO-6Bronze2' 5-max Seat #4 is the button
+Seat 1: Hero ($132.1 in chips)
+Seat 2: P1 ($28.07 in chips)
+Seat 3: P2 ($179.48 in chips)
+Seat 4: P3 ($11.41 in chips)
+Seat 5: P4 ($139.01 in chips)
+P4: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [Jd Tc 3d As Qh Kh]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: raises $2.5 to $3.5
+P2: folds
+P3: raises $7.91 to $11.41 and is all-in
+P4: folds
+Hero: folds
+P1: calls $7.91
+P3: shows [Jc Kc 6c 8h Ac 9s] (Ace high)
+P1: shows [Ah 6h Ts Qd Js Jh] (a pair of Jacks)
+*** FLOP *** [4s 8s Kd]
+P3: Chooses to EV Cashout
+*** TURN *** [4s 8s Kd] [3c]
+P3: Pays Cashout Risk ($3)
+P3: Chooses to EV Cashout
+*** RIVER *** [4s 8s Kd 3c] [7c]
+P3: Pays Cashout Risk ($3.88)
+*** SHOWDOWN ***
+P3 collected $23.11 from pot
+*** SUMMARY ***
+Total pot $24.32 | Rake $1.21 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [4s 8s Kd 3c 7c]
+Seat 1: Hero (big blind) folded before Flop
+Seat 2: P1 showed [Ah 6h Ts Qd Js Jh] and lost with a pair of Jacks
+Seat 3: P2 folded before Flop (didn't bet)
+Seat 4: P3 (button) showed [Jc Kc 6c 8h Ac 9s] and won ($23.11) with two pair, Kings and Eights, Cashout Risk ($6.88)
+Seat 5: P4 (small blind) folded before Flop
+
+
+Poker Hand #OM89856763: PLO-6 ($0.5/$1) - 2026/06/01 00:53:48
+Table 'PLO-6Bronze11' 5-max Seat #3 is the button
+Seat 1: P1 ($131.31 in chips)
+Seat 3: P2 ($116.44 in chips)
+Seat 4: P3 ($17.92 in chips)
+Seat 5: Hero ($124.32 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Tc 3s 6s Kd 3d 4h]
+P1: raises $2.5 to $3.5
+P2: calls $3.5
+P3: raises $11.5 to $15
+Hero: folds
+P1: calls $11.5
+P2: folds
+*** FLOP *** [Ac 2c 4s]
+P3: bets $2.92 and is all-in
+P1: calls $2.92
+P3: shows [Qc 5c As Td Jh 4d] (two pair, Aces and Fours)
+P1: shows [6h Qh 7s Ts Jc 9d] (Ace high)
+*** TURN *** [Ac 2c 4s] [3c]
+*** RIVER *** [Ac 2c 4s 3c] [Js]
+*** SHOWDOWN ***
+P3 collected $37.84 from pot
+*** SUMMARY ***
+Total pot $40.34 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ac 2c 4s 3c Js]
+Seat 1: P1 showed [6h Qh 7s Ts Jc 9d] and lost with a pair of Jacks
+Seat 3: P2 (button) folded before Flop
+Seat 4: P3 (small blind) showed [Qc 5c As Td Jh 4d] and won ($37.84) with a flush Ace high
+Seat 5: Hero (big blind) folded before Flop
+
+
+Poker Hand #OM89856792: PLO-6 ($0.5/$1) - 2026/06/01 00:58:49
+Table 'PLO-6Bronze11' 5-max Seat #3 is the button
+Seat 1: P1 ($111.89 in chips)
+Seat 2: P2 ($32 in chips)
+Seat 3: P3 ($153.26 in chips)
+Seat 4: P4 ($19 in chips)
+Seat 5: Hero ($152.82 in chips)
+P4: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [2h 4c 3h Td 5d 9d]
+P1: folds
+P2: folds
+P3: raises $2.5 to $3.5
+P4: raises $6 to $9.5
+Hero: folds
+P3: calls $6
+*** FLOP *** [Jd 8d 8s]
+P4: bets $9.5 and is all-in
+P3: folds
+Uncalled bet ($9.5) returned to P4
+*** SHOWDOWN ***
+P4 collected $19 from pot
+*** SUMMARY ***
+Total pot $20 | Rake $1 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Jd 8d 8s]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 3: P3 (button) folded on the Flop
+Seat 4: P4 (small blind) won ($19)
+Seat 5: Hero (big blind) folded before Flop
+
+
+Poker Hand #OM89856849: PLO-6 ($0.5/$1) - 2026/06/01 01:06:04
+Table 'PLO-6Bronze11' 5-max Seat #3 is the button
+Seat 2: P1 ($61.5 in chips)
+Seat 3: P2 ($127.34 in chips)
+Seat 4: P3 ($42.13 in chips)
+Seat 5: Hero ($154.02 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [2s 3s 4s Jc Ts 3d]
+P1: folds
+P2: raises $2.5 to $3.5
+P3: raises $8 to $11.5
+Hero: folds
+P2: calls $8
+*** FLOP *** [Qd 3c Jh]
+P3: bets $24
+P2: raises $24 to $48
+P3: calls $6.63 and is all-in
+Uncalled bet ($17.37) returned to P2
+P2: shows [As 5s Qh 3h 7h 7d] (two pair, Queens and Threes)
+P3: shows [9s 4d Ad 8s 8d Ac] (a pair of Aces)
+*** TURN *** [Qd 3c Jh] [4c]
+*** RIVER *** [Qd 3c Jh 4c] [Js]
+*** SHOWDOWN ***
+P3 collected $82.76 from pot
+*** SUMMARY ***
+Total pot $85.26 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qd 3c Jh 4c Js]
+Seat 2: P1 folded before Flop (didn't bet)
+Seat 3: P2 (button) showed [As 5s Qh 3h 7h 7d] and lost with two pair, Queens and Jacks
+Seat 4: P3 (small blind) showed [9s 4d Ad 8s 8d Ac] and won ($82.76) with two pair, Aces and Jacks
+Seat 5: Hero (big blind) folded before Flop
+
+
+Poker Hand #OM89924914: PLO-6 ($0.5/$1) - 2026/06/01 01:14:20
+Table 'PLO-6Bronze8' 5-max Seat #5 is the button
+Seat 2: P1 ($99.38 in chips)
+Seat 3: Hero ($137.66 in chips)
+Seat 4: P2 ($20 in chips)
+Seat 5: P3 ($182.06 in chips)
+P1: posts small blind $0.5
+Hero: posts big blind $1
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Kc 2s 7h Jh 4c Ad]
+Dealt to P2
+Dealt to P3
+P2: raises $2.5 to $3.5
+P3: calls $3.5
+P1: raises $11.5 to $15
+Hero: folds
+P2: calls $11.5
+P3: calls $11.5
+*** FLOP *** [Kd 3h 5s]
+P1: bets $46
+P2: calls $5 and is all-in
+P3: raises $46 to $92
+P1: calls $38.38 and is all-in
+Uncalled bet ($7.62) returned to P3
+P3: shows [5c Ks Js 5d Tc 9h] (three of a kind, Fives)
+P1: shows [4h 7d Jc Th Ah As] (a pair of Aces)
+P2: shows [Td 6d 6h 3c Qh Kh] (two pair, Kings and Threes)
+*** TURN *** [Kd 3h 5s] [6c]
+P1: Chooses to EV Cashout
+*** RIVER *** [Kd 3h 5s 6c] [Qd]
+P1: Pays Cashout Risk ($39.85)
+*** SHOWDOWN ***
+P1 collected $60.35 from pot
+P1 collected $156.92 from pot
+*** SUMMARY ***
+Total pot $219.76 | Rake $1.49 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Kd 3h 5s 6c Qd]
+Seat 2: P1 (small blind) showed [4h 7d Jc Th Ah As] and won ($217.27) with a straight, Seven to Three, Cashout Risk ($39.85)
+Seat 3: Hero (big blind) folded before Flop
+Seat 4: P2 showed [Td 6d 6h 3c Qh Kh] and lost with three of a kind, Sixes
+Seat 5: P3 (button) showed [5c Ks Js 5d Tc 9h] and lost with three of a kind, Fives
+
+
+Poker Hand #OM89895530: PLO-6 ($0.5/$1) - 2026/06/01 01:18:34
+Table 'PLO-6Bronze12' 5-max Seat #5 is the button
+Seat 1: P1 ($181.21 in chips)
+Seat 2: Hero ($145.63 in chips)
+Seat 3: P2 ($100.38 in chips)
+Seat 4: P3 ($25 in chips)
+Seat 5: P4 ($118.71 in chips)
+P1: posts small blind $0.5
+Hero: posts big blind $1
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Ks 8d 6d 9d 5c 8s]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P2: raises $2 to $3
+P3: raises $7.5 to $10.5
+P4: folds
+P1: calls $10
+Hero: folds
+P2: calls $7.5
+*** FLOP *** [5s 7h Tc]
+P1: checks
+P2: checks
+P3: bets $14.5 and is all-in
+P1: calls $14.5
+P2: raises $75.38 to $89.88 and is all-in
+P1: folds
+Uncalled bet ($75.38) returned to P2
+P2: shows [9s 7s 3d Td Ah 8h] (two pair, Tens and Sevens)
+P3: shows [Qs Ad 4d Jc Ts Kc] (a pair of Tens)
+*** TURN *** [5s 7h Tc] [4c]
+*** RIVER *** [5s 7h Tc 4c] [3h]
+*** SHOWDOWN ***
+P2 collected $73 from pot
+*** SUMMARY ***
+Total pot $76 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [5s 7h Tc 4c 3h]
+Seat 1: P1 (small blind) folded on the Flop
+Seat 2: Hero (big blind) folded before Flop
+Seat 3: P2 showed [9s 7s 3d Td Ah 8h] and won ($73) with two pair, Tens and Sevens
+Seat 4: P3 showed [Qs Ad 4d Jc Ts Kc] and lost with two pair, Tens and Fours
+Seat 5: P4 (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM89894742: PLO-6 ($0.5/$1) - 2026/06/01 00:19:02
+Table 'PLO-6Bronze12' 5-max Seat #5 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($147.77 in chips)
+Seat 3: P3 ($126.88 in chips)
+Seat 4: Hero ($112.13 in chips)
+Seat 5: P4 ($127.6 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Qd 2d Ac 4h 2c Td]
+Dealt to P4
+P3: folds
+Hero: raises $2.5 to $3.5
+P4: folds
+P1: raises $8 to $11.5
+P2: folds
+Hero: calls $8
+*** FLOP *** [4s 4d Kd]
+P1: bets $11
+Hero: calls $11
+*** TURN *** [4s 4d Kd] [Qh]
+P1: bets $13
+Hero: calls $13
+*** RIVER *** [4s 4d Kd Qh] [Qs]
+P1: checks
+Hero: bets $72
+P1: folds
+Uncalled bet ($72) returned to Hero
+*** SHOWDOWN ***
+Hero collected $69 from pot
+*** SUMMARY ***
+Total pot $72 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [4s 4d Kd Qh Qs]
+Seat 1: P1 (small blind) folded on the River
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 4: Hero won ($69)
+Seat 5: P4 (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM89856699: PLO-6 ($0.5/$1) - 2026/06/01 00:45:31
+Table 'PLO-6Bronze11' 5-max Seat #2 is the button
+Seat 1: P1 ($109.8 in chips)
+Seat 2: P2 ($57.78 in chips)
+Seat 3: P3 ($102.1 in chips)
+Seat 4: P4 ($32.91 in chips)
+Seat 5: Hero ($100 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Jc Ad 7c 7s 4s 5d]
+Hero: raises $2.5 to $3.5
+P1: raises $8.5 to $12
+P2: folds
+P3: folds
+P4: calls $11
+Hero: calls $8.5
+*** FLOP *** [9h 6s 8c]
+P4: bets $20.91 and is all-in
+Hero: raises $67.09 to $88 and is all-in
+P1: folds
+Uncalled bet ($67.09) returned to Hero
+Hero: shows [Jc Ad 7c 7s 4s 5d] (a straight, Nine to Five)
+P4: shows [9s Qs Qc Tc Jh 6h] (two pair, Nines and Sixes)
+*** TURN *** [9h 6s 8c] [8h]
+*** RIVER *** [9h 6s 8c 8h] [4d]
+*** SHOWDOWN ***
+Hero collected $75.32 from pot
+*** SUMMARY ***
+Total pot $78.32 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [9h 6s 8c 8h 4d]
+Seat 1: P1 folded on the Flop
+Seat 2: P2 (button) folded before Flop (didn't bet)
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: P4 (big blind) showed [9s Qs Qc Tc Jh 6h] and lost with two pair, Queens and Eights
+Seat 5: Hero showed [Jc Ad 7c 7s 4s 5d] and won ($75.32) with a straight, Nine to Five
+
+
+Poker Hand #OM89856716: PLO-6 ($0.5/$1) - 2026/06/01 00:47:52
+Table 'PLO-6Bronze11' 5-max Seat #5 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($57.78 in chips)
+Seat 3: P3 ($114.06 in chips)
+Seat 4: P4 ($20 in chips)
+Seat 5: Hero ($129.63 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+P4: posts missed blind $0.5
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Qh 3d 3c 4s Kd Qc]
+P3: folds
+P4: calls $1
+Hero: raises $4 to $5
+P1: calls $4.5
+P2: folds
+P4: raises $14.5 to $19.5 and is all-in
+Hero: calls $14.5
+P1: calls $14.5
+*** FLOP *** [7c Tc 6h]
+P1: bets $45
+Hero: folds
+Uncalled bet ($45) returned to P1
+P1: shows [Jh Ks 6s 9h 6c As] (three of a kind, Sixes)
+P4: shows [Td Jc Ad 7d 3h Ah] (two pair, Tens and Sevens)
+*** TURN *** [7c Tc 6h] [2d]
+*** RIVER *** [7c Tc 6h 2d] [5h]
+*** SHOWDOWN ***
+P1 collected $57 from pot
+*** SUMMARY ***
+Total pot $60 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [7c Tc 6h 2d 5h]
+Seat 1: P1 (small blind) showed [Jh Ks 6s 9h 6c As] and won ($57) with three of a kind, Sixes
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 4: P4 showed [Td Jc Ad 7d 3h Ah] and lost with two pair, Tens and Sevens
+Seat 5: Hero (button) folded on the Flop
+
+
+Poker Hand #OM89856773: PLO-6 ($0.5/$1) - 2026/06/01 00:55:42
+Table 'PLO-6Bronze11' 5-max Seat #5 is the button
+Seat 1: P1 ($112.39 in chips)
+Seat 2: P2 ($32 in chips)
+Seat 3: P3 ($149.78 in chips)
+Seat 5: Hero ($122.82 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [9c 6s 7h 9d 8h Ks]
+P3: folds
+Hero: raises $2.5 to $3.5
+P1: folds
+P2: raises $7.5 to $11
+Hero: calls $7.5
+*** FLOP *** [9h Qc 6c]
+P2: bets $21 and is all-in
+Hero: calls $21
+P2: shows [Qd Ad Js 5d Kh Jh] (a pair of Queens)
+Hero: shows [9c 6s 7h 9d 8h Ks] (three of a kind, Nines)
+*** TURN *** [9h Qc 6c] [5c]
+*** RIVER *** [9h Qc 6c 5c] [3s]
+*** SHOWDOWN ***
+Hero collected $62 from pot
+*** SUMMARY ***
+Total pot $64.5 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [9h Qc 6c 5c 3s]
+Seat 1: P1 (small blind) folded before Flop
+Seat 2: P2 (big blind) showed [Qd Ad Js 5d Kh Jh] and lost with two pair, Queens and Fives
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 5: Hero (button) showed [9c 6s 7h 9d 8h Ks] and won ($62) with a straight, Nine to Five
+
+
+Poker Hand #OM89856819: PLO-6 ($0.5/$1) - 2026/06/01 01:01:55
+Table 'PLO-6Bronze11' 5-max Seat #2 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($32 in chips)
+Seat 3: P3 ($152.44 in chips)
+Seat 4: P4 ($25 in chips)
+Seat 5: Hero ($163.12 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Ac 7h 7s 4c 6d 4h]
+Hero: raises $2.5 to $3.5
+P1: calls $3.5
+P2: folds
+P3: folds
+P4: raises $5.5 to $9
+Hero: calls $5.5
+P1: calls $5.5
+*** FLOP *** [Js Kd Kc]
+P4: bets $16 and is all-in
+Hero: folds
+P1: folds
+Uncalled bet ($16) returned to P4
+*** SHOWDOWN ***
+P4 collected $26.13 from pot
+*** SUMMARY ***
+Total pot $27.5 | Rake $1.37 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Js Kd Kc]
+Seat 1: P1 folded on the Flop
+Seat 2: P2 (button) folded before Flop (didn't bet)
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: P4 (big blind) won ($26.13)
+Seat 5: Hero folded on the Flop
+
+
+Poker Hand #OM89856866: PLO-6 ($0.5/$1) - 2026/06/01 01:08:21
+Table 'PLO-6Bronze11' 5-max Seat #1 is the button
+Seat 1: P1 ($93.5 in chips)
+Seat 2: P2 ($112.7 in chips)
+Seat 4: P3 ($35.26 in chips)
+Seat 5: Hero ($152.52 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ac 2h 2s 3c 5d 5c]
+Hero: raises $2.5 to $3.5
+P1: folds
+P2: folds
+P3: raises $7.5 to $11
+Hero: calls $7.5
+*** FLOP *** [Js Qh 6h]
+P3: bets $11.25
+Hero: folds
+Uncalled bet ($11.25) returned to P3
+*** SHOWDOWN ***
+P3 collected $21.38 from pot
+*** SUMMARY ***
+Total pot $22.5 | Rake $1.12 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Js Qh 6h]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: P2 (small blind) folded before Flop
+Seat 4: P3 (big blind) won ($21.38)
+Seat 5: Hero folded on the Flop
+
+
+Poker Hand #OM89924941: PLO-6 ($0.5/$1) - 2026/06/01 01:15:36
+Table 'PLO-6Bronze8' 5-max Seat #3 is the button
+Seat 1: P1 ($23.83 in chips)
+Seat 2: P2 ($177.42 in chips)
+Seat 3: Hero ($136.16 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [8c 5d Ac Jd 3c Tc]
+Hero: raises $2.5 to $3.5
+P1: raises $8 to $11.5
+P2: folds
+Hero: calls $8
+*** FLOP *** [4c Th 5c]
+P1: bets $12.33 and is all-in
+Hero: calls $12.33
+P1: shows [Jc Ts Qc Qd Ad Qs] (a pair of Queens)
+Hero: shows [8c 5d Ac Jd 3c Tc] (two pair, Tens and Fives)
+*** TURN *** [4c Th 5c] [8h]
+*** RIVER *** [4c Th 5c 8h] [Ah]
+*** SHOWDOWN ***
+P1 collected $23.08 from pot
+Hero collected $23.33 from pot
+*** SUMMARY ***
+Total pot $48.66 | Rake $1.25 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [4c Th 5c 8h Ah]
+Seat 1: P1 (small blind) showed [Jc Ts Qc Qd Ad Qs] and won ($23.08) with two pair, Aces and Tens
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: Hero (button) showed [8c 5d Ac Jd 3c Tc] and won ($23.33) with two pair, Aces and Tens
+
+
+Poker Hand #OM89952574: PLO-6 ($0.5/$1) - 2026/06/01 07:51:24
+Table 'PLO-6Bronze7' 5-max Seat #5 is the button
+Seat 1: Hero ($103.63 in chips)
+Seat 2: P1 ($93.5 in chips)
+Seat 3: P2 ($181.73 in chips)
+Seat 4: P3 ($65.48 in chips)
+Seat 5: P4 ($203.41 in chips)
+Hero: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [7s Ad Qd 6s 9d Ks]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P2: folds
+P3: folds
+P4: folds
+Hero: raises $2 to $3
+P1: raises $4.5 to $7.5
+Hero: calls $4.5
+*** FLOP *** [9h 7h 7d]
+Hero: checks
+P1: checks
+*** TURN *** [9h 7h 7d] [Tc]
+Hero: bets $4.95
+P1: calls $4.95
+*** RIVER *** [9h 7h 7d Tc] [3c]
+Hero: bets $12.45
+P1: folds
+Uncalled bet ($12.45) returned to Hero
+*** SHOWDOWN ***
+Hero collected $23.66 from pot
+*** SUMMARY ***
+Total pot $24.9 | Rake $1.24 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [9h 7h 7d Tc 3c]
+Seat 1: Hero (small blind) won ($23.66)
+Seat 2: P1 (big blind) folded on the River
+Seat 3: P2 folded before Flop (didn't bet)
+Seat 4: P3 folded before Flop (didn't bet)
+Seat 5: P4 (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM89856643: PLO-6 ($0.5/$1) - 2026/06/01 00:37:25
+Table 'PLO-6Bronze11' 5-max Seat #2 is the button
+Seat 2: P1 ($55.47 in chips)
+Seat 3: P2 ($111.1 in chips)
+Seat 4: P3 ($14 in chips)
+Seat 5: Hero ($100 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Td 9h Jh 7d 8h Tc]
+Hero: raises $2.5 to $3.5
+P1: folds
+P2: folds
+P3: raises $7.5 to $11
+Hero: raises $7.5 to $18.5
+P3: calls $3 and is all-in
+Uncalled bet ($4.5) returned to Hero
+Hero: shows [Td 9h Jh 7d 8h Tc] (a pair of Tens)
+P3: shows [As 7h 9s 5h Kc 3c] (Ace high)
+*** FLOP *** [Jd 9c 2s]
+*** TURN *** [Jd 9c 2s] [Ts]
+*** RIVER *** [Jd 9c 2s Ts] [Qs]
+*** SHOWDOWN ***
+P3 collected $27.08 from pot
+*** SUMMARY ***
+Total pot $28.5 | Rake $1.42 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Jd 9c 2s Ts Qs]
+Seat 2: P1 (button) folded before Flop (didn't bet)
+Seat 3: P2 (small blind) folded before Flop
+Seat 4: P3 (big blind) showed [As 7h 9s 5h Kc 3c] and won ($27.08) with a flush Ace high
+Seat 5: Hero showed [Td 9h Jh 7d 8h Tc] and lost with a straight, Queen to Eight
+
+
+Poker Hand #OM89980745: PLO-6 ($0.5/$1) - 2026/06/01 09:23:29
+Table 'PLO-6Bronze8' 5-max Seat #4 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: Hero ($136.06 in chips)
+Seat 3: P2 ($253.58 in chips)
+Seat 4: P3 ($307.12 in chips)
+Seat 5: P4 ($87.99 in chips)
+P4: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Jd 7s 4s 3d As Ad]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Hero: raises $2.5 to $3.5
+P2: calls $3.5
+P3: folds
+P4: raises $11.5 to $15
+P1: folds
+Hero: raises $34.5 to $49.5
+P2: folds
+P4: calls $34.5
+*** FLOP *** [2c Js 6d]
+P4: bets $38.49 and is all-in
+Hero: calls $38.49
+P4: shows [Tc 4h Jh Kd 8d Qs] (a pair of Jacks)
+Hero: shows [Jd 7s 4s 3d As Ad] (a pair of Aces)
+*** TURN *** [2c Js 6d] [8h]
+*** RIVER *** [2c Js 6d 8h] [4d]
+*** SHOWDOWN ***
+P4 collected $177.48 from pot
+*** SUMMARY ***
+Total pot $180.48 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [2c Js 6d 8h 4d]
+Seat 1: P1 (big blind) folded before Flop
+Seat 2: Hero showed [Jd 7s 4s 3d As Ad] and lost with two pair, Jacks and Fours
+Seat 3: P2 folded before Flop
+Seat 4: P3 (button) folded before Flop (didn't bet)
+Seat 5: P4 (small blind) showed [Tc 4h Jh Kd 8d Qs] and won ($177.48) with two pair, Jacks and Eights
+
+
+Poker Hand #OM89954594: PLO-6 ($0.5/$1) - 2026/06/01 09:47:16
+Table 'PLO-6Bronze7' 5-max Seat #2 is the button
+Seat 1: Hero ($208.06 in chips)
+Seat 2: P1 ($53.88 in chips)
+Seat 3: P2 ($202.9 in chips)
+Seat 4: P3 ($100 in chips)
+Seat 5: P4 ($282.19 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [5s Ad As 6d Js Qd]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P4: folds
+Hero: raises $2.5 to $3.5
+P1: raises $4.25 to $7.75
+P2: folds
+P3: folds
+Hero: raises $17 to $24.75
+P1: calls $17
+*** FIRST FLOP *** [6s 2h 7s]
+Hero: bets $51
+P1: calls $29.13 and is all-in
+Uncalled bet ($21.87) returned to Hero
+Hero: shows [5s Ad As 6d Js Qd] (a pair of Aces)
+P1: shows [Qs Ah 5d 5h Jh Jd] (a pair of Jacks)
+*** FIRST TURN *** [6s 2h 7s] [8s]
+*** FIRST RIVER *** [6s 2h 7s 8s] [4s]
+*** SECOND TURN *** [6s 2h 7s] [Jc]
+*** SECOND RIVER *** [6s 2h 7s Jc] [Qc]
+*** FIRST SHOWDOWN ***
+Hero collected $53.13 from pot
+*** SECOND SHOWDOWN ***
+P1 collected $53.13 from pot
+*** SUMMARY ***
+Total pot $109.26 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Hand was run two times
+FIRST Board [6s 2h 7s 8s 4s]
+SECOND Board [Jc Qc]
+Seat 1: Hero showed [5s Ad As 6d Js Qd] and won ($53.13) with a flush Ace high, and lost with two pair, Queens and Jacks
+Seat 2: P1 (button) showed [Qs Ah 5d 5h Jh Jd] and lost with a pair of Jacks, and won ($53.13) with three of a kind, Jacks
+Seat 3: P2 (small blind) folded before Flop
+Seat 4: P3 (big blind) folded before Flop
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM89962223: PLO-6 ($0.5/$1) - 2026/06/01 09:54:17
+Table 'PLO-6Bronze4' 5-max Seat #4 is the button
+Seat 1: P1 ($104.1 in chips)
+Seat 2: Hero ($100 in chips)
+Seat 3: P2 ($109.6 in chips)
+Seat 4: P3 ($184.09 in chips)
+Seat 5: P4 ($407.3 in chips)
+P4: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [As 9h Qh Kh Ad 7h]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Hero: raises $2.5 to $3.5
+P2: calls $3.5
+P3: folds
+P4: folds
+P1: raises $11 to $14.5
+Hero: raises $33 to $47.5
+P2: raises $62.1 to $109.6 and is all-in
+P1: calls $89.6 and is all-in
+Hero: calls $52.5 and is all-in
+Uncalled bet ($5.5) returned to P2
+P2: shows [Th Js 6s Td 6d 4h] (a pair of Tens)
+P1: shows [7s Ac 9c 8c Ah 9s] (a pair of Aces)
+Hero: shows [As 9h Qh Kh Ad 7h] (a pair of Aces)
+*** FLOP *** [7d 5c Kc]
+*** TURN *** [7d 5c Kc] [8s]
+*** RIVER *** [7d 5c Kc 8s] [4s]
+*** SHOWDOWN ***
+P2 collected $297.58 from pot
+P2 collected $8.13 from pot
+*** SUMMARY ***
+Total pot $308.7 | Rake $1.99 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [7d 5c Kc 8s 4s]
+Seat 1: P1 (big blind) showed [7s Ac 9c 8c Ah 9s] and lost with two pair, Eights and Sevens
+Seat 2: Hero showed [As 9h Qh Kh Ad 7h] and lost with two pair, Kings and Sevens
+Seat 3: P2 showed [Th Js 6s Td 6d 4h] and won ($305.71) with a straight, Eight to Four
+Seat 4: P3 (button) folded before Flop (didn't bet)
+Seat 5: P4 (small blind) folded before Flop
+
+
+Poker Hand #OM89981614: PLO-6 ($0.5/$1) - 2026/06/01 10:26:45
+Table 'PLO-6Bronze6' 5-max Seat #3 is the button
+Seat 1: P1 ($113.4 in chips)
+Seat 2: P2 ($50.98 in chips)
+Seat 3: P3 ($112.66 in chips)
+Seat 5: Hero ($151.23 in chips)
+Hero: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ad 9h 6c Ac 5d 4d]
+P2: folds
+P3: folds
+Hero: raises $2 to $3
+P1: raises $6 to $9
+Hero: raises $18 to $27
+P1: calls $18
+*** FLOP *** [2s Js Qc]
+Hero: checks
+P1: bets $54
+Hero: folds
+Uncalled bet ($54) returned to P1
+*** SHOWDOWN ***
+P1 collected $51.5 from pot
+*** SUMMARY ***
+Total pot $54 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [2s Js Qc]
+Seat 1: P1 (big blind) won ($51.5)
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 3: P3 (button) folded before Flop (didn't bet)
+Seat 5: Hero (small blind) folded on the Flop
+
+
+Poker Hand #OM89942960: PLO-6 ($0.5/$1) - 2026/06/01 10:28:40
+Table 'PLO-6Bronze3' 5-max Seat #2 is the button
+Seat 1: P1 ($117.9 in chips)
+Seat 2: P2 ($227.28 in chips)
+Seat 3: P3 ($134.46 in chips)
+Seat 4: P4 ($64.98 in chips)
+Seat 5: Hero ($100 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Qh 8h Ad 9d 4d Ac]
+Hero: raises $2.5 to $3.5
+P1: folds
+P2: calls $3.5
+P3: folds
+P4: raises $11 to $14.5
+Hero: raises $33 to $47.5
+P2: folds
+P4: calls $33
+*** FLOP *** [8s 9s 8d]
+P4: checks
+Hero: bets $52.5 and is all-in
+P4: calls $17.48 and is all-in
+Uncalled bet ($35.02) returned to Hero
+Hero: shows [Qh 8h Ad 9d 4d Ac] (a full house, Eights full of Nines)
+P4: shows [Th Qs 8c 4c 9c 5c] (a full house, Eights full of Nines)
+*** TURN *** [8s 9s 8d] [3h]
+*** RIVER *** [8s 9s 8d 3h] [3s]
+*** SHOWDOWN ***
+P4 collected $64.98 from pot
+Hero collected $65.48 from pot
+*** SUMMARY ***
+Total pot $133.96 | Rake $2.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [8s 9s 8d 3h 3s]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 (button) folded before Flop
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: P4 (big blind) showed [Th Qs 8c 4c 9c 5c] and won ($64.98) with a full house, Eights full of Nines
+Seat 5: Hero showed [Qh 8h Ad 9d 4d Ac] and won ($65.48) with a full house, Eights full of Nines
+
+
+Poker Hand #OM89981815: PLO-6 ($0.5/$1) - 2026/06/01 10:46:43
+Table 'PLO-6Bronze6' 5-max Seat #2 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($17.19 in chips)
+Seat 3: P3 ($195.88 in chips)
+Seat 4: P4 ($90.86 in chips)
+Seat 5: Hero ($104.07 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [7d 3h Ad 9c Ac 6c]
+Hero: raises $2.5 to $3.5
+P1: folds
+P2: raises $4.25 to $7.75
+P3: folds
+P4: folds
+Hero: raises $17 to $24.75
+P2: calls $9.44 and is all-in
+Uncalled bet ($7.56) returned to Hero
+Hero: shows [7d 3h Ad 9c Ac 6c] (a pair of Aces)
+P2: shows [Qd Kd 5c Kh 2c 7c] (a pair of Kings)
+*** FLOP *** [Th Td 5h]
+*** TURN *** [Th Td 5h] [4d]
+*** RIVER *** [Th Td 5h 4d] [6d]
+*** SHOWDOWN ***
+Hero collected $33.14 from pot
+*** SUMMARY ***
+Total pot $35.88 | Rake $1.74 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Th Td 5h 4d 6d]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 (button) showed [Qd Kd 5c Kh 2c 7c] and lost with a flush King high
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: P4 (big blind) folded before Flop
+Seat 5: Hero showed [7d 3h Ad 9c Ac 6c] and won ($33.14) with a flush Ace high
+
+
+Poker Hand #OM89991583: PLO-6 ($0.5/$1) - 2026/06/01 11:06:08
+Table 'PLO-6Bronze1' 5-max Seat #4 is the button
+Seat 1: P1 ($47.59 in chips)
+Seat 2: P2 ($100 in chips)
+Seat 3: Hero ($189.67 in chips)
+Seat 4: P3 ($126.15 in chips)
+Seat 5: P4 ($223.85 in chips)
+P4: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [2s Ac Kc 3d 2h Ad]
+Dealt to P3
+Dealt to P4
+P2: folds
+Hero: raises $2.5 to $3.5
+P3: raises $8.5 to $12
+P4: calls $11.5
+P1: folds
+Hero: raises $37 to $49
+P3: calls $37
+P4: calls $37
+*** FLOP *** [4s 6c 2d]
+P4: checks
+Hero: bets $140.67 and is all-in
+P3: folds
+P4: folds
+Uncalled bet ($140.67) returned to Hero
+*** SHOWDOWN ***
+Hero collected $145 from pot
+*** SUMMARY ***
+Total pot $148 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [4s 6c 2d]
+Seat 1: P1 (big blind) folded before Flop
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 3: Hero won ($145)
+Seat 4: P3 (button) folded on the Flop
+Seat 5: P4 (small blind) folded on the Flop
+
+
+Poker Hand #OM90052902: PLO-6 ($0.5/$1) - 2026/06/01 22:46:39
+Table 'PLO-6Bronze5' 5-max Seat #3 is the button
+Seat 1: P1 ($78.92 in chips)
+Seat 2: P2 ($203.11 in chips)
+Seat 3: Hero ($114.03 in chips)
+Seat 4: P3 ($100 in chips)
+Seat 5: P4 ($133.18 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [Th Jh As Kc 5d Jc]
+Dealt to P3
+Dealt to P4
+P1: raises $2 to $3
+P2: raises $7.5 to $10.5
+Hero: calls $10.5
+P3: folds
+P4: folds
+P1: calls $7.5
+*** FLOP *** [Qc Qh Tc]
+P1: checks
+P2: checks
+Hero: bets $10.89
+P1: folds
+P2: folds
+Uncalled bet ($10.89) returned to Hero
+*** SHOWDOWN ***
+Hero collected $30.4 from pot
+*** SUMMARY ***
+Total pot $33 | Rake $1.6 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qc Qh Tc]
+Seat 1: P1 folded on the Flop
+Seat 2: P2 folded on the Flop
+Seat 3: Hero (button) won ($30.4)
+Seat 4: P3 (small blind) folded before Flop
+Seat 5: P4 (big blind) folded before Flop
+
+
+Poker Hand #OM90101201: PLO-6 ($0.5/$1) - 2026/06/02 00:12:41
+Table 'PLO-6Bronze12' 5-max Seat #4 is the button
+Seat 1: Hero ($132.8 in chips)
+Seat 2: P1 ($188.38 in chips)
+Seat 3: P2 ($50.86 in chips)
+Seat 4: P3 ($102.35 in chips)
+Seat 5: P4 ($182.85 in chips)
+P4: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [Ad 4c 9s 2h Ah 9h]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: folds
+P2: folds
+P3: raises $2.5 to $3.5
+P4: raises $8 to $11.5
+Hero: calls $10.5
+P3: calls $8
+*** FLOP *** [3d Ks 4h]
+P4: bets $34.5
+Hero: folds
+P3: folds
+Uncalled bet ($34.5) returned to P4
+*** SHOWDOWN ***
+P4 collected $31.49 from pot
+*** SUMMARY ***
+Total pot $34.5 | Rake $2.01 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [3d Ks 4h]
+Seat 1: Hero (big blind) folded on the Flop
+Seat 2: P1 folded before Flop (didn't bet)
+Seat 3: P2 folded before Flop (didn't bet)
+Seat 4: P3 (button) folded on the Flop
+Seat 5: P4 (small blind) won ($31.49)
+
+
+Poker Hand #OM90302508: PLO-6 ($0.5/$1) - 2026/06/03 10:23:39
+Table 'PLO-6Bronze6' 5-max Seat #1 is the button
+Seat 1: P1 ($182.67 in chips)
+Seat 2: P2 ($11.05 in chips)
+Seat 3: Hero ($108.51 in chips)
+Seat 4: P3 ($82.77 in chips)
+Seat 5: P4 ($100 in chips)
+P2: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [Ac 3d 4c 5c Js Ah]
+Dealt to P3
+Dealt to P4
+P3: folds
+P4: folds
+P1: raises $1 to $2
+P2: raises $5 to $7
+Hero: calls $6
+P1: calls $5
+*** FLOP *** [Qh 7s 3c]
+P2: checks
+Hero: bets $6.93
+P1: folds
+P2: folds
+Uncalled bet ($6.93) returned to Hero
+*** SHOWDOWN ***
+Hero collected $19.95 from pot
+*** SUMMARY ***
+Total pot $21 | Rake $1.05 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qh 7s 3c]
+Seat 1: P1 (button) folded on the Flop
+Seat 2: P2 (small blind) folded on the Flop
+Seat 3: Hero (big blind) won ($19.95)
+Seat 4: P3 folded before Flop (didn't bet)
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM90249371: PLO-6 ($0.5/$1) - 2026/06/03 10:40:51
+Table 'PLO-6Bronze3' 5-max Seat #5 is the button
+Seat 1: P1 ($211.94 in chips)
+Seat 2: Hero ($335.39 in chips)
+Seat 3: P2 ($48.82 in chips)
+Seat 4: P3 ($34.5 in chips)
+Seat 5: P4 ($147.97 in chips)
+P1: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [5c 5s Ac 8h 4d 9d]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P2: folds
+P3: raises $1 to $2
+P4: folds
+P1: raises $5 to $7
+Hero: calls $6
+P3: calls $5
+*** FLOP *** [3d 9c 4h]
+P1: checks
+Hero: bets $12.86
+P3: folds
+P1: folds
+Uncalled bet ($12.86) returned to Hero
+*** SHOWDOWN ***
+Hero collected $19.95 from pot
+*** SUMMARY ***
+Total pot $21 | Rake $1.05 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [3d 9c 4h]
+Seat 1: P1 (small blind) folded on the Flop
+Seat 2: Hero (big blind) won ($19.95)
+Seat 3: P2 folded before Flop (didn't bet)
+Seat 4: P3 folded on the Flop
+Seat 5: P4 (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM90249376: PLO-6 ($0.5/$1) - 2026/06/03 10:41:46
+Table 'PLO-6Bronze3' 5-max Seat #1 is the button
+Seat 1: P1 ($204.94 in chips)
+Seat 2: Hero ($348.34 in chips)
+Seat 3: P2 ($48.82 in chips)
+Seat 4: P3 ($27.5 in chips)
+Seat 5: P4 ($147.97 in chips)
+Hero: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Td 8d 7h Ts Js 7d]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P3: raises $1 to $2
+P4: raises $5.5 to $7.5
+P1: folds
+Hero: calls $7
+P2: folds
+P3: calls $5.5
+*** FLOP *** [4s 4h 9h]
+Hero: checks
+P3: checks
+P4: checks
+*** TURN *** [4s 4h 9h] [6d]
+Hero: checks
+P3: checks
+P4: checks
+*** RIVER *** [4s 4h 9h 6d] [3h]
+Hero: checks
+P3: checks
+P4: checks
+Hero: shows [Td 8d 7h Ts Js 7d] (two pair, Tens and Fours)
+P3: shows [Kd 2h 7c 3d 8s As] (two pair, Fours and Threes)
+P4: shows [9c Ah Qh Qd 5d Ac] (a flush Ace high)
+*** SHOWDOWN ***
+P4 collected $22.09 from pot
+*** SUMMARY ***
+Total pot $23.5 | Rake $1.41 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [4s 4h 9h 6d 3h]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: Hero (small blind) showed [Td 8d 7h Ts Js 7d] and lost with two pair, Tens and Fours
+Seat 3: P2 (big blind) folded before Flop
+Seat 4: P3 showed [Kd 2h 7c 3d 8s As] and lost with two pair, Fours and Threes
+Seat 5: P4 showed [9c Ah Qh Qd 5d Ac] and won ($22.09) with a flush Ace high
+
+
+Poker Hand #OM90268954: PLO-6 ($0.5/$1) - 2026/06/03 15:14:59
+Table 'PLO-6Bronze5' 5-max Seat #5 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($100 in chips)
+Seat 3: P3 ($204 in chips)
+Seat 4: P4 ($139.82 in chips)
+Seat 5: Hero ($415.29 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [6s Td 7c 4s Ad 4h]
+P3: raises $1 to $2
+P4: raises $5.5 to $7.5
+Hero: calls $7.5
+P1: folds
+P2: folds
+P3: calls $5.5
+*** FLOP *** [Qc Kh 8h]
+P3: checks
+P4: bets $24
+Hero: folds
+P3: folds
+Uncalled bet ($24) returned to P4
+*** SHOWDOWN ***
+P4 collected $22.8 from pot
+*** SUMMARY ***
+Total pot $24 | Rake $1.2 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qc Kh 8h]
+Seat 1: P1 (small blind) folded before Flop
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: P3 folded on the Flop
+Seat 4: P4 won ($22.8)
+Seat 5: Hero (button) folded on the Flop
+
+
+Poker Hand #OM90336184: PLO-6 ($0.5/$1) - 2026/06/03 18:19:40
+Table 'PLO-6Bronze11' 5-max Seat #2 is the button
+Seat 1: P1 ($87.64 in chips)
+Seat 2: P2 ($127.29 in chips)
+Seat 3: P3 ($129.45 in chips)
+Seat 4: Hero ($198.5 in chips)
+Seat 5: P4 ($11.58 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [As 2d Ad 8c 8h 3d]
+Dealt to P4
+P4: raises $1.7 to $2.7
+P1: folds
+P2: calls $2.7
+P3: raises $9.1 to $11.8
+Hero: calls $10.8
+P4: calls $8.88 and is all-in
+P2: calls $9.1
+*** FLOP *** [2h Jd 7d]
+P3: bets $46.98
+Hero: raises $139.72 to $186.7 and is all-in
+P2: folds
+P3: calls $70.67 and is all-in
+Uncalled bet ($69.05) returned to Hero
+Hero: shows [As 2d Ad 8c 8h 3d] (a pair of Aces)
+P4: shows [7s 3s 3c Qs Th Qc] (a pair of Queens)
+P3: shows [Ks 5h 4d Ac 7c 9s] (a pair of Sevens)
+*** TURN *** [2h Jd 7d] [Kh]
+*** RIVER *** [2h Jd 7d Kh] [9c]
+*** SHOWDOWN ***
+P4 collected $45.84 from pot
+P3 collected $233.45 from pot
+*** SUMMARY ***
+Total pot $282.28 | Rake $1.99 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [2h Jd 7d Kh 9c]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 (button) folded on the Flop
+Seat 3: P3 (small blind) showed [Ks 5h 4d Ac 7c 9s] and won ($233.45) with two pair, Kings and Nines
+Seat 4: Hero (big blind) showed [As 2d Ad 8c 8h 3d] and lost with a pair of Aces
+Seat 5: P4 showed [7s 3s 3c Qs Th Qc] and won ($45.84) with a straight, King to Nine
+
+
+Poker Hand #OM90490591: PLO-6 ($0.5/$1) - 2026/06/04 09:33:36
+Table 'PLO-6Bronze3' 5-max Seat #3 is the button
+Seat 1: P1 ($175.3 in chips)
+Seat 2: P2 ($127 in chips)
+Seat 3: Hero ($100 in chips)
+Seat 4: P3 ($94.06 in chips)
+Seat 5: P4 ($165.54 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [Kh 9h 5d 9s 5h Kc]
+Dealt to P3
+Dealt to P4
+P1: raises $2.5 to $3.5
+P2: raises $8.5 to $12
+Hero: calls $12
+P3: folds
+P4: folds
+P1: calls $8.5
+*** FLOP *** [3d 2c Td]
+P1: bets $37.5
+P2: raises $77.5 to $115 and is all-in
+Hero: folds
+P1: calls $77.5
+P2: shows [Ad 4h 7d Jd 5c 6h] (Ace high)
+P1: shows [Qh Ac Tc Jh Ts 7c] (three of a kind, Tens)
+*** TURN *** [3d 2c Td] [Kd]
+*** RIVER *** [3d 2c Td Kd] [3s]
+*** SHOWDOWN ***
+P1 collected $264.5 from pot
+*** SUMMARY ***
+Total pot $267.5 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [3d 2c Td Kd 3s]
+Seat 1: P1 showed [Qh Ac Tc Jh Ts 7c] and won ($264.5) with a full house, Tens full of Threes
+Seat 2: P2 showed [Ad 4h 7d Jd 5c 6h] and lost with a flush Ace high
+Seat 3: Hero (button) folded on the Flop
+Seat 4: P3 (small blind) folded before Flop
+Seat 5: P4 (big blind) folded before Flop
+
+
+Poker Hand #OM90053583: PLO-6 ($0.5/$1) - 2026/06/02 00:23:12
+Table 'PLO-6Bronze5' 5-max Seat #5 is the button
+Seat 2: P1 ($124.13 in chips)
+Seat 3: Hero ($100 in chips)
+Seat 4: P2 ($51.19 in chips)
+Seat 5: P3 ($100 in chips)
+P1: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Ah 8d 9s Js Ac 3s]
+Dealt to P2
+Dealt to P3
+P2: raises $2.5 to $3.5
+P3: raises $8.5 to $12
+P1: folds
+Hero: raises $28 to $40
+P2: calls $36.5
+P3: calls $28
+*** FLOP *** [Qd 9h 6h]
+Hero: bets $60 and is all-in
+P2: calls $11.19 and is all-in
+P3: calls $60 and is all-in
+Hero: shows [Ah 8d 9s Js Ac 3s] (a pair of Aces)
+P2: shows [6c Qh Kc 2s 7c 6d] (three of a kind, Sixes)
+P3: shows [4h Jc 7h Ks Ts 5d] (King high)
+*** TURN *** [Qd 9h 6h] [Th]
+*** RIVER *** [Qd 9h 6h Th] [As]
+*** SHOWDOWN ***
+P3 collected $152.54 from pot
+P3 collected $96.66 from pot
+*** SUMMARY ***
+Total pot $251.69 | Rake $1.49 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qd 9h 6h Th As]
+Seat 2: P1 (small blind) folded before Flop
+Seat 3: Hero (big blind) showed [Ah 8d 9s Js Ac 3s] and lost with a straight, Queen to Eight
+Seat 4: P2 showed [6c Qh Kc 2s 7c 6d] and lost with three of a kind, Sixes
+Seat 5: P3 (button) showed [4h Jc 7h Ks Ts 5d] and won ($249.2) with a flush Ten high
+
+
+Poker Hand #OM90511645: PLO-6 ($0.5/$1) - 2026/06/04 16:09:22
+Table 'PLO-6Bronze5' 5-max Seat #2 is the button
+Seat 1: P1 ($88.98 in chips)
+Seat 2: P2 ($12.47 in chips)
+Seat 3: Hero ($102.9 in chips)
+Seat 4: P3 ($106.5 in chips)
+Seat 5: P4 ($100 in chips)
+Hero: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [Kc 3s Ac 8c 9s As]
+Dealt to P3
+Dealt to P4
+P4: raises $2.5 to $3.5
+P1: folds
+P2: raises $2.81 to $6.31
+Hero: raises $17.12 to $23.43
+P3: folds
+P4: folds
+P2: calls $6.16 and is all-in
+Uncalled bet ($10.96) returned to Hero
+Hero: shows [Kc 3s Ac 8c 9s As] (a pair of Aces)
+P2: shows [Jh 5s Jc Qs 2c 9c] (a pair of Jacks)
+*** FLOP *** [7d Jd 4d]
+*** TURN *** [7d Jd 4d] [5h]
+*** RIVER *** [7d Jd 4d 5h] [3h]
+*** SHOWDOWN ***
+P2 collected $27.97 from pot
+*** SUMMARY ***
+Total pot $29.44 | Rake $1.47 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [7d Jd 4d 5h 3h]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 (button) showed [Jh 5s Jc Qs 2c 9c] and won ($27.97) with three of a kind, Jacks
+Seat 3: Hero (small blind) showed [Kc 3s Ac 8c 9s As] and lost with a pair of Aces
+Seat 4: P3 (big blind) folded before Flop
+Seat 5: P4 folded before Flop
+
+
+Poker Hand #OM90564069: PLO-6 ($0.5/$1) - 2026/06/04 19:44:50
+Table 'PLO-6Bronze10' 5-max Seat #2 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($112.19 in chips)
+Seat 3: Hero ($147.42 in chips)
+Seat 4: P3 ($60.16 in chips)
+Hero: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [3s 6c 8d As Ad 6s]
+Dealt to P3
+P1: raises $2.5 to $3.5
+P2: raises $2.5 to $6
+Hero: raises $16.5 to $22.5
+P3: folds
+P1: raises $52 to $74.5
+P2: folds
+Hero: raises $72.92 to $147.42 and is all-in
+P1: calls $25.5 and is all-in
+Uncalled bet ($47.42) returned to Hero
+Hero: shows [3s 6c 8d As Ad 6s] (a pair of Aces)
+P1: shows [Qd Ah Ac 6h Ks Kh] (a pair of Aces)
+*** FLOP *** [9s Th 7d]
+*** TURN *** [9s Th 7d] [7c]
+*** RIVER *** [9s Th 7d 7c] [Jc]
+*** SHOWDOWN ***
+P1 collected $204.5 from pot
+*** SUMMARY ***
+Total pot $207 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [9s Th 7d 7c Jc]
+Seat 1: P1 showed [Qd Ah Ac 6h Ks Kh] and won ($204.5) with a straight, King to Nine
+Seat 2: P2 (button) folded before Flop
+Seat 3: Hero (small blind) showed [3s 6c 8d As Ad 6s] and lost with a straight, Ten to Six
+Seat 4: P3 (big blind) folded before Flop
+
+
+Poker Hand #OM90942962: PLO-6 ($0.5/$1) - 2026/06/07 10:57:06
+Table 'PLO-6Bronze1' 5-max Seat #4 is the button
+Seat 1: Hero ($234.06 in chips)
+Seat 2: P1 ($73.86 in chips)
+Seat 3: P2 ($114.93 in chips)
+Seat 4: P3 ($66.13 in chips)
+Seat 5: P4 ($130.12 in chips)
+P4: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [6d Ah Ac Ks 8c 7s]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: raises $2.5 to $3.5
+P2: raises $8.5 to $12
+P3: folds
+P4: folds
+Hero: raises $28 to $40
+P1: raises $33.86 to $73.86 and is all-in
+P2: calls $61.86
+Hero: raises $33.86 to $107.72
+P2: calls $33.86
+*** FLOP *** [7c 7h 5h]
+Hero: bets $126.34 and is all-in
+P2: calls $7.21 and is all-in
+Uncalled bet ($119.13) returned to Hero
+Hero: shows [6d Ah Ac Ks 8c 7s] (three of a kind, Sevens)
+P1: shows [7d As 4d 4s 6s Ad] (three of a kind, Sevens)
+P2: shows [Th Qh Tc Jc Kh Qc] (two pair, Queens and Sevens)
+*** TURN *** [7c 7h 5h] [6h]
+*** RIVER *** [7c 7h 5h 6h] [3d]
+*** SHOWDOWN ***
+Hero collected $109.95 from pot
+P1 collected $109.95 from pot
+Hero collected $81.34 from pot
+*** SUMMARY ***
+Total pot $304.22 | Rake $1.98 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [7c 7h 5h 6h 3d]
+Seat 1: Hero (big blind) showed [6d Ah Ac Ks 8c 7s] and won ($191.29) with a full house, Sevens full of Sixes
+Seat 2: P1 showed [7d As 4d 4s 6s Ad] and won ($109.95) with a full house, Sevens full of Sixes
+Seat 3: P2 showed [Th Qh Tc Jc Kh Qc] and lost with a flush King high
+Seat 4: P3 (button) folded before Flop (didn't bet)
+Seat 5: P4 (small blind) folded before Flop
+
+
+Poker Hand #OM90971892: PLO-6 ($0.5/$1) - 2026/06/07 15:44:32
+Table 'PLO-6Bronze1' 5-max Seat #3 is the button
+Seat 1: P1 ($119.46 in chips)
+Seat 2: P2 ($192.53 in chips)
+Seat 3: Hero ($163.18 in chips)
+Seat 4: P3 ($100 in chips)
+Seat 5: P4 ($77 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [7c 3d Ac 4c As 9s]
+Dealt to P3
+Dealt to P4
+P1: raises $2 to $3
+P2: raises $7.5 to $10.5
+Hero: raises $25.5 to $36
+P3: folds
+P4: raises $41 to $77 and is all-in
+P1: folds
+P2: calls $66.5
+Hero: raises $86.18 to $163.18 and is all-in
+P2: calls $86.18
+Hero: shows [7c 3d Ac 4c As 9s] (a pair of Aces)
+P4: shows [6h 2c 4s 5h 7s 2h] (a pair of Twos)
+P2: shows [Ts 5d 6s 6d Kd Jc] (a pair of Sixes)
+*** FLOP *** [Kh Kc 5s]
+P2: Chooses to EV Cashout
+*** TURN *** [Kh Kc 5s] [Tc]
+*** RIVER *** [Kh Kc 5s Tc] [8h]
+P2: Pays Cashout Risk ($57.08)
+*** SHOWDOWN ***
+P2 collected $232.77 from pot
+P2 collected $171.1 from pot
+*** SUMMARY ***
+Total pot $406.86 | Rake $1.99 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Kh Kc 5s Tc 8h]
+Seat 1: P1 folded before Flop
+Seat 2: P2 showed [Ts 5d 6s 6d Kd Jc] and won ($403.87) with a full house, Kings full of Tens, Cashout Risk ($57.08)
+Seat 3: Hero (button) showed [7c 3d Ac 4c As 9s] and lost with two pair, Aces and Kings
+Seat 4: P3 (small blind) folded before Flop
+Seat 5: P4 (big blind) showed [6h 2c 4s 5h 7s 2h] and lost with two pair, Kings and Fives
+
+
+Poker Hand #OM91040259: PLO-6 ($0.5/$1) - 2026/06/08 01:20:26
+Table 'PLO-6Bronze3' 5-max Seat #5 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: Hero ($173.66 in chips)
+Seat 3: P2 ($100 in chips)
+Seat 5: P3 ($109.31 in chips)
+P1: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [4c As 3c 8d Ad 3h]
+Dealt to P2
+Dealt to P3
+P2: raises $2.5 to $3.5
+P3: folds
+P1: raises $8 to $11.5
+Hero: raises $26.5 to $38
+P2: raises $62 to $100 and is all-in
+P1: calls $88.5 and is all-in
+Hero: calls $62
+P2: shows [Kh 6d 7c 9c Kd 5h] (a pair of Kings)
+P1: shows [2h Jc Ts Qc 8c Jh] (a pair of Jacks)
+Hero: shows [4c As 3c 8d Ad 3h] (a pair of Aces)
+*** FLOP *** [Ah 4d 5s]
+*** TURN *** [Ah 4d 5s] [9d]
+*** RIVER *** [Ah 4d 5s 9d] [6h]
+*** SHOWDOWN ***
+Hero collected $297.5 from pot
+*** SUMMARY ***
+Total pot $300 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ah 4d 5s 9d 6h]
+Seat 1: P1 (small blind) showed [2h Jc Ts Qc 8c Jh] and lost with a pair of Jacks
+Seat 2: Hero (big blind) showed [4c As 3c 8d Ad 3h] and won ($297.5) with three of a kind, Aces
+Seat 3: P2 showed [Kh 6d 7c 9c Kd 5h] and lost with two pair, Nines and Sixes
+Seat 5: P3 (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM91061076: PLO-6 ($0.5/$1) - 2026/06/08 02:23:10
+Table 'PLO-6Bronze8' 5-max Seat #3 is the button
+Seat 1: P1 ($234.84 in chips)
+Seat 2: P2 ($121.63 in chips)
+Seat 3: P3 ($64.57 in chips)
+Seat 4: P4 ($161.21 in chips)
+Seat 5: Hero ($100 in chips)
+P4: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [3d 9c As 2d 4s Ah]
+P1: raises $2.5 to $3.5
+P2: folds
+P3: raises $8.5 to $12
+P4: folds
+Hero: raises $28 to $40
+P1: folds
+P3: calls $28
+*** FLOP *** [Ad 2h 2s]
+Hero: checks
+P3: checks
+*** TURN *** [Ad 2h 2s] [4d]
+Hero: checks
+P3: bets $24.57 and is all-in
+Hero: calls $24.57
+P3: shows [8c Kc 6d 7c 3h 5d] (a straight, Ace to Five)
+Hero: shows [3d 9c As 2d 4s Ah] (a full house, Aces full of Twos)
+*** RIVER *** [Ad 2h 2s 4d] [4c]
+*** SHOWDOWN ***
+Hero collected $130.14 from pot
+*** SUMMARY ***
+Total pot $133.14 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ad 2h 2s 4d 4c]
+Seat 1: P1 folded before Flop
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 3: P3 (button) showed [8c Kc 6d 7c 3h 5d] and lost with a straight, Ace to Five
+Seat 4: P4 (small blind) folded before Flop
+Seat 5: Hero (big blind) showed [3d 9c As 2d 4s Ah] and won ($130.14) with a full house, Aces full of Fours
+
+
+Poker Hand #OM91333003: PLO-6 ($0.5/$1) - 2026/06/10 01:00:32
+Table 'PLO-6Bronze8' 5-max Seat #2 is the button
+Seat 1: P1 ($148.03 in chips)
+Seat 2: P2 ($170.62 in chips)
+Seat 3: Hero ($100 in chips)
+Seat 4: P3 ($26 in chips)
+Seat 5: P4 ($90.22 in chips)
+Hero: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [5c Ac 4s Ks Ah Qc]
+Dealt to P3
+Dealt to P4
+P4: folds
+P1: raises $1 to $2
+P2: raises $5.5 to $7.5
+Hero: raises $18 to $25.5
+P3: raises $0.5 to $26 and is all-in
+P1: folds
+P2: calls $18.5
+Hero: calls $0.5
+*** FLOP *** [Jd 7d 9s]
+Hero: checks
+P2: checks
+*** TURN *** [Jd 7d 9s] [3c]
+Hero: checks
+P2: checks
+*** RIVER *** [Jd 7d 9s 3c] [6c]
+Hero: bets $34
+P2: folds
+Uncalled bet ($34) returned to Hero
+Hero: shows [5c Ac 4s Ks Ah Qc] (a straight, Seven to Three)
+P3: shows [Kd 7c Kh 5h Qh 9d] (two pair, Nines and Sevens)
+*** SHOWDOWN ***
+Hero collected $77 from pot
+*** SUMMARY ***
+Total pot $80 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Jd 7d 9s 3c 6c]
+Seat 1: P1 folded before Flop
+Seat 2: P2 (button) folded on the River
+Seat 3: Hero (small blind) showed [5c Ac 4s Ks Ah Qc] and won ($77) with a straight, Seven to Three
+Seat 4: P3 (big blind) showed [Kd 7c Kh 5h Qh 9d] and lost with two pair, Nines and Sevens
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM90284761: PLO-6 ($0.5/$1) - 2026/06/03 14:19:03
+Table 'PLO-6Bronze7' 5-max Seat #4 is the button
+Seat 1: P1 ($20 in chips)
+Seat 2: P2 ($130.27 in chips)
+Seat 3: P3 ($66.91 in chips)
+Seat 4: Hero ($144.77 in chips)
+Seat 5: P4 ($116.3 in chips)
+P4: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ah 9c 2d 2h 3h 6c]
+Dealt to P4
+P2: folds
+P3: folds
+Hero: raises $2.5 to $3.5
+P4: calls $3
+P1: raises $10.5 to $14
+Hero: folds
+P4: raises $31.5 to $45.5
+P1: calls $6 and is all-in
+Uncalled bet ($25.5) returned to P4
+P4: shows [Ts 4c Ks Ac Tc 7c] (a pair of Tens)
+P1: shows [3d Qc Jd Ad As Th] (a pair of Aces)
+*** FLOP *** [7d Js Kd]
+*** TURN *** [7d Js Kd] [8c]
+*** RIVER *** [7d Js Kd 8c] [3s]
+*** SHOWDOWN ***
+P4 collected $40.5 from pot
+*** SUMMARY ***
+Total pot $43.5 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [7d Js Kd 8c 3s]
+Seat 1: P1 (big blind) showed [3d Qc Jd Ad As Th] and lost with two pair, Jacks and Threes
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 4: Hero (button) folded before Flop
+Seat 5: P4 (small blind) showed [Ts 4c Ks Ac Tc 7c] and won ($40.5) with two pair, Kings and Sevens
+
+
+Poker Hand #OM90473992: PLO-6 ($0.5/$1) - 2026/06/04 10:55:06
+Table 'PLO-6Bronze4' 5-max Seat #3 is the button
+Seat 1: P1 ($170.58 in chips)
+Seat 2: Hero ($278.96 in chips)
+Seat 3: P2 ($106.29 in chips)
+Seat 4: P3 ($100 in chips)
+P3: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Ac Kd 5d 4d 5s 5c]
+Dealt to P2
+Dealt to P3
+Hero: raises $2.5 to $3.5
+P2: raises $8.5 to $12
+P3: folds
+P1: folds
+Hero: folds
+Uncalled bet ($8.5) returned to P2
+*** SHOWDOWN ***
+P2 collected $8.08 from pot
+*** SUMMARY ***
+Total pot $8.5 | Rake $0.42 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: P1 (big blind) folded before Flop
+Seat 2: Hero folded before Flop
+Seat 3: P2 (button) collected ($8.08)
+Seat 4: P3 (small blind) folded before Flop
+
+
+Poker Hand #OM90474561: PLO-6 ($0.5/$1) - 2026/06/04 11:31:44
+Table 'PLO-6Bronze4' 5-max Seat #3 is the button
+Seat 1: P1 ($110.03 in chips)
+Seat 2: Hero ($190.7 in chips)
+Seat 3: P2 ($244.51 in chips)
+Seat 4: P3 ($125.95 in chips)
+Seat 5: P4 ($71.3 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Td Kd Jd 8s Ah 2s]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: folds
+Hero: raises $2.5 to $3.5
+P2: folds
+P3: folds
+P4: raises $5.63 to $9.13
+Hero: folds
+Uncalled bet ($5.63) returned to P4
+*** SHOWDOWN ***
+P4 collected $7.13 from pot
+*** SUMMARY ***
+Total pot $7.5 | Rake $0.37 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: Hero folded before Flop
+Seat 3: P2 (button) folded before Flop (didn't bet)
+Seat 4: P3 (small blind) folded before Flop
+Seat 5: P4 (big blind) collected ($7.13)
+
+
+Poker Hand #OM90989191: PLO-6 ($0.5/$1) - 2026/06/08 00:54:29
+Table 'PLO-6Bronze1' 5-max Seat #1 is the button
+Seat 1: P1 ($102.7 in chips)
+Seat 2: P2 ($254.64 in chips)
+Seat 3: P3 ($229.78 in chips)
+Seat 4: Hero ($100 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Kc 8s Tc Ac 7c Kh]
+Hero: raises $2.5 to $3.5
+P1: raises $8.5 to $12
+P2: folds
+P3: folds
+Hero: folds
+Uncalled bet ($8.5) returned to P1
+*** SHOWDOWN ***
+P1 collected $8.08 from pot
+*** SUMMARY ***
+Total pot $8.5 | Rake $0.42 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: P1 (button) collected ($8.08)
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: Hero folded before Flop
+
+
+Poker Hand #OM91016015: PLO-6 ($0.5/$1) - 2026/06/08 01:56:01
+Table 'PLO-6Bronze4' 5-max Seat #5 is the button
+Seat 1: Hero ($103.1 in chips)
+Seat 2: P1 ($462.37 in chips)
+Seat 4: P2 ($156.64 in chips)
+Seat 5: P3 ($135.08 in chips)
+Hero: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [3d Qd 9d 6c 8d As]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+P2: folds
+P3: folds
+Hero: raises $2 to $3
+P1: raises $6 to $9
+Hero: folds
+Uncalled bet ($6) returned to P1
+*** SHOWDOWN ***
+P1 collected $5.7 from pot
+*** SUMMARY ***
+Total pot $6 | Rake $0.3 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: Hero (small blind) folded before Flop
+Seat 2: P1 (big blind) collected ($5.7)
+Seat 4: P2 folded before Flop (didn't bet)
+Seat 5: P3 (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM91240821: PLO-6 ($0.5/$1) - 2026/06/09 10:53:26
+Table 'PLO-6Bronze4' 5-max Seat #5 is the button
+Seat 1: P1 ($39.28 in chips)
+Seat 2: P2 ($100 in chips)
+Seat 3: P3 ($100 in chips)
+Seat 4: Hero ($184.43 in chips)
+Seat 5: P4 ($163.67 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ad 6c 3d Qs 3s Tc]
+Dealt to P4
+P3: folds
+Hero: raises $2.5 to $3.5
+P4: calls $3.5
+P1: raises $11.5 to $15
+P2: folds
+Hero: folds
+P4: calls $11.5
+*** FIRST FLOP *** [Ts 4d Qc]
+P1: bets $24.28 and is all-in
+P4: calls $24.28
+P1: shows [Js 8s Kd Qd Kh 6h] (a pair of Kings)
+P4: shows [7c 5h Th Qh Ac 5s] (two pair, Queens and Tens)
+*** FIRST TURN *** [Ts 4d Qc] [3h]
+*** FIRST RIVER *** [Ts 4d Qc 3h] [Jc]
+*** SECOND TURN *** [Ts 4d Qc] [2c]
+*** SECOND RIVER *** [Ts 4d Qc 2c] [4s]
+*** FIRST SHOWDOWN ***
+P1 collected $40.03 from pot
+*** SECOND SHOWDOWN ***
+P1 collected $40.03 from pot
+*** SUMMARY ***
+Total pot $83.06 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Hand was run two times
+FIRST Board [Ts 4d Qc 3h Jc]
+SECOND Board [2c 4s]
+Seat 1: P1 (small blind) showed [Js 8s Kd Qd Kh 6h] and won ($40.03) with two pair, Queens and Jacks, and won ($40.03) with a pair of Kings
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 4: Hero folded before Flop
+Seat 5: P4 (button) showed [7c 5h Th Qh Ac 5s] and lost with two pair, Queens and Tens, and lost with a pair of Fives
+
+
+Poker Hand #OM91260282: PLO-6 ($0.5/$1) - 2026/06/09 11:06:01
+Table 'PLO-6Bronze5' 5-max Seat #1 is the button
+Seat 1: P1 ($40 in chips)
+Seat 2: P2 ($114.7 in chips)
+Seat 3: P3 ($102.33 in chips)
+Seat 4: Hero ($100 in chips)
+Seat 5: P4 ($35 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+P4: posts missed blind $0.5
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [7s 9s 5h 7h 3d Ah]
+Dealt to P4
+Hero: raises $3 to $4
+P4: calls $4
+P1: raises $14 to $18
+P2: folds
+P3: folds
+Hero: folds
+P4: calls $14
+*** FLOP *** [5s Ac 2c]
+P4: checks
+P1: bets $22 and is all-in
+P4: calls $16.5 and is all-in
+Uncalled bet ($5.5) returned to P1
+P1: shows [4d 7d 9c 6c Qs 3s] (a straight, Ace to Five)
+P4: shows [Kh 9d 2h Jd Ks As] (two pair, Aces and Twos)
+*** TURN *** [5s Ac 2c] [8h]
+*** RIVER *** [5s Ac 2c 8h] [2d]
+*** SHOWDOWN ***
+P4 collected $72 from pot
+*** SUMMARY ***
+Total pot $75 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [5s Ac 2c 8h 2d]
+Seat 1: P1 (button) showed [4d 7d 9c 6c Qs 3s] and lost with a straight, Ace to Five
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: Hero folded before Flop
+Seat 5: P4 showed [Kh 9d 2h Jd Ks As] and won ($72) with a full house, Twos full of Aces
+
+
+Poker Hand #OM91252294: PLO-6 ($0.5/$1) - 2026/06/09 12:40:00
+Table 'PLO-6Bronze3' 5-max Seat #1 is the button
+Seat 1: P1 ($133.96 in chips)
+Seat 2: P2 ($79.51 in chips)
+Seat 3: P3 ($100 in chips)
+Seat 4: Hero ($163.78 in chips)
+Seat 5: P4 ($110.9 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [2d 9h 9c Qs 8s 8d]
+Dealt to P4
+Hero: raises $2.5 to $3.5
+P4: calls $3.5
+P1: folds
+P2: folds
+P3: raises $11 to $14.5
+Hero: folds
+P4: calls $11
+*** FLOP *** [3d 6d 3h]
+P3: bets $8.25
+P4: calls $8.25
+*** TURN *** [3d 6d 3h] [2h]
+P3: bets $16
+P4: raises $26.9 to $42.9
+P3: folds
+Uncalled bet ($26.9) returned to P4
+*** SHOWDOWN ***
+P4 collected $79 from pot
+*** SUMMARY ***
+Total pot $81.5 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [3d 6d 3h 2h]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: P3 (big blind) folded on the Turn
+Seat 4: Hero folded before Flop
+Seat 5: P4 won ($79)
+
+
+Poker Hand #OM90535546: PLO-6 ($0.5/$1) - 2026/06/04 22:11:43
+Table 'PLO-6Bronze8' 5-max Seat #5 is the button
+Seat 1: P1 ($192.24 in chips)
+Seat 2: P2 ($58.5 in chips)
+Seat 4: P3 ($449.52 in chips)
+Seat 5: Hero ($181.59 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $6
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [5s Js Qh 5d 6d 6h]
+P3: raises $2.5 to $3.5
+Hero: folds
+P1: folds
+P2: calls $2.5
+*** FLOP *** [5h 8d 6s]
+P2: checks
+P3: checks
+*** TURN *** [5h 8d 6s] [8h]
+P2: checks
+P3: bets $4
+P2: calls $4
+*** RIVER *** [5h 8d 6s 8h] [2h]
+P2: checks
+P3: checks
+P2: shows [Jh 2d Jc 7h 7s Ts] (a flush Jack high)
+P3: shows [As 8c Th 3c Ah 9c] (a flush Ace high)
+*** SHOWDOWN ***
+P3 collected $14.73 from pot
+*** SUMMARY ***
+Total pot $15.5 | Rake $0.77 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [5h 8d 6s 8h 2h]
+Seat 1: P1 (small blind) folded before Flop
+Seat 2: P2 (big blind) showed [Jh 2d Jc 7h 7s Ts] and lost with a flush Jack high
+Seat 4: P3 showed [As 8c Th 3c Ah 9c] and won ($14.73) with a flush Ace high
+Seat 5: Hero (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM92249928: PLO-6 ($0.5/$6) - 2026/06/16 09:36:20
+Table 'PLO-6Bronze4' 5-max Seat #3 is the button
+Seat 1: P1 ($77.69 in chips)
+Seat 2: P2 ($174.08 in chips)
+Seat 3: P3 ($100 in chips)
+Seat 4: P4 ($151.02 in chips)
+Seat 5: Hero ($409 in chips)
+P4: posts small blind $0.5
+Hero: posts big blind $1
+P1: straddle $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [9h 3c Js 8c Qc Qs]
+P2: folds
+P3: raises $5.5 to $7.5
+P4: folds
+Hero: calls $6.5
+P1: raises $23 to $30.5
+P3: calls $23
+Hero: calls $23
+*** FIRST FLOP *** [5h 9c 2h]
+Hero: checks
+P1: bets $47.19 and is all-in
+P3: raises $22.31 to $69.5 and is all-in
+Hero: folds
+Uncalled bet ($22.31) returned to P3
+P3: shows [Kd Qh 6d Jc 9s Kh] (a pair of Kings)
+P1: shows [Ad As Td 6s 8d 3s] (a pair of Aces)
+*** FIRST TURN *** [5h 9c 2h] [2c]
+*** FIRST RIVER *** [5h 9c 2h 2c] [5d]
+*** SECOND TURN *** [5h 9c 2h] [2d]
+*** SECOND RIVER *** [5h 9c 2h 2d] [Jh]
+*** THIRD TURN *** [5h 9c 2h] [6c]
+*** THIRD RIVER *** [5h 9c 2h 6c] [5s]
+*** FIRST SHOWDOWN ***
+P1 collected $61.14 from pot
+*** SECOND SHOWDOWN ***
+P3 collected $61.13 from pot
+*** THIRD SHOWDOWN ***
+P1 collected $61.13 from pot
+*** SUMMARY ***
+Total pot $186.38 | Rake $1.98 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Hand was run three times
+FIRST Board [5h 9c 2h 2c 5d]
+SECOND Board [2d Jh]
+THIRD Board [6c 5s]
+Seat 1: P1 showed [Ad As Td 6s 8d 3s] and won ($61.14) with two pair, Aces and Fives, and lost with a pair of Aces, and won ($61.13) with a pair of Aces
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 3: P3 (button) showed [Kd Qh 6d Jc 9s Kh] and lost with two pair, Kings and Fives, and won ($61.13) with a pair of Kings, and lost with a pair of Kings
+Seat 4: P4 (small blind) folded before Flop
+Seat 5: Hero (big blind) folded on the Flop
+
+
+Poker Hand #OM99661085: PLO-6 ($1/$0) - 2026/08/03 19:54:47
+Table 'PLO-6Silver3' 5-max Seat #3 is the button
+Seat 1: P1 ($290.49 in chips)
+Seat 2: Hero ($200 in chips)
+Seat 3: P2 ($200 in chips)
+Seat 4: P3 ($214.44 in chips)
+Seat 5: P4 ($510.72 in chips)
+P3: posts small blind $1
+P4: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Ts 2c 3c 9d Jh 4s]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: raises $5 to $7
+Hero: folds
+P2: raises $17 to $24
+P3: calls $23
+P4: folds
+P1: calls $17
+*** FLOP *** [8d 5s 5h]
+P3: checks
+P1: checks
+P2: bets $24.42
+P3: calls $24.42
+P1: folds
+*** TURN *** [8d 5s 5h] [7h]
+P3: checks
+P2: bets $61.42
+P3: calls $61.42
+*** RIVER *** [8d 5s 5h 7h] [6d]
+P3: checks
+P2: bets $90.16 and is all-in
+P3: folds
+Uncalled bet ($90.16) returned to P2
+*** SHOWDOWN ***
+P2 collected $239.68 from pot
+*** SUMMARY ***
+Total pot $245.68 | Rake $4 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [8d 5s 5h 7h 6d]
+Seat 1: P1 folded on the Flop
+Seat 2: Hero folded before Flop (didn't bet)
+Seat 3: P2 (button) won ($239.68)
+Seat 4: P3 (small blind) folded on the River
+Seat 5: P4 (big blind) folded before Flop
+
+
+Poker Hand #OM90955294: PLO-6 ($0.5/$1) - 2026/06/07 13:25:18
+Table 'PLO-6Bronze1' 5-max Seat #2 is the button
+Seat 1: P1 ($111.39 in chips)
+Seat 2: P2 ($204.5 in chips)
+Seat 3: P3 ($100 in chips)
+Seat 4: Hero ($100 in chips)
+Seat 5: P4 ($292.86 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+P1: straddle $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ah 5h 8d 3d 3h 9c]
+Dealt to P4
+P4: calls $4
+P1: folds
+P2: folds
+P3: folds
+Hero: checks
+*** FLOP *** [Qd 5d 3s]
+Hero: checks
+P4: checks
+*** TURN *** [Qd 5d 3s] [Th]
+Hero: bets $10.5
+P4: folds
+Uncalled bet ($10.5) returned to Hero
+*** SHOWDOWN ***
+Hero collected $9.98 from pot
+*** SUMMARY ***
+Total pot $10.5 | Rake $0.52 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Qd 5d 3s Th]
+Seat 1: P1 folded before Flop
+Seat 2: P2 (button) folded before Flop (didn't bet)
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: Hero (big blind) won ($9.98)
+Seat 5: P4 folded on the Turn
+
+
+Poker Hand #OM91071563: PLO-6 ($0.5/$1) - 2026/06/08 03:55:42
+Table 'PLO-6Bronze11' 5-max Seat #5 is the button
+Seat 1: P1 ($194.31 in chips)
+Seat 2: P2 ($96 in chips)
+Seat 3: P3 ($65.7 in chips)
+Seat 4: Hero ($128.96 in chips)
+Seat 5: P4 ($261.06 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+P2: straddle $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [3s Qd 2c Kc 7c 2s]
+Dealt to P4
+P4: raises $4 to $8
+P1: folds
+P2: calls $6
+P3: folds
+Hero: calls $4
+*** FLOP *** [9s Kd 8h]
+P2: checks
+Hero: checks
+P4: checks
+*** TURN *** [9s Kd 8h] [Ah]
+P2: checks
+Hero: checks
+P4: checks
+*** RIVER *** [9s Kd 8h Ah] [9c]
+P2: checks
+Hero: checks
+P4: checks
+P2: shows [8c 7d 5d 2h 4s 6c] (two pair, Nines and Eights)
+Hero: shows [3s Qd 2c Kc 7c 2s] (two pair, Kings and Nines)
+P4: shows [Qh 9d Jd Qc 8s Js] (a full house, Nines full of Eights)
+*** SHOWDOWN ***
+P4 collected $23.28 from pot
+*** SUMMARY ***
+Total pot $24.5 | Rake $1.22 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [9s Kd 8h Ah 9c]
+Seat 1: P1 (small blind) folded before Flop
+Seat 2: P2 (big blind) showed [8c 7d 5d 2h 4s 6c] and lost with two pair, Nines and Eights
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 4: Hero showed [3s Qd 2c Kc 7c 2s] and lost with two pair, Kings and Nines
+Seat 5: P4 (button) showed [Qh 9d Jd Qc 8s Js] and won ($23.28) with a full house, Nines full of Eights
+
+
+Poker Hand #OM91241742: PLO-6 ($0.5/$1) - 2026/06/09 12:07:05
+Table 'PLO-6Bronze9' 5-max Seat #5 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($27 in chips)
+Seat 3: P3 ($179.79 in chips)
+Seat 5: Hero ($100 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+P3: straddle $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ah 6d 7s Jh Th Qh]
+P1: folds
+P2: folds
+P3: folds
+Uncalled bet ($2) returned to Hero
+*** SHOWDOWN ***
+Hero collected $5.23 from pot
+*** SUMMARY ***
+Total pot $5.5 | Rake $0.27 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: P1 (small blind) folded before Flop
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: P3 folded before Flop
+Seat 5: Hero (button) collected ($5.23)
+
+
+Poker Hand #OM91241810: PLO-6 ($0.5/$1) - 2026/06/09 12:11:40
+Table 'PLO-6Bronze9' 5-max Seat #5 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($25.5 in chips)
+Seat 3: P3 ($185.03 in chips)
+Seat 4: P4 ($100 in chips)
+Seat 5: Hero ($108.06 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+P3: straddle $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Jd 6s Ks 8h 7d Qs]
+P1: folds
+P2: folds
+P3: folds
+P4: raises $11.5 to $15.5
+Hero: calls $11.5
+*** FLOP *** [7c 2c Jc]
+P4: checks
+Hero: bets $11.39
+P4: folds
+Uncalled bet ($11.39) returned to Hero
+*** SHOWDOWN ***
+Hero collected $31.83 from pot
+*** SUMMARY ***
+Total pot $34.5 | Rake $1.67 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [7c 2c Jc]
+Seat 1: P1 (small blind) folded before Flop
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: P3 folded before Flop
+Seat 4: P4 folded on the Flop
+Seat 5: Hero (button) won ($31.83)
+
+
+Poker Hand #OM91242015: PLO-6 ($0.5/$1) - 2026/06/09 12:26:38
+Table 'PLO-6Bronze9' 5-max Seat #1 is the button
+Seat 1: P1 ($106.7 in chips)
+Seat 2: P2 ($100 in chips)
+Seat 3: P3 ($286.14 in chips)
+Seat 4: P4 ($126.5 in chips)
+Seat 5: Hero ($110.8 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+P3: straddle $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [2d Ts 6s 8s 9c 2c]
+P1: calls $4
+P2: calls $3.5
+P3: calls $2
+P4: folds
+Hero: checks
+*** FLOP *** [4c Jh Qc]
+P2: checks
+P3: checks
+Hero: checks
+P1: bets $16
+P2: calls $16
+P3: folds
+Hero: folds
+*** TURN *** [4c Jh Qc] [Js]
+P2: checks
+P1: bets $24
+P2: folds
+Uncalled bet ($24) returned to P1
+*** SHOWDOWN ***
+P1 collected $45 from pot
+*** SUMMARY ***
+Total pot $48 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [4c Jh Qc Js]
+Seat 1: P1 (button) won ($45)
+Seat 2: P2 (small blind) folded on the Turn
+Seat 3: P3 (big blind) folded on the Flop
+Seat 4: P4 folded before Flop (didn't bet)
+Seat 5: Hero folded on the Flop
+
+
+Poker Hand #OM91270759: PLO-6 ($0.5/$1) - 2026/06/09 12:55:44
+Table 'PLO-6Bronze8' 5-max Seat #3 is the button
+Seat 1: P1 ($498.47 in chips)
+Seat 2: Hero ($127.73 in chips)
+Seat 3: P2 ($134.41 in chips)
+Seat 4: P3 ($100 in chips)
+Seat 5: P4 ($100 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+P1: straddle $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [6d As 6c Ks 4d Jh]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P2: folds
+P3: folds
+P4: folds
+P1: calls $2
+Hero: checks
+*** FLOP *** [7h 2h 5h]
+P1: checks
+Hero: bets $4.75
+P1: calls $4.75
+*** TURN *** [7h 2h 5h] [Kd]
+P1: checks
+Hero: checks
+*** RIVER *** [7h 2h 5h Kd] [7d]
+P1: bets $14.25
+Hero: folds
+Uncalled bet ($14.25) returned to P1
+*** SHOWDOWN ***
+P1 collected $18.05 from pot
+*** SUMMARY ***
+Total pot $19 | Rake $0.95 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [7h 2h 5h Kd 7d]
+Seat 1: P1 won ($18.05)
+Seat 2: Hero folded on the River
+Seat 3: P2 (button) folded before Flop (didn't bet)
+Seat 4: P3 (small blind) folded before Flop
+Seat 5: P4 (big blind) folded before Flop
+
+
+Poker Hand #OM91209689: PLO-6 ($0.5/$1) - 2026/06/09 13:42:48
+Table 'PLO-6Bronze1' 5-max Seat #1 is the button
+Seat 1: P1 ($161.96 in chips)
+Seat 2: Hero ($413.71 in chips)
+Seat 3: P2 ($104.31 in chips)
+Seat 4: P3 ($102.75 in chips)
+Seat 5: P4 ($155.63 in chips)
+Hero: posts small blind $0.5
+P2: posts big blind $1
+P1: straddle $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Kh Jh 6s Kc 8s 5h]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P2: folds
+P3: raises $11 to $15
+P4: folds
+P1: calls $13
+Hero: calls $11
+*** FLOP *** [As 9h 9c]
+Hero: checks
+P3: bets $14.68
+P1: folds
+Hero: folds
+Uncalled bet ($14.68) returned to P3
+*** SHOWDOWN ***
+P3 collected $43 from pot
+*** SUMMARY ***
+Total pot $46 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [As 9h 9c]
+Seat 1: P1 (button) folded on the Flop
+Seat 2: Hero (small blind) folded on the Flop
+Seat 3: P2 (big blind) folded before Flop
+Seat 4: P3 won ($43)
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM91898607: PLO-6 ($0.5/$1) - 2026/06/13 17:40:05
+Table 'PLO-6Bronze7' 5-max Seat #1 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: P2 ($66.82 in chips)
+Seat 3: P3 ($242.54 in chips)
+Seat 4: P4 ($100 in chips)
+Seat 5: Hero ($117 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+P3: straddle $2
+P3: straddle $4
+Hero: straddle $8
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [8d 4s Jc Ks 6h Ts]
+P1: folds
+P2: folds
+P3: folds
+P4: raises $20.5 to $28.5
+Hero: calls $20.5
+*** FLOP *** [5c Kd Ah]
+P4: bets $20.3
+Hero: folds
+Uncalled bet ($20.3) returned to P4
+*** SHOWDOWN ***
+P4 collected $58.5 from pot
+*** SUMMARY ***
+Total pot $61.5 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [5c Kd Ah]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: P4 won ($58.5)
+Seat 5: Hero folded on the Flop
+
+
+Poker Hand #OM92076733: PLO-6 ($0.5/$1) - 2026/06/14 23:20:44
+Table 'PLO-6Bronze4' 5-max Seat #4 is the button
+Seat 1: P1 ($95.98 in chips)
+Seat 2: P2 ($158.96 in chips)
+Seat 3: P3 ($65.94 in chips)
+Seat 4: Hero ($100 in chips)
+P1: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ad Kh Jc Td 8h 8s]
+P3: raises $2.5 to $3.5
+Hero: calls $3.5
+P1: calls $3
+P2: folds
+*** FLOP *** [Ac 5d 6d]
+P1: checks
+P3: checks
+Hero: bets $7.39
+P1: raises $21.86 to $30.49
+P3: folds
+Hero: calls $21.86
+*** TURN *** [Ac 5d 6d] [6s]
+P1: bets $23.2
+Hero: folds
+Uncalled bet ($23.2) returned to P1
+*** SHOWDOWN ***
+P1 collected $69.98 from pot
+*** SUMMARY ***
+Total pot $72.48 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ac 5d 6d 6s]
+Seat 1: P1 (small blind) won ($69.98)
+Seat 2: P2 (big blind) folded before Flop
+Seat 3: P3 folded on the Flop
+Seat 4: Hero (button) folded on the Turn
+
+
+Poker Hand #OM108087930: PLO-6 ($0.5/$1) - 2026/09/25 04:56:35
+Table 'PLO-6Bronze14' 5-max Seat #4 is the button
+Seat 1: P1 ($51.37 in chips)
+Seat 2: Hero ($110.1 in chips)
+Seat 4: P2 ($87.8 in chips)
+Seat 5: P3 ($244.21 in chips)
+P3: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [8c Kh 2d Qh Jh Td]
+Dealt to P2
+Dealt to P3
+Hero: folds
+P2: raises $1 to $2
+P3: folds
+P1: calls $1
+*** FLOP *** [3d 6d 6h]
+P1: checks
+P2: checks
+*** TURN *** [3d 6d 6h] [5d]
+P1: bets $2.25
+P2: folds
+Uncalled bet ($2.25) returned to P1
+*** SHOWDOWN ***
+P1 collected $4.28 from pot
+*** SUMMARY ***
+Total pot $4.5 | Rake $0.22 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [3d 6d 6h 5d]
+Seat 1: P1 (big blind) won ($4.28)
+Seat 2: Hero folded before Flop (didn't bet)
+Seat 4: P2 (button) folded on the Turn
+Seat 5: P3 (small blind) folded before Flop
+
+
+Poker Hand #OM92987116: PLO-6 ($0.5/$1) - 2026/06/21 06:40:12
+Table 'PLO-6Bronze3' 5-max Seat #1 is the button
+Seat 1: P1 ($54.5 in chips)
+Seat 2: P2 ($122.51 in chips)
+Seat 3: P3 ($49.85 in chips)
+Seat 4: Hero ($257.17 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+P2: straddle $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ks Js 8h 7c Qs Ah]
+P3: folds
+Hero: raises $5 to $7
+P1: folds
+P2: folds
+Uncalled bet ($5) returned to Hero
+*** SHOWDOWN ***
+Hero collected $4.75 from pot
+*** SUMMARY ***
+Total pot $5 | Rake $0.25 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: Hero collected ($4.75)
+
+
+Poker Hand #OM90559187: PLO-6 ($0.5/$1) - 2026/06/04 22:29:19
+Table 'PLO-6Bronze5' 5-max Seat #1 is the button
+Seat 1: P1 ($129.58 in chips)
+Seat 2: P2 ($100 in chips)
+Seat 3: Hero ($100 in chips)
+Seat 4: P3 ($121.38 in chips)
+Seat 5: P4 ($85.95 in chips)
+P2: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [9h Kd Js Jd 6d 4s]
+Dealt to P3
+Dealt to P4
+P3: folds
+P4: raises $2.5 to $3.5
+P1: folds
+P2: raises $8 to $11.5
+Hero: folds
+P4: calls $8
+*** FLOP *** [9d Ad Td]
+P2: bets $7.92
+P4: folds
+Uncalled bet ($7.92) returned to P2
+*** SHOWDOWN ***
+P2 collected $22.8 from pot
+*** SUMMARY ***
+Total pot $24 | Rake $1.2 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [9d Ad Td]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: P2 (small blind) won ($22.8)
+Seat 3: Hero (big blind) folded before Flop
+Seat 4: P3 folded before Flop (didn't bet)
+Seat 5: P4 folded on the Flop
+
+
+Poker Hand #OM97950394: PLO-6 ($1/$2) - 2026/07/23 23:17:58
+Table 'PLO-6Silver8' 5-max Seat #4 is the button
+Seat 1: P1 ($200 in chips)
+Seat 2: P2 ($588.51 in chips)
+Seat 4: P3 ($332.13 in chips)
+Seat 5: Hero ($209.25 in chips)
+Hero: posts small blind $1
+P1: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [9h 5d As 7d Jd 7c]
+P2: folds
+P3: folds
+Hero: folds
+Uncalled bet ($1) returned to P1
+*** SHOWDOWN ***
+P1 collected $2 from pot
+*** SUMMARY ***
+Total pot $2 | Rake $0 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: P1 (big blind) collected ($2)
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 4: P3 (button) folded before Flop (didn't bet)
+Seat 5: Hero (small blind) folded before Flop
+
+
+Poker Hand #OM97191263: PLO-6 ($1/$2) - 2026/07/19 01:07:06
+Table 'PLO-6Silver12' 5-max Seat #3 is the button
+Seat 1: P1 ($656.13 in chips)
+Seat 2: Hero ($225.23 in chips)
+Seat 3: P2 ($225.05 in chips)
+Seat 4: P3 ($131.83 in chips)
+Seat 5: P4 ($422.01 in chips)
+P3: posts small blind $1
+P4: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [2s 4h As 9d 3h 2c]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: folds
+Hero: raises $5 to $7
+P2: calls $7
+P3: calls $6
+P4: folds
+*** FLOP *** [3s 9h 6h]
+P3: checks
+Hero: bets $23
+P2: folds
+P3: folds
+Uncalled bet ($23) returned to Hero
+*** SHOWDOWN ***
+Hero collected $21.85 from pot
+*** SUMMARY ***
+Total pot $23 | Rake $1.15 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [3s 9h 6h]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: Hero won ($21.85)
+Seat 3: P2 (button) folded on the Flop
+Seat 4: P3 (small blind) folded on the Flop
+Seat 5: P4 (big blind) folded before Flop
+
+
+Poker Hand #OM96791378: PLO-6 ($1/$2) - 2026/07/16 08:48:22
+Table 'PLO-6Silver8' 5-max Seat #5 is the button
+Seat 1: P1 ($202.4 in chips)
+Seat 2: P2 ($56.85 in chips)
+Seat 3: P3 ($200 in chips)
+Seat 4: P4 ($142.65 in chips)
+Seat 5: Hero ($200 in chips)
+P1: posts small blind $1
+P2: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Jd 8c Kh 4d 8d 7h]
+P3: folds
+P4: raises $5 to $7
+Hero: folds
+P1: folds
+P2: calls $5
+*** FLOP *** [Ac 6d 2d]
+P2: checks
+P4: checks
+*** TURN *** [Ac 6d 2d] [8s]
+P2: checks
+P4: checks
+*** RIVER *** [Ac 6d 2d 8s] [6c]
+P2: checks
+P4: checks
+P2: shows [4c 9s 5h 4h Tc 9d] (two pair, Nines and Sixes)
+P4: shows [2s Qh 8h Qd 5c 3s] (two pair, Queens and Sixes)
+*** SHOWDOWN ***
+P4 collected $14.25 from pot
+*** SUMMARY ***
+Total pot $15 | Rake $0.75 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ac 6d 2d 8s 6c]
+Seat 1: P1 (small blind) folded before Flop
+Seat 2: P2 (big blind) showed [4c 9s 5h 4h Tc 9d] and lost with two pair, Nines and Sixes
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 4: P4 showed [2s Qh 8h Qd 5c 3s] and won ($14.25) with two pair, Queens and Sixes
+Seat 5: Hero (button) folded before Flop (didn't bet)
+
+
+Poker Hand #OM94016451: PLO-6 ($0.5/$1) - 2026/06/29 02:51:52
+Table 'PLO-6Bronze1' 5-max Seat #2 is the button
+Seat 2: P1 ($117.25 in chips)
+Seat 3: P2 ($100 in chips)
+Seat 4: Hero ($100 in chips)
+Seat 5: P3 ($101.5 in chips)
+P2: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [7h 6s Th 3s 8c Ts]
+Dealt to P3
+P3: folds
+P1: folds
+P2: folds
+Uncalled bet ($0.5) returned to Hero
+*** SHOWDOWN ***
+Hero collected $1 from pot
+*** SUMMARY ***
+Total pot $1 | Rake $0 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 2: P1 (button) folded before Flop (didn't bet)
+Seat 3: P2 (small blind) folded before Flop
+Seat 4: Hero (big blind) collected ($1)
+Seat 5: P3 folded before Flop (didn't bet)
+
+
+Poker Hand #OM92698127: PLO-6 ($0.5/$1) - 2026/06/19 03:02:10
+Table 'PLO-6Bronze1' 5-max Seat #4 is the button
+Seat 1: P1 ($55.4 in chips)
+Seat 2: P2 ($91 in chips)
+Seat 3: P3 ($108.2 in chips)
+Seat 4: P4 ($138.04 in chips)
+Seat 5: Hero ($116.89 in chips)
+Hero: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [6d 6c Tc 7d Ks 5c]
+P2: folds
+P3: folds
+P4: raises $2.5 to $3.5
+Hero: folds
+P1: raises $7.5 to $11
+P4: calls $7.5
+*** FLOP *** [2c 5h Ad]
+P1: bets $5.63
+P4: raises $33.76 to $39.39
+P1: folds
+Uncalled bet ($33.76) returned to P4
+*** SHOWDOWN ***
+P4 collected $31.13 from pot
+*** SUMMARY ***
+Total pot $33.76 | Rake $1.63 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [2c 5h Ad]
+Seat 1: P1 (big blind) folded on the Flop
+Seat 2: P2 folded before Flop (didn't bet)
+Seat 3: P3 folded before Flop (didn't bet)
+Seat 4: P4 (button) won ($31.13)
+Seat 5: Hero (small blind) folded before Flop
+
+
+Poker Hand #OM109918450: PLO-6 ($0.5/$1) - 2026/10/06 12:46:01
+Table 'PLO-6Bronze13' 5-max Seat #5 is the button
+Seat 3: Hero ($100 in chips)
+Seat 5: P1 ($109.6 in chips)
+P1: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [8d Qs 3c Ks Ah Kc]
+Dealt to P1
+P1: raises $2 to $3
+Hero: calls $2
+*** FLOP *** [4c 8h As]
+Hero: checks
+P1: bets $4.5
+Hero: calls $4.5
+*** TURN *** [4c 8h As] [7d]
+Hero: checks
+P1: bets $15
+Hero: calls $15
+*** RIVER *** [4c 8h As 7d] [2h]
+Hero: checks
+P1: checks
+P1: shows [Ts Ad 7s 9s Jc 8s] (two pair, Aces and Eights)
+Hero: shows [8d Qs 3c Ks Ah Kc] (two pair, Aces and Eights)
+*** SHOWDOWN ***
+Hero collected $21.75 from pot
+P1 collected $21.75 from pot
+*** SUMMARY ***
+Total pot $45 | Rake $0.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [4c 8h As 7d 2h]
+Seat 3: Hero (big blind) showed [8d Qs 3c Ks Ah Kc] and won ($21.75) with two pair, Aces and Eights
+Seat 5: P1 (small blind) showed [Ts Ad 7s 9s Jc 8s] and won ($21.75) with two pair, Aces and Eights
+
+
+Poker Hand #OM104363494: PLO-6 ($0.5/$1) - 2026/09/02 15:28:20
+Table 'PLO-6Bronze15' 5-max Seat #5 is the button
+Seat 1: P1 ($100.58 in chips)
+Seat 4: Hero ($159.54 in chips)
+Seat 5: P2 ($141.74 in chips)
+P1: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Qd 5s Ks Jh 6d Jc]
+Dealt to P2
+P2: raises $2.5 to $3.5
+P1: folds
+Hero: calls $2.5
+*** FLOP *** [3d 4d 2c]
+Hero: bets $5.63
+P2: folds
+Uncalled bet ($5.63) returned to Hero
+*** SHOWDOWN ***
+Hero collected $7.13 from pot
+*** SUMMARY ***
+Total pot $7.5 | Rake $0.37 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Board [3d 4d 2c]
+Seat 1: P1 (small blind) folded before Flop
+Seat 4: Hero (big blind) won ($7.13)
+Seat 5: P2 (button) folded on the Flop
+
+
+Poker Hand #OM105003672: PLO-6 ($0.5/$1) - 2026/09/06 11:59:11
+Table 'PLO-6Bronze2' 5-max Seat #1 is the button
+Seat 1: P1 ($100 in chips)
+Seat 2: Hero ($397.7 in chips)
+Seat 3: P2 ($100 in chips)
+Seat 4: P3 ($346.75 in chips)
+Seat 5: P4 ($550.2 in chips)
+Hero: posts small blind $0.5
+P2: posts big blind $1
+P4: straddle $2
+P4: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Jh 9d Kd 8h Js Qs]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: folds
+Hero: raises $9 to $13
+P2: folds
+P3: folds
+P4: calls $9
+*** FLOP *** [Td Jd 5c]
+Hero: checks
+P4: bets $20.25
+Hero: raises $67.5 to $87.75
+P4: calls $67.5
+*** TURN *** [Td Jd 5c] [9c]
+Hero: bets $202.5
+P4: raises $246.95 to $449.45 and is all-in
+Hero: calls $94.45 and is all-in
+Uncalled bet ($152.5) returned to P4
+P4: shows [Ks Qd 2h 7d Kc Jc] (a straight, King to Nine)
+Hero: shows [Jh 9d Kd 8h Js Qs] (a straight, King to Nine)
+*** RIVER *** [Td Jd 5c 9c] [8c]
+*** SHOWDOWN ***
+P4 collected $793.9 from pot
+*** SUMMARY ***
+Total pot $796.4 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Td Jd 5c 9c 8c]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: Hero (small blind) showed [Jh 9d Kd 8h Js Qs] and lost with a straight, King to Nine
+Seat 3: P2 (big blind) folded before Flop
+Seat 4: P3 folded before Flop (didn't bet)
+Seat 5: P4 showed [Ks Qd 2h 7d Kc Jc] and won ($793.9) with a flush King high
+
+
+Poker Hand #OM102910876: PLO-6 ($1/$2) - 2026/08/24 12:32:46
+Table 'PLO-6Silver6' 5-max Seat #1 is the button
+Seat 1: P1 ($459.15 in chips)
+Seat 3: P2 ($1,383.51 in chips)
+Seat 4: Hero ($729.93 in chips)
+Seat 5: P3 ($213.72 in chips)
+P2: posts small blind $1
+Hero: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [5d 2h Qh Ad 9h As]
+Dealt to P3
+P3: raises $5 to $7
+P1: folds
+P2: raises $16 to $23
+Hero: raises $53 to $76
+P3: raises $137.72 to $213.72 and is all-in
+P2: raises $503.44 to $717.16
+Hero: raises $12.77 to $729.93 and is all-in
+P2: calls $12.77
+Hero: shows [5d 2h Qh Ad 9h As] (a pair of Aces)
+P3: shows [Ah 4c Ac 4h 8h 5s] (a pair of Aces)
+P2: shows [Tc Jd 8c Kd 7h 9c] (King high)
+*** FLOP *** [Jc 8s 7d]
+*** TURN *** [Jc 8s 7d] [9d]
+*** RIVER *** [Jc 8s 7d 9d] [Qc]
+*** SHOWDOWN ***
+P2 collected $639.27 from pot
+P2 collected $1,029.32 from pot
+*** SUMMARY ***
+Total pot $1,673.58 | Rake $2.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [Jc 8s 7d 9d Qc]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 3: P2 (small blind) showed [Tc Jd 8c Kd 7h 9c] and won ($1,668.59) with a straight, King to Nine
+Seat 4: Hero (big blind) showed [5d 2h Qh Ad 9h As] and lost with two pair, Queens and Nines
+Seat 5: P3 showed [Ah 4c Ac 4h 8h 5s] and lost with a pair of Aces
+
+
+Poker Hand #OM92939852: PLO-6 ($0.5/$1) - 2026/06/21 07:38:53
+Table 'PLO-6Bronze9' 5-max Seat #3 is the button
+Seat 1: P1 ($156.9 in chips)
+Seat 2: P2 ($745.09 in chips)
+Seat 3: Hero ($340.6 in chips)
+Seat 4: P3 ($141.22 in chips)
+Seat 5: P4 ($161.22 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+P4: straddle $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [5d Jc Ac 4h Th Jd]
+Dealt to P3
+Dealt to P4
+P1: folds
+P2: raises $4.5 to $6.5
+Hero: raises $15.5 to $22
+P3: folds
+P4: folds
+P2: raises $46.5 to $68.5
+Hero: calls $46.5
+*** FLOP *** [3h 8d 2c]
+P2: bets $139.5
+Hero: calls $139.5
+*** TURN *** [3h 8d 2c] [8h]
+P2: bets $230.18
+Hero: calls $132.6 and is all-in
+Uncalled bet ($97.58) returned to P2
+P2: shows [Ad 9c Qh Ah Ks 9d] (two pair, Aces and Eights)
+Hero: shows [5d Jc Ac 4h Th Jd] (two pair, Jacks and Eights)
+*** RIVER *** [3h 8d 2c 8h] [3d]
+*** SHOWDOWN ***
+P2 collected $680.7 from pot
+*** SUMMARY ***
+Total pot $683.7 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [3h 8d 2c 8h 3d]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 showed [Ad 9c Qh Ah Ks 9d] and won ($680.7) with two pair, Aces and Eights
+Seat 3: Hero (button) showed [5d Jc Ac 4h Th Jd] and lost with two pair, Jacks and Eights
+Seat 4: P3 (small blind) folded before Flop
+Seat 5: P4 (big blind) folded before Flop
+
+
+Poker Hand #OM105202801: PLO-6 ($0.5/$1) - 2026/09/07 12:38:50
+Table 'PLO-6Bronze4' 5-max Seat #4 is the button
+Seat 1: P1 ($125.44 in chips)
+Seat 2: P2 ($340.38 in chips)
+Seat 4: P3 ($112.96 in chips)
+Seat 5: Hero ($344.36 in chips)
+Hero: posts small blind $0.5
+P1: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Ts 7s Ad Qc Js 6d]
+P2: raises $2.5 to $3.5
+P3: calls $3.5
+Hero: raises $11.5 to $15
+P1: folds
+P2: calls $11.5
+P3: calls $11.5
+*** FLOP *** [Td Qd 2c]
+Hero: bets $46
+P2: calls $46
+P3: calls $46
+*** TURN *** [Td Qd 2c] [3h]
+Hero: bets $184
+P2: raises $95.38 to $279.38 and is all-in
+P3: calls $51.96 and is all-in
+Hero: calls $95.38
+P2: shows [Ks 3s 3d Qh 5s Kd] (three of a kind, Threes)
+P3: shows [4d 9h Kc 8c Jc Ac] (Ace high)
+Hero: shows [Ts 7s Ad Qc Js 6d] (two pair, Queens and Tens)
+*** RIVER *** [Td Qd 2c 3h] [Jh]
+*** SHOWDOWN ***
+P3 collected $338.84 from pot
+P2 collected $453.39 from pot
+*** SUMMARY ***
+Total pot $794.72 | Rake $1.49 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Td Qd 2c 3h Jh]
+Seat 1: P1 (big blind) folded before Flop
+Seat 2: P2 showed [Ks 3s 3d Qh 5s Kd] and won ($453.39) with three of a kind, Threes
+Seat 4: P3 (button) showed [4d 9h Kc 8c Jc Ac] and won ($338.84) with a straight, Ace to Ten
+Seat 5: Hero (small blind) showed [Ts 7s Ad Qc Js 6d] and lost with two pair, Queens and Jacks
+
+
+Poker Hand #OM109080009: PLO-6 ($0.5/$1) - 2026/10/01 05:22:39
+Table 'PLO-6Bronze10' 5-max Seat #2 is the button
+Seat 1: P1 ($152.73 in chips)
+Seat 2: P2 ($743.81 in chips)
+Seat 3: P3 ($111.58 in chips)
+Seat 4: P4 ($309.68 in chips)
+Seat 5: Hero ($392.37 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Qs Kc 6c 3c 7d Ah]
+Hero: raises $2.5 to $3.5
+P1: folds
+P2: calls $3.5
+P3: folds
+P4: raises $11 to $14.5
+Hero: calls $11
+P2: raises $44 to $58.5
+P4: calls $44
+Hero: calls $44
+*** FLOP *** [Kd Qh 6s]
+P4: bets $176
+Hero: raises $157.87 to $333.87 and is all-in
+P2: folds
+P4: calls $75.18 and is all-in
+Uncalled bet ($82.69) returned to Hero
+Hero: shows [Qs Kc 6c 3c 7d Ah] (two pair, Kings and Queens)
+P4: shows [8s 4s 9h Tc Ks Js] (a pair of Kings)
+*** TURN *** [Kd Qh 6s] [8h]
+*** RIVER *** [Kd Qh 6s 8h] [8c]
+*** SHOWDOWN ***
+P4 collected $675.36 from pot
+*** SUMMARY ***
+Total pot $678.36 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [Kd Qh 6s 8h 8c]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 (button) folded on the Flop
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: P4 (big blind) showed [8s 4s 9h Tc Ks Js] and won ($675.36) with a full house, Eights full of Kings
+Seat 5: Hero showed [Qs Kc 6c 3c 7d Ah] and lost with two pair, Kings and Queens
+
+
+Poker Hand #OM109009067: PLO-6 ($0.5/$1) - 2026/10/01 04:03:24
+Table 'PLO-6Bronze12' 5-max Seat #1 is the button
+Seat 1: P1 ($235 in chips)
+Seat 2: P2 ($102.13 in chips)
+Seat 3: Hero ($386.7 in chips)
+Seat 4: P3 ($77.05 in chips)
+Seat 5: P4 ($299.71 in chips)
+P2: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [Ah 6c 9d 4s 2d 7c]
+Dealt to P3
+Dealt to P4
+P3: raises $2.5 to $3.5
+P4: calls $3.5
+P1: calls $3.5
+P2: folds
+Hero: calls $2.5
+*** FLOP *** [4d 4h 3s]
+Hero: bets $9.57
+P3: calls $9.57
+P4: raises $21.61 to $31.18
+P1: folds
+Hero: calls $21.61
+P3: folds
+*** TURN *** [4d 4h 3s] [7d]
+Hero: bets $66.05
+P4: calls $66.05
+*** RIVER *** [4d 4h 3s 7d] [Jd]
+Hero: bets $144.23
+P4: raises $54.75 to $198.98 and is all-in
+Hero: calls $54.75
+P4: shows [Qc Js 8d As 4c Ts] (a full house, Fours full of Jacks)
+Hero: shows [Ah 6c 9d 4s 2d 7c] (a full house, Fours full of Sevens)
+*** SHOWDOWN ***
+P4 collected $613.49 from pot
+*** SUMMARY ***
+Total pot $616.49 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [4d 4h 3s 7d Jd]
+Seat 1: P1 (button) folded on the Flop
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: Hero (big blind) showed [Ah 6c 9d 4s 2d 7c] and lost with a full house, Fours full of Sevens
+Seat 4: P3 folded on the Flop
+Seat 5: P4 showed [Qc Js 8d As 4c Ts] and won ($613.49) with a full house, Fours full of Jacks
+
+
+Poker Hand #OM98400134: PLO-6 ($1/$2) - 2026/07/27 00:05:40
+Table 'PLO-6Silver12' 5-max Seat #2 is the button
+Seat 1: P1 ($246.72 in chips)
+Seat 2: Hero ($528.98 in chips)
+Seat 3: P2 ($112.52 in chips)
+Seat 4: P3 ($691 in chips)
+Seat 5: P4 ($1,098.55 in chips)
+P2: posts small blind $1
+P3: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Jh 2d Kd 4h Kh 3d]
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P4: folds
+P1: folds
+Hero: raises $5 to $7
+P2: raises $16 to $23
+P3: calls $21
+Hero: calls $16
+*** FLOP *** [Ks 4s 5d]
+P2: checks
+P3: bets $34.5
+Hero: raises $138 to $172.5
+P2: calls $89.52 and is all-in
+P3: calls $138
+*** TURN *** [Ks 4s 5d] [7c]
+P3: bets $495.5 and is all-in
+Hero: calls $333.48 and is all-in
+Uncalled bet ($162.02) returned to P3
+P3: shows [Qh 5h 3c 6d 7s 4c] (a straight, Seven to Three)
+Hero: shows [Jh 2d Kd 4h Kh 3d] (three of a kind, Kings)
+P2: shows [2s Qc Qd 7h 3h Kc] (two pair, Kings and Sevens)
+*** RIVER *** [Ks 4s 5d 7c] [Jd]
+*** SHOWDOWN ***
+P3 collected $335.84 from pot
+P3 collected $828.65 from pot
+*** SUMMARY ***
+Total pot $1,170.48 | Rake $3.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [Ks 4s 5d 7c Jd]
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: Hero (button) showed [Jh 2d Kd 4h Kh 3d] and lost with three of a kind, Kings
+Seat 3: P2 (small blind) showed [2s Qc Qd 7h 3h Kc] and lost with two pair, Kings and Sevens
+Seat 4: P3 (big blind) showed [Qh 5h 3c 6d 7s 4c] and won ($1,164.49) with a straight, Seven to Three
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM105077328: PLO-6 ($0.5/$1) - 2026/09/07 02:02:19
+Table 'PLO-6Bronze15' 5-max Seat #2 is the button
+Seat 1: Hero ($502.95 in chips)
+Seat 2: P1 ($60.36 in chips)
+Seat 3: P2 ($106.58 in chips)
+Seat 4: P3 ($263.44 in chips)
+Seat 5: P4 ($250.23 in chips)
+P2: posts small blind $0.5
+P3: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [5c Jh 3c Ac Th 4h]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P4: raises $2.5 to $3.5
+Hero: calls $3.5
+P1: calls $3.5
+P2: folds
+P3: raises $14.5 to $18
+P4: folds
+Hero: calls $14.5
+P1: calls $14.5
+*** FLOP *** [As Jc 2c]
+P3: bets $58
+Hero: calls $58
+P1: folds
+*** TURN *** [As Jc 2c] [Td]
+P3: bets $174
+Hero: raises $174 to $348
+P3: calls $13.44 and is all-in
+Uncalled bet ($160.56) returned to Hero
+Hero: shows [5c Jh 3c Ac Th 4h] (two pair, Aces and Jacks)
+P3: shows [Qd 9s 4d 8c Qs Kc] (a straight, Ace to Ten)
+*** RIVER *** [As Jc 2c Td] [7s]
+*** SHOWDOWN ***
+P3 collected $545.88 from pot
+*** SUMMARY ***
+Total pot $548.88 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [As Jc 2c Td 7s]
+Seat 1: Hero showed [5c Jh 3c Ac Th 4h] and lost with two pair, Aces and Jacks
+Seat 2: P1 (button) folded on the Flop
+Seat 3: P2 (small blind) folded before Flop
+Seat 4: P3 (big blind) showed [Qd 9s 4d 8c Qs Kc] and won ($545.88) with a straight, Ace to Ten
+Seat 5: P4 folded before Flop
+
+
+Poker Hand #OM105200963: PLO-6 ($0.5/$1) - 2026/09/07 10:41:48
+Table 'PLO-6Bronze4' 5-max Seat #2 is the button
+Seat 1: P1 ($357.83 in chips)
+Seat 2: P2 ($97.43 in chips)
+Seat 3: P3 ($112.83 in chips)
+Seat 4: P4 ($221.24 in chips)
+Seat 5: Hero ($260.92 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Qd 8c 6d 9h Th Td]
+Hero: raises $2.5 to $3.5
+P1: raises $8.5 to $12
+P2: raises $29 to $41
+P3: folds
+P4: folds
+Hero: calls $37.5
+P1: calls $29
+*** FLOP *** [6h 7h 7c]
+Hero: bets $24.09
+P1: raises $172.68 to $196.77
+P2: calls $56.43 and is all-in
+Hero: raises $23.15 to $219.92 and is all-in
+P1: calls $23.15
+Hero: shows [Qd 8c 6d 9h Th Td] (two pair, Tens and Sevens)
+P1: shows [Tc Jc 4d 7d Ad 8d] (three of a kind, Sevens)
+P2: shows [7s Qc 5c 3s Ah Ac] (three of a kind, Sevens)
+*** TURN *** [6h 7h 7c] [2d]
+*** RIVER *** [6h 7h 7c 2d] [6s]
+*** SHOWDOWN ***
+P1 collected $146.2 from pot
+P2 collected $146.2 from pot
+P1 collected $325.38 from pot
+*** SUMMARY ***
+Total pot $620.77 | Rake $1.99 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [6h 7h 7c 2d 6s]
+Seat 1: P1 showed [Tc Jc 4d 7d Ad 8d] and won ($471.58) with three of a kind, Sevens
+Seat 2: P2 (button) showed [7s Qc 5c 3s Ah Ac] and won ($146.2) with three of a kind, Sevens
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: P4 (big blind) folded before Flop
+Seat 5: Hero showed [Qd 8c 6d 9h Th Td] and lost with three of a kind, Sixes
+
+
+Poker Hand #OM102843200: PLO-6 ($1/$2) - 2026/08/24 02:45:17
+Table 'PLO-6Silver6' 5-max Seat #1 is the button
+Seat 1: P1 ($209 in chips)
+Seat 2: P2 ($530.7 in chips)
+Seat 3: P3 ($200 in chips)
+Seat 4: Hero ($470.05 in chips)
+Seat 5: P4 ($696.3 in chips)
+P2: posts small blind $1
+P3: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [5d 3s Ah Kh Qc Js]
+Dealt to P4
+Hero: raises $5 to $7
+P4: folds
+P1: calls $7
+P2: calls $6
+P3: raises $28 to $35
+Hero: calls $28
+P1: calls $28
+P2: calls $28
+*** FLOP *** [5h 2h 3c]
+P2: bets $140
+P3: folds
+Hero: raises $295.05 to $435.05 and is all-in
+P1: folds
+P2: calls $295.05
+Hero: shows [5d 3s Ah Kh Qc Js] (two pair, Fives and Threes)
+P2: shows [Kd Ks 7c 6d 6h 4s] (a straight, Six to Two)
+*** TURN *** [5h 2h 3c] [4d]
+*** RIVER *** [5h 2h 3c 4d] [2s]
+*** SHOWDOWN ***
+P2 collected $1,002.1 from pot
+*** SUMMARY ***
+Total pot $1,010.1 | Rake $6 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [5h 2h 3c 4d 2s]
+Seat 1: P1 (button) folded on the Flop
+Seat 2: P2 (small blind) showed [Kd Ks 7c 6d 6h 4s] and won ($1,002.1) with a straight, Seven to Three
+Seat 3: P3 (big blind) folded on the Flop
+Seat 4: Hero showed [5d 3s Ah Kh Qc Js] and lost with a straight, Ace to Five
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM108552947: PLO-6 ($0.5/$1) - 2026/09/28 03:48:29
+Table 'PLO-6Bronze13' 5-max Seat #3 is the button
+Seat 1: P1 ($222.46 in chips)
+Seat 2: P2 ($137.21 in chips)
+Seat 3: Hero ($222.91 in chips)
+Seat 4: P3 ($227.04 in chips)
+Seat 5: P4 ($130.56 in chips)
+P3: posts small blind $0.5
+P4: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [3d Ac 7c 5s 4s 6s]
+Dealt to P3
+Dealt to P4
+P1: calls $1
+P2: calls $1
+Hero: raises $4.5 to $5.5
+P3: raises $14 to $19.5
+P4: folds
+P1: folds
+P2: calls $18.5
+Hero: calls $14
+*** FLOP *** [9d 5c 8d]
+P3: checks
+P2: bets $60.5
+Hero: calls $60.5
+P3: raises $147.04 to $207.54 and is all-in
+P2: calls $57.21 and is all-in
+Hero: calls $142.91 and is all-in
+Uncalled bet ($4.13) returned to P3
+P3: shows [4c Ad Tc 6d Qh Jh] (Ace high)
+P2: shows [6h 7s Qd Js 8s Ks] (a straight, Nine to Five)
+Hero: shows [3d Ac 7c 5s 4s 6s] (a straight, Nine to Five)
+*** TURN *** [9d 5c 8d] [6c]
+*** RIVER *** [9d 5c 8d 6c] [Ts]
+*** SHOWDOWN ***
+P3 collected $205.76 from pot
+P2 collected $205.75 from pot
+P3 collected $170.54 from pot
+*** SUMMARY ***
+Total pot $585.03 | Rake $1.98 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [9d 5c 8d 6c Ts]
+Seat 1: P1 folded before Flop
+Seat 2: P2 showed [6h 7s Qd Js 8s Ks] and won ($205.75) with a straight, Queen to Eight
+Seat 3: Hero (button) showed [3d Ac 7c 5s 4s 6s] and lost with a straight, Ten to Six
+Seat 4: P3 (small blind) showed [4c Ad Tc 6d Qh Jh] and won ($376.3) with a straight, Queen to Eight
+Seat 5: P4 (big blind) folded before Flop
+
+
+Poker Hand #OM98363945: PLO-6 ($1/$2) - 2026/07/26 22:13:21
+Table 'PLO-6Silver11' 5-max Seat #1 is the button
+Seat 1: P1 ($619.26 in chips)
+Seat 3: P2 ($1,707.97 in chips)
+Seat 4: Hero ($488.6 in chips)
+Seat 5: P3 ($200 in chips)
+P2: posts small blind $1
+Hero: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [3c 5d 3h Ad 8h Jc]
+Dealt to P3
+P3: raises $5 to $7
+P1: folds
+P2: raises $16 to $23
+Hero: calls $21
+P3: raises $69 to $92
+P2: calls $69
+Hero: calls $69
+*** FIRST FLOP *** [5s 8d 6c]
+P2: bets $138
+Hero: raises $258.6 to $396.6 and is all-in
+P3: folds
+P2: calls $258.6
+Hero: shows [3c 5d 3h Ad 8h Jc] (two pair, Eights and Fives)
+P2: shows [7d 5h 7c Qs 3d 5c] (three of a kind, Fives)
+*** FIRST TURN *** [5s 8d 6c] [Jh]
+*** FIRST RIVER *** [5s 8d 6c Jh] [9d]
+*** SECOND TURN *** [5s 8d 6c] [Ah]
+*** SECOND RIVER *** [5s 8d 6c Ah] [2d]
+*** FIRST SHOWDOWN ***
+P2 collected $532.1 from pot
+*** SECOND SHOWDOWN ***
+P2 collected $532.1 from pot
+*** SUMMARY ***
+Total pot $1,069.2 | Rake $3 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Hand was run two times
+FIRST Board [5s 8d 6c Jh 9d]
+SECOND Board [Ah 2d]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 3: P2 (small blind) showed [7d 5h 7c Qs 3d 5c] and won ($532.1) with a straight, Nine to Five, and won ($532.1) with a pair of Sevens
+Seat 4: Hero (big blind) showed [3c 5d 3h Ad 8h Jc] and lost with two pair, Jacks and Eights, and lost with a pair of Aces
+Seat 5: P3 folded on the Flop
+
+
+Poker Hand #OM108423506: PLO-6 ($0.5/$1) - 2026/09/27 08:07:05
+Table 'PLO-6Bronze6' 5-max Seat #4 is the button
+Seat 1: Hero ($214.04 in chips)
+Seat 2: P1 ($32.22 in chips)
+Seat 3: P2 ($239.99 in chips)
+Seat 4: P3 ($100 in chips)
+Seat 5: P4 ($97.5 in chips)
+P4: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to Hero [Kh Jh 3c Qc 9c Tc]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+P1: folds
+P2: raises $2.5 to $3.5
+P3: raises $8.5 to $12
+P4: folds
+Hero: calls $11
+P2: raises $36.5 to $48.5
+P3: raises $51.5 to $100 and is all-in
+Hero: calls $88
+P2: raises $139.99 to $239.99 and is all-in
+Hero: calls $114.04 and is all-in
+Uncalled bet ($25.95) returned to P2
+P2: shows [2d Ac Qh 8c Ad 5h] (a pair of Aces)
+P3: shows [6c Ks Td 7s 8d 5c] (King high)
+Hero: shows [Kh Jh 3c Qc 9c Tc] (King high)
+*** FLOP *** [7h Qs 2h]
+*** TURN *** [7h Qs 2h] [5d]
+*** RIVER *** [7h Qs 2h 5d] [2c]
+*** SHOWDOWN ***
+P2 collected $298.79 from pot
+P2 collected $226.8 from pot
+*** SUMMARY ***
+Total pot $528.58 | Rake $1.99 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [7h Qs 2h 5d 2c]
+Seat 1: Hero (big blind) showed [Kh Jh 3c Qc 9c Tc] and lost with two pair, Queens and Twos
+Seat 2: P1 folded before Flop (didn't bet)
+Seat 3: P2 showed [2d Ac Qh 8c Ad 5h] and won ($525.59) with a full house, Twos full of Queens
+Seat 4: P3 (button) showed [6c Ks Td 7s 8d 5c] and lost with two pair, Sevens and Fives
+Seat 5: P4 (small blind) folded before Flop
+
+
+Poker Hand #OM99683583: PLO-6 ($1/$2) - 2026/08/04 02:00:48
+Table 'PLO-6Silver14' 5-max Seat #5 is the button
+Seat 1: Hero ($529.5 in chips)
+Seat 2: P1 ($316.5 in chips)
+Seat 4: P2 ($422.43 in chips)
+Seat 5: P3 ($200 in chips)
+Hero: posts small blind $1
+P1: posts big blind $2
+*** HOLE CARDS ***
+Dealt to Hero [6h 9c 6c Th 8s Qs]
+Dealt to P1
+Dealt to P2
+Dealt to P3
+P2: raises $4 to $6
+P3: raises $15 to $21
+Hero: calls $20
+P1: folds
+P2: calls $15
+*** FLOP *** [Jc 7s 3d]
+Hero: bets $48.75
+P2: calls $48.75
+P3: folds
+*** TURN *** [Jc 7s 3d] [6s]
+Hero: bets $121.88
+P2: calls $121.88
+*** RIVER *** [Jc 7s 3d 6s] [7c]
+Hero: checks
+P2: bets $230.8 and is all-in
+Hero: calls $230.8
+P2: shows [7d 8c 9d 7h 8h Ac] (four of a kind, Sevens)
+Hero: shows [6h 9c 6c Th 8s Qs] (a full house, Sixes full of Sevens)
+*** SHOWDOWN ***
+P2 collected $862.86 from pot
+*** SUMMARY ***
+Total pot $867.86 | Rake $3 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [Jc 7s 3d 6s 7c]
+Seat 1: Hero (small blind) showed [6h 9c 6c Th 8s Qs] and lost with a full house, Sixes full of Sevens
+Seat 2: P1 (big blind) folded before Flop
+Seat 4: P2 showed [7d 8c 9d 7h 8h Ac] and won ($862.86) with four of a kind, Sevens
+Seat 5: P3 (button) folded on the Flop
+
+
+Poker Hand #OM96877162: PLO-6 ($1/$2) - 2026/07/17 10:52:30
+Table 'PLO-6Silver3' 5-max Seat #1 is the button
+Seat 1: P1 ($151.71 in chips)
+Seat 2: P2 ($200 in chips)
+Seat 3: P3 ($212.9 in chips)
+Seat 4: Hero ($491.95 in chips)
+Seat 5: P4 ($519.6 in chips)
+P2: posts small blind $1
+P3: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [3h 3s 8d 8s 2c Ad]
+Dealt to P4
+Hero: raises $5 to $7
+P4: calls $7
+P1: raises $24 to $31
+P2: folds
+P3: folds
+Hero: calls $24
+P4: calls $24
+*** FLOP *** [7h Ah 8c]
+Hero: checks
+P4: checks
+P1: bets $96
+Hero: raises $288 to $384
+P4: raises $104.6 to $488.6 and is all-in
+P1: calls $24.71 and is all-in
+Hero: calls $76.95 and is all-in
+Uncalled bet ($27.65) returned to P4
+P4: shows [6h Kh 4h 6d Td Kd] (a pair of Kings)
+P1: shows [5d 2d 6c Ac 9s As] (three of a kind, Aces)
+Hero: shows [3h 3s 8d 8s 2c Ad] (three of a kind, Eights)
+*** TURN *** [7h Ah 8c] [Th]
+*** RIVER *** [7h Ah 8c Th] [2h]
+*** SHOWDOWN ***
+P4 collected $455.73 from pot
+P4 collected $676.89 from pot
+*** SUMMARY ***
+Total pot $1,138.61 | Rake $3.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [7h Ah 8c Th 2h]
+Seat 1: P1 (button) showed [5d 2d 6c Ac 9s As] and lost with a straight, Ten to Six
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: Hero showed [3h 3s 8d 8s 2c Ad] and lost with three of a kind, Eights
+Seat 5: P4 showed [6h Kh 4h 6d Td Kd] and won ($1,132.62) with a flush Ace high
+
+
+Poker Hand #OM98149619: PLO-6 ($1/$2) - 2026/07/25 17:37:07
+Table 'PLO-6Silver1' 5-max Seat #1 is the button
+Seat 1: P1 ($262.06 in chips)
+Seat 2: P2 ($200 in chips)
+Seat 3: P3 ($488 in chips)
+Seat 4: Hero ($423.73 in chips)
+Seat 5: P4 ($671.92 in chips)
+P2: posts small blind $1
+P3: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [9c 2d 3d 8c Th 2h]
+Dealt to P4
+Hero: raises $5 to $7
+P4: raises $17 to $24
+P1: folds
+P2: calls $23
+P3: folds
+Hero: calls $17
+*** FLOP *** [7d Qs 2s]
+P2: checks
+Hero: bets $55.5
+P4: raises $185 to $240.5
+P2: folds
+Hero: raises $159.23 to $399.73 and is all-in
+P4: calls $159.23
+Hero: shows [9c 2d 3d 8c Th 2h] (three of a kind, Twos)
+P4: shows [6d 6c 3h Qc Qh 6h] (three of a kind, Queens)
+P4: Chooses to EV Cashout
+*** TURN *** [7d Qs 2s] [Kc]
+*** RIVER *** [7d Qs 2s Kc] [5h]
+P4: Pays Cashout Risk ($175.65)
+*** SHOWDOWN ***
+P4 collected $867.46 from pot
+*** SUMMARY ***
+Total pot $873.46 | Rake $4 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [7d Qs 2s Kc 5h]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: P2 (small blind) folded on the Flop
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: Hero showed [9c 2d 3d 8c Th 2h] and lost with three of a kind, Twos
+Seat 5: P4 showed [6d 6c 3h Qc Qh 6h] and won ($867.46) with three of a kind, Queens, Cashout Risk ($175.65)
+
+
+Poker Hand #OM98044848: PLO-6 ($1/$2) - 2026/07/24 20:32:30
+Table 'PLO-6Silver2' 5-max Seat #1 is the button
+Seat 1: P1 ($477.01 in chips)
+Seat 2: P2 ($257.94 in chips)
+Seat 3: P3 ($32 in chips)
+Seat 4: Hero ($418.3 in chips)
+Seat 5: P4 ($257.01 in chips)
+P2: posts small blind $1
+P3: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [As 7d 2h 5h 5s 3h]
+Dealt to P4
+Hero: raises $5 to $7
+P4: folds
+P1: raises $17 to $24
+P2: folds
+P3: folds
+Hero: calls $17
+*** FIRST FLOP *** [Kc 5d 9c]
+Hero: checks
+P1: bets $51
+Hero: calls $51
+*** FIRST TURN *** [Kc 5d 9c] [4d]
+Hero: checks
+P1: bets $153
+Hero: raises $190.3 to $343.3 and is all-in
+P1: calls $190.3
+Hero: shows [As 7d 2h 5h 5s 3h] (three of a kind, Fives)
+P1: shows [Ks Kh Jc 8h 2c 7s] (three of a kind, Kings)
+*** FIRST RIVER *** [Kc 5d 9c 4d] [Js]
+*** SECOND RIVER *** [Kc 5d 9c 4d] [6c]
+*** FIRST SHOWDOWN ***
+P1 collected $416.8 from pot
+*** SECOND SHOWDOWN ***
+P1 collected $416.8 from pot
+*** SUMMARY ***
+Total pot $839.6 | Rake $4 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Hand was run two times
+FIRST Board [Kc 5d 9c 4d Js]
+SECOND Board [6c]
+Seat 1: P1 (button) showed [Ks Kh Jc 8h 2c 7s] and won ($416.8) with three of a kind, Kings, and won ($416.8) with a pair of Kings
+Seat 2: P2 (small blind) folded before Flop
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: Hero showed [As 7d 2h 5h 5s 3h] and lost with three of a kind, Fives, and lost with a pair of Fives
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM89894702: PLO-6 ($0.5/$1) - 2026/06/01 00:15:39
+Table 'PLO-6Bronze12' 5-max Seat #2 is the button
+Seat 1: P1 ($40 in chips)
+Seat 2: P2 ($146.27 in chips)
+Seat 3: P3 ($136.88 in chips)
+Seat 4: Hero ($103.63 in chips)
+Seat 5: P4 ($100.1 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [6c 3s Td 7s 8h Qd]
+Dealt to P4
+P4: folds
+P1: folds
+P2: raises $2.5 to $3.5
+P3: folds
+Hero: folds
+Uncalled bet ($2.5) returned to P2
+*** SHOWDOWN ***
+P2 collected $2.5 from pot
+*** SUMMARY ***
+Total pot $2.5 | Rake $0 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 1: P1 folded before Flop (didn't bet)
+Seat 2: P2 (button) collected ($2.5)
+Seat 3: P3 (small blind) folded before Flop
+Seat 4: Hero (big blind) folded before Flop
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM89856633: PLO-6 ($0.5/$1) - 2026/06/01 00:36:38
+Table 'PLO-6Bronze11' 5-max Seat #3 is the button
+Seat 2: P1 ($55.47 in chips)
+Seat 3: P2 ($109.1 in chips)
+Seat 4: P3 ($14.5 in chips)
+Seat 5: Hero ($100 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [5c 2h 8h Ah 5h 4c]
+P1: folds
+P2: raises $2.5 to $3.5
+P3: folds
+Hero: folds
+Uncalled bet ($2.5) returned to P2
+*** SHOWDOWN ***
+P2 collected $2.5 from pot
+*** SUMMARY ***
+Total pot $2.5 | Rake $0 | Jackpot $0 | Bingo $0 | Fortune $0 | Tax $0
+Seat 2: P1 folded before Flop (didn't bet)
+Seat 3: P2 (button) collected ($2.5)
+Seat 4: P3 (small blind) folded before Flop
+Seat 5: Hero (big blind) folded before Flop
+
+
+Poker Hand #OM89856649: PLO-6 ($0.5/$1) - 2026/06/01 00:38:19
+Table 'PLO-6Bronze11' 5-max Seat #3 is the button
+Seat 2: P1 ($55.47 in chips)
+Seat 3: P2 ($110.6 in chips)
+Seat 4: P3 ($27.08 in chips)
+Seat 5: Hero ($100 in chips)
+P3: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [Th 3c Ad 2c 3h 9c]
+P1: raises $2 to $3
+P2: calls $3
+P3: calls $2.5
+Hero: folds
+*** FLOP *** [4h Jc 8d]
+P3: bets $10
+P1: raises $30 to $40
+P2: folds
+P3: calls $14.08 and is all-in
+Uncalled bet ($15.92) returned to P1
+P1: shows [9d 8h Ts Kh Jh Kc] (two pair, Jacks and Eights)
+P3: shows [4s 9s Js Tc Ah 8s] (two pair, Jacks and Eights)
+*** TURN *** [4h Jc 8d] [8c]
+*** RIVER *** [4h Jc 8d 8c] [6d]
+*** SHOWDOWN ***
+P3 collected $27.83 from pot
+P1 collected $27.83 from pot
+*** SUMMARY ***
+Total pot $58.16 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [4h Jc 8d 8c 6d]
+Seat 2: P1 showed [9d 8h Ts Kh Jh Kc] and won ($27.83) with a full house, Eights full of Jacks
+Seat 3: P2 (button) folded on the Flop
+Seat 4: P3 (small blind) showed [4s 9s Js Tc Ah 8s] and won ($27.83) with a full house, Eights full of Jacks
+Seat 5: Hero (big blind) folded before Flop
+
+
+Poker Hand #OM99382500: PLO-6 ($1/$2) - 2026/08/02 01:18:14
+Table 'PLO-6Silver12' 5-max Seat #1 is the button
+Seat 1: P1 ($202.28 in chips)
+Seat 2: P2 ($533.17 in chips)
+Seat 3: P3 ($200 in chips)
+Seat 4: P4 ($647.81 in chips)
+Seat 5: Hero ($526.68 in chips)
+P2: posts small blind $1
+P3: posts big blind $2
+Hero: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Ks Jd 9s 7d 5h Qh]
+P1: calls $4
+P2: calls $3
+P3: folds
+P4: calls $4
+Hero: raises $18 to $22
+P1: calls $18
+P2: raises $72 to $94
+P4: folds
+Hero: calls $72
+P1: raises $108.28 to $202.28 and is all-in
+P2: raises $330.89 to $533.17 and is all-in
+Hero: calls $432.68 and is all-in
+Uncalled bet ($6.49) returned to P2
+P2: shows [Td 6d Ah Jc 7h Kc] (Ace high)
+Hero: shows [Ks Jd 9s 7d 5h Qh] (King high)
+P1: shows [9h 9c 8h 8d 2h 2s] (a pair of Nines)
+*** FLOP *** [9d 7c Tc]
+*** TURN *** [9d 7c Tc] [Kh]
+*** RIVER *** [9d 7c Tc Kh] [6c]
+*** SHOWDOWN ***
+P2 collected $609.95 from pot
+P2 collected $645.7 from pot
+*** SUMMARY ***
+Total pot $1,261.64 | Rake $3.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [9d 7c Tc Kh 6c]
+Seat 1: P1 (button) showed [9h 9c 8h 8d 2h 2s] and lost with a straight, Ten to Six
+Seat 2: P2 (small blind) showed [Td 6d Ah Jc 7h Kc] and won ($1,255.65) with a flush King high
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: P4 folded before Flop
+Seat 5: Hero showed [Ks Jd 9s 7d 5h Qh] and lost with a straight, King to Nine
+
+
+Poker Hand #OM97158042: PLO-6 ($1/$2) - 2026/07/19 06:36:02
+Table 'PLO-6Silver7' 5-max Seat #5 is the button
+Seat 1: P1 ($201 in chips)
+Seat 2: P2 ($36 in chips)
+Seat 3: Hero ($1,384.22 in chips)
+Seat 4: P3 ($197 in chips)
+Seat 5: P4 ($501.2 in chips)
+P1: posts small blind $1
+P2: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to Hero [Kd 3d Qd 8s As 3c]
+Dealt to P3
+Dealt to P4
+Hero: raises $5 to $7
+P3: calls $7
+P4: calls $7
+P1: calls $6
+P2: raises $29 to $36 and is all-in
+Hero: calls $29
+P3: calls $29
+P4: calls $29
+P1: calls $29
+*** FLOP *** [3h 7s Js]
+P1: checks
+Hero: bets $180
+P3: folds
+P4: raises $285.2 to $465.2 and is all-in
+P1: folds
+Hero: calls $285.2
+P4: shows [Jc Jd Ac 4h 5c Ks] (three of a kind, Jacks)
+P2: shows [Qh 8c Tc 6h Kc 4d] (King high)
+Hero: shows [Kd 3d Qd 8s As 3c] (three of a kind, Threes)
+*** TURN *** [3h 7s Js] [4c]
+*** RIVER *** [3h 7s Js 4c] [9h]
+*** SHOWDOWN ***
+P2 collected $179.06 from pot
+P4 collected $925.35 from pot
+*** SUMMARY ***
+Total pot $1,110.4 | Rake $3.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [3h 7s Js 4c 9h]
+Seat 1: P1 (small blind) folded on the Flop
+Seat 2: P2 (big blind) showed [Qh 8c Tc 6h Kc 4d] and won ($179.06) with a straight, Jack to Seven
+Seat 3: Hero showed [Kd 3d Qd 8s As 3c] and lost with three of a kind, Threes
+Seat 4: P3 folded on the Flop
+Seat 5: P4 (button) showed [Jc Jd Ac 4h 5c Ks] and won ($925.35) with three of a kind, Jacks
+
+
+Poker Hand #OM100023732: PLO-6 ($1/$2) - 2026/08/06 09:22:56
+Table 'PLO-6Silver6' 5-max Seat #1 is the button
+Seat 1: P1 ($216.41 in chips)
+Seat 2: P2 ($409.97 in chips)
+Seat 3: P3 ($561.22 in chips)
+Seat 4: Hero ($346.02 in chips)
+Seat 5: P4 ($268.91 in chips)
+P2: posts small blind $1
+P3: posts big blind $2
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to Hero [7d Qd 5c Js 5h 8d]
+Dealt to P4
+Hero: raises $5 to $7
+P4: folds
+P1: folds
+P2: raises $8 to $15
+P3: folds
+Hero: calls $8
+*** FLOP *** [5s 2h Ah]
+P2: bets $10.56
+Hero: raises $26.56 to $37.12
+P2: calls $26.56
+*** TURN *** [5s 2h Ah] [Qs]
+P2: checks
+Hero: bets $79.68
+P2: calls $79.68
+*** RIVER *** [5s 2h Ah Qs] [Kd]
+P2: bets $265.6
+Hero: calls $214.22 and is all-in
+Uncalled bet ($51.38) returned to P2
+P2: shows [5d Kh 2c Jc Td 6h] (a straight, Ace to Ten)
+Hero: shows [7d Qd 5c Js 5h 8d] (three of a kind, Fives)
+*** SHOWDOWN ***
+P2 collected $688.04 from pot
+*** SUMMARY ***
+Total pot $694.04 | Rake $4 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [5s 2h Ah Qs Kd]
+Seat 1: P1 (button) folded before Flop (didn't bet)
+Seat 2: P2 (small blind) showed [5d Kh 2c Jc Td 6h] and won ($688.04) with a straight, Ace to Ten
+Seat 3: P3 (big blind) folded before Flop
+Seat 4: Hero showed [7d Qd 5c Js 5h 8d] and lost with three of a kind, Fives
+Seat 5: P4 folded before Flop (didn't bet)
+
+
+Poker Hand #OM97183448: PLO-6 ($1/$2) - 2026/07/19 05:14:05
+Table 'PLO-6Silver2' 5-max Seat #2 is the button
+Seat 1: P1 ($483.92 in chips)
+Seat 2: P2 ($200 in chips)
+Seat 3: P3 ($190.3 in chips)
+Seat 4: P4 ($418.44 in chips)
+Seat 5: Hero ($650.93 in chips)
+P3: posts small blind $1
+P4: posts big blind $2
+P3: straddle $4
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to P2
+Dealt to P3
+Dealt to P4
+Dealt to Hero [Qc Js Jh Qh 7c 5c]
+P4: raises $8 to $12
+Hero: calls $12
+P1: calls $12
+P2: folds
+P3: calls $8
+*** FLOP *** [6s 4d 3d]
+P3: checks
+P4: checks
+Hero: bets $36
+P1: calls $36
+P3: raises $142.3 to $178.3 and is all-in
+P4: folds
+Hero: raises $440.6 to $618.9
+P1: calls $435.92 and is all-in
+Uncalled bet ($146.98) returned to Hero
+Hero: shows [Qc Js Jh Qh 7c 5c] (a straight, Seven to Three)
+P1: shows [8s 5s 9c 9s 7d Tc] (a straight, Seven to Three)
+P3: shows [8d Ks Kd Td 5h Th] (a pair of Kings)
+*** TURN *** [6s 4d 3d] [6c]
+*** RIVER *** [6s 4d 3d 6c] [9d]
+*** SHOWDOWN ***
+P1 collected $579.95 from pot
+P1 collected $584.2 from pot
+*** SUMMARY ***
+Total pot $1,170.14 | Rake $3.99 | Jackpot $2 | Bingo $0 | Fortune $0 | Tax $0
+Board [6s 4d 3d 6c 9d]
+Seat 1: P1 showed [8s 5s 9c 9s 7d Tc] and won ($1,164.15) with a full house, Nines full of Sixes
+Seat 2: P2 (button) folded before Flop (didn't bet)
+Seat 3: P3 (small blind) showed [8d Ks Kd Td 5h Th] and lost with a flush King high
+Seat 4: P4 (big blind) folded on the Flop
+Seat 5: Hero showed [Qc Js Jh Qh 7c 5c] and lost with a straight, Seven to Three
+
+
+Poker Hand #OM107644459: PLO-6 ($0.5/$1) - 2026/09/22 13:58:21
+Table 'PLO-6Bronze2' 5-max Seat #1 is the button
+Seat 1: P1 ($408.26 in chips)
+Seat 2: Hero ($235.75 in chips)
+Seat 3: P2 ($373.23 in chips)
+Seat 5: P3 ($120.08 in chips)
+Hero: posts small blind $0.5
+P2: posts big blind $1
+*** HOLE CARDS ***
+Dealt to P1
+Dealt to Hero [Qc Jh Kh 6c Kc 4s]
+Dealt to P2
+Dealt to P3
+P3: folds
+P1: raises $2.5 to $3.5
+Hero: calls $3
+P2: raises $10.5 to $14
+P1: calls $10.5
+Hero: calls $10.5
+*** FIRST FLOP *** [5c 7s Ks]
+Hero: checks
+P2: bets $21
+P1: calls $21
+Hero: raises $105 to $126
+P2: calls $105
+P1: folds
+*** FIRST TURN *** [5c 7s Ks] [3s]
+Hero: bets $95.75 and is all-in
+P2: calls $95.75
+Hero: shows [Qc Jh Kh 6c Kc 4s] (a straight, Seven to Three)
+P2: shows [Th As 4d 3h 8s Ac] (a flush Ace high)
+*** FIRST RIVER *** [5c 7s Ks 3s] [9d]
+*** SECOND RIVER *** [5c 7s Ks 3s] [2h]
+*** FIRST SHOWDOWN ***
+P2 collected $252 from pot
+*** SECOND SHOWDOWN ***
+P2 collected $252 from pot
+*** SUMMARY ***
+Total pot $506.5 | Rake $1.5 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Hand was run two times
+FIRST Board [5c 7s Ks 3s 9d]
+SECOND Board [2h]
+Seat 1: P1 (button) folded on the Flop
+Seat 2: Hero (small blind) showed [Qc Jh Kh 6c Kc 4s] and lost with a straight, Seven to Three, and lost with a pair of Kings
+Seat 3: P2 (big blind) showed [Th As 4d 3h 8s Ac] and won ($252) with a flush Ace high, and won ($252) with a pair of Aces
+Seat 5: P3 folded before Flop (didn't bet)

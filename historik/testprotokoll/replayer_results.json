@@ -1,0 +1,110 @@
+{
+  "cases": [
+    {
+      "name": "initial_step",
+      "pass": true,
+      "detail": "steg 1 av 12"
+    },
+    {
+      "name": "button_next",
+      "pass": true,
+      "detail": "steg 2 av 12"
+    },
+    {
+      "name": "button_prev",
+      "pass": true,
+      "detail": "steg 1 av 12"
+    },
+    {
+      "name": "button_end",
+      "pass": true,
+      "detail": "steg 12 av 12"
+    },
+    {
+      "name": "button_next",
+      "pass": true,
+      "detail": "steg 12 av 12"
+    },
+    {
+      "name": "button_start",
+      "pass": true,
+      "detail": "steg 1 av 12"
+    },
+    {
+      "name": "button_prev",
+      "pass": true,
+      "detail": "steg 1 av 12"
+    },
+    {
+      "name": "slider_step_0",
+      "pass": true,
+      "detail": "steg 1 av 12"
+    },
+    {
+      "name": "slider_step_1",
+      "pass": true,
+      "detail": "steg 2 av 12"
+    },
+    {
+      "name": "slider_step_2",
+      "pass": true,
+      "detail": "steg 3 av 12"
+    },
+    {
+      "name": "slider_step_3",
+      "pass": true,
+      "detail": "steg 4 av 12"
+    },
+    {
+      "name": "slider_step_4",
+      "pass": true,
+      "detail": "steg 5 av 12"
+    },
+    {
+      "name": "slider_step_5",
+      "pass": true,
+      "detail": "steg 6 av 12"
+    },
+    {
+      "name": "slider_step_6",
+      "pass": true,
+      "detail": "steg 7 av 12"
+    },
+    {
+      "name": "slider_step_7",
+      "pass": true,
+      "detail": "steg 8 av 12"
+    },
+    {
+      "name": "slider_step_8",
+      "pass": true,
+      "detail": "steg 9 av 12"
+    },
+    {
+      "name": "slider_step_9",
+      "pass": true,
+      "detail": "steg 10 av 12"
+    },
+    {
+      "name": "slider_step_10",
+      "pass": true,
+      "detail": "steg 11 av 12"
+    },
+    {
+      "name": "slider_step_11",
+      "pass": true,
+      "detail": "steg 12 av 12"
+    },
+    {
+      "name": "keyboard_left",
+      "pass": true,
+      "detail": "steg 11 av 12"
+    },
+    {
+      "name": "keyboard_right",
+      "pass": true,
+      "detail": "steg 12 av 12"
+    }
+  ],
+  "notes": "Isolated JavaScript unit tests with DOM stubs, no browser rendering, known actual all-in hand"
+}

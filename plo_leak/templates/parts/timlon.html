@@ -1,0 +1,50 @@
+{% if hourly and hourly.total %}{% set t = hourly.total %}
+{% macro usd(v, d=0) -%}{{ ('+' if v > 0 else ('−' if v < 0 else '')) ~ '$' ~ ('{:,.' ~ d ~ 'f}').format(v|abs).replace(',', ' ') }}{%- endmacro %}
+  <h2 data-tab="Timlön">Timlön och händer per timme</h2>
+  <div class="panel scroll">
+    <div class="kpis" style="margin-top:0;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+      <div class="kpi"><div class="l">Speltid</div><div class="v">{{ '%.0f'|format(t.hours) }} h</div></div>
+      <div class="kpi"><div class="l">Händer per timme</div><div class="v">{{ '%.0f'|format(t.hph) }}</div></div>
+      <div class="kpi"><div class="l">Spelpass</div><div class="v">{{ t.sessions }}</div></div>
+      <div class="kpi"><div class="l">Timlön (faktiskt)</div><div class="v {{ 'pos' if t.usd_h >= 0 else 'neg' }}">{{ usd(t.usd_h, 2) }}</div></div>
+      <div class="kpi"><div class="l">Timlön (all-in EV)</div><div class="v {{ 'pos' if t.ev_usd_h >= 0 else 'neg' }}">{{ usd(t.ev_usd_h, 2) }}</div></div>
+      <div class="kpi"><div class="l">EV-timlön före rake</div><div class="v {{ 'pos' if t.pre_usd_h >= 0 else 'neg' }}">{{ usd(t.pre_usd_h, 2) }}</div></div>
+      <div class="kpi"><div class="l">Rake per timme</div><div class="v">${{ '%.2f'|format(t.rake_usd_h) }}</div></div>
+      <div class="kpi"><div class="l">bb per timme (EV)</div><div class="v {{ 'pos' if t.ev_bb_h >= 0 else 'neg' }}">{{ t.ev_bb_h|signed(1) }}</div></div>
+    </div>
+    {% if t.ev_lo is defined %}<div class="answer {{ 'good' if t.ev_lo > 0 else '' }}" style="border-left-color:var({{ '--good' if t.ev_lo > 0 else ('--bad' if t.ev_hi < 0 else '--line') }})"><b>Din EV-timlön är {{ usd(t.ev_usd_h, 2) }}</b> – med 95 % säkerhet mellan {{ usd(t.ev_lo, 2) }} och {{ usd(t.ev_hi, 2) }} per timme{% if t.ev_lo > 0 %}, alltså säkert plus{% elif t.ev_hi < 0 %}, alltså säkert minus{% else %}; det går inte att säga om den är plus eller minus än{% endif %}. Faktiskt resultat: {{ usd(t.usd_h, 2) }} per timme.</div>{% endif %}
+
+    {% if hourly.weeks|length > 1 %}{% set mx = hourly.weeks_max %}
+    <div class="lbl" style="margin-top:16px">Timlön vecka för vecka (all-in EV)</div>
+    <div class="potchart">
+      <div class="ph2"><span>Vecka</span><span>← minus · plus →</span><span>timmar</span></div>
+      {% for w in hourly.weeks %}{% set v = w.ev_usd_h %}{% set wd = (38 * (v|abs) / mx) %}{% set k = (25 + 75 * (v|abs) / mx)|round(0) %}
+      <div class="pr" title="{{ w.week }}: {{ w.hands }} händer, {{ '%.1f'|format(w.hours) }} h, faktiskt {{ usd(w.usd_h, 2) }}/h"><div class="pl">{{ w.week }}</div><div class="pt"><div class="pz"></div>
+        <div class="pb" style="{{ 'left:50%' if v >= 0 else 'left:' ~ (50 - wd) ~ '%' }};width:{{ wd }}%;background:color-mix(in srgb, var({{ '--good' if v >= 0 else '--bad' }}) {{ k }}%, var(--chip))"></div>
+        <div class="pv" style="{{ 'left:calc(50% + ' ~ wd ~ '% + 6px)' if v >= 0 else 'right:calc(50% + ' ~ wd ~ '% + 6px)' }}">{{ usd(v, 0) }}/h</div></div><div class="pn">{{ '%.0f'|format(w.hours) }}</div></div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if hourly.stakes|length > 1 %}
+    <div class="lbl" style="margin-top:16px">Per nivå</div>
+    {% if hourly.total and hourly.total.mixed_stakes %}<div class="note" style="margin:0 0 6px">⚠ Du har spelat flera nivåer i samma pass. Då räknas samma klocktid på varje nivå – <b>summera inte timmarna</b> och jämför nivåernas timlön med försiktighet (en nivå som spelas på få bord bredvid en annan får låg timlön per klocktimme). Speltiden är en uppskattning från handstarterna (lucka över 5 min räknas som 5 min).</div>{% endif %}
+    <table class="tbl"><tr><th>Nivå</th><th class="n">Händer</th><th class="n">Timmar</th><th class="n">Händer/timme</th><th class="n">Timlön</th><th class="n">EV-timlön</th><th class="n">95 %-intervall</th><th class="n">EV-timlön före rake</th></tr>
+      {% for s in hourly.stakes %}<tr><td>${{ s.stake.replace('/', '/$') }}</td><td class="n">{{ s.hands }}</td><td class="n">{{ '%.1f'|format(s.hours) }}</td><td class="n">{{ '%.0f'|format(s.hph) }}</td>
+        <td class="n {{ 'pos' if s.usd_h >= 0 else 'neg' }}">{{ usd(s.usd_h, 2) }}</td><td class="n {{ 'pos' if s.ev_usd_h >= 0 else 'neg' }}"><b>{{ usd(s.ev_usd_h, 2) }}</b></td>
+        <td class="n">{% if s.ev_lo is defined %}{{ usd(s.ev_lo, 0) }} till {{ usd(s.ev_hi, 0) }}{% else %}–{% endif %}</td>
+        <td class="n {{ 'pos' if s.pre_usd_h >= 0 else 'neg' }}">{{ usd(s.pre_usd_h, 2) }}</td></tr>{% endfor %}
+    </table>
+    {% endif %}
+
+    {% if hourly.sessions %}
+    <div class="lbl" style="margin-top:16px">De senaste spelpassen</div>
+    <table class="tbl"><tr><th>Start</th><th>Slut</th><th class="n">Speltid</th><th class="n">Händer</th><th class="n">Händer/timme</th><th class="n">Resultat</th><th class="n">All-in EV</th><th class="n">EV-timlön</th></tr>
+      {% for s in hourly.sessions %}<tr><td style="white-space:nowrap">{{ s.start }}</td><td>{{ s.end }}</td><td class="n">{{ '%d:%02d'|format((s.hours)|int, ((s.hours * 60) % 60)|int) }}</td><td class="n">{{ s.hands }}</td><td class="n">{{ '%.0f'|format(s.hph) if s.hph and s.rate_ok else '–' }}</td>
+        <td class="n {{ 'pos' if s.money >= 0 else 'neg' }}">{{ usd(s.money, 2) }}</td><td class="n {{ 'pos' if s.ev_money >= 0 else 'neg' }}">{{ usd(s.ev_money, 2) }}</td>
+        <td class="n {{ 'pos' if (s.ev_usd_h or 0) >= 0 else 'neg' }}">{{ usd(s.ev_usd_h, 2) if s.rate_ok and s.ev_usd_h is defined else '–' }}</td></tr>{% endfor %}
+    </table>
+    {% endif %}
+    <div class="note"><b>Så räknas speltiden:</b> från tidsstämpeln på varje hand, för alla bord tillsammans – spelar du flera bord samtidigt får du fler händer per timme. Ett nytt spelpass börjar efter en paus på mer än 30 minuter, och inom ett pass räknas en lucka på mer än {{ hourly.pause_min }} minuter som paus (bara {{ hourly.pause_min }} minuter räknas). Speltiden är därför en uppskattning av den tid du faktiskt satt och spelade. Per nivå räknas tiden medan du spelade just den nivån – spelar du två nivåer samtidigt räknas tiden på båda. All-in EV-timlönen är det bästa måttet på din verkliga timlön; intervallet bygger på hur mycket resultaten skiftar mellan spelpassen. Veckor och nivåer med mindre än en timmes spel visas inte, och spelpass kortare än en timme får ingen timlön – det blir bara brus. Rakeback ingår inte – lägg till den ovanpå.</div>
+  </div>
+{% endif %}

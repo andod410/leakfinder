@@ -1,0 +1,43 @@
+Poker Hand #OM108301143: PLO-6 ($0.5/$1) - 2026/09/26 09:00:52
+Table 'PLO-6Bronze2' 5-max Seat #2 is the button
+Seat 1: a6eb7a5c ($116.97 in chips)
+Seat 2: 81c9823b ($100 in chips)
+Seat 3: 1db8bc70 ($292.36 in chips)
+Seat 4: Hero ($311.2 in chips)
+Seat 5: b5504e97 ($111.78 in chips)
+1db8bc70: posts small blind $0.5
+Hero: posts big blind $1
+*** HOLE CARDS ***
+Dealt to a6eb7a5c
+Dealt to 81c9823b
+Dealt to 1db8bc70
+Dealt to Hero [6h Ac 3s Jc Ah 9c]
+Dealt to b5504e97
+b5504e97: folds
+a6eb7a5c: folds
+81c9823b: folds
+1db8bc70: raises $2 to $3
+Hero: raises $6 to $9
+1db8bc70: raises $18 to $27
+Hero: calls $18
+*** FLOP *** [3c 7h Js]
+1db8bc70: bets $40.5
+Hero: calls $40.5
+*** TURN *** [3c 7h Js] [Qs]
+1db8bc70: bets $67.5
+Hero: calls $67.5
+*** RIVER *** [3c 7h Js Qs] [8s]
+1db8bc70: checks
+Hero: checks
+1db8bc70: shows [4s Ad 5h Ks 5s As] (a flush Ace high)
+Hero: shows [6h Ac 3s Jc Ah 9c] (two pair, Jacks and Threes)
+*** SHOWDOWN ***
+1db8bc70 collected $267 from pot
+*** SUMMARY ***
+Total pot $270 | Rake $2 | Jackpot $1 | Bingo $0 | Fortune $0 | Tax $0
+Board [3c 7h Js Qs 8s]
+Seat 1: a6eb7a5c folded before Flop (didn't bet)
+Seat 2: 81c9823b (button) folded before Flop (didn't bet)
+Seat 3: 1db8bc70 (small blind) showed [4s Ad 5h Ks 5s As] and won ($267) with a flush Ace high
+Seat 4: Hero (big blind) showed [6h Ac 3s Jc Ah 9c] and lost with two pair, Jacks and Threes
+Seat 5: b5504e97 folded before Flop (didn't bet)

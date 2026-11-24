@@ -1,0 +1,204 @@
+  <p class="sec-i">Vilka händer du ska spela – öppningsguide per position, nöt-egenskaper och var gränsen går.</p>
+  {% if pos_leaks and pos_leaks.positions %}
+  <h2 data-tab="Positionsläckor">Positionsläckor: var kostar ditt första beslut mest?</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Per position: ditt första beslut preflop delat på situation × handling × nöt-egenskaper, jämfört med att folda just då. <b>bb/100 totalt</b> = hur mycket gruppen drar ner hela din vinst. <b>Säkert minus</b> = hela 95 %-intervallet under noll. <b>Bekräftad</b> = klarar dessutom korrigering för alla {{ pos_leaks.m_tests }} grupper som prövas. Grupper med färre än {{ pos_leaks.min_n }} spelade händer visas inte.{% if pos_leaks.biggest %} <b>Största säkra positionsläckan just nu: {{ pos_leaks.biggest }}.</b>{% endif %}</p>
+    {% set wr = {} %}{% for r in ranges or [] %}{% if r.spot == 'rfi' and r.wr_curve %}{% set _ = wr.update({r.pos: r.wr_curve}) %}{% endif %}{% endfor %}
+    {% for p in pos_leaks.positions|sort(attribute='sure_cost_bb100') %}
+    <div class="lbl">{{ p.pos }} – {{ p.dealt }} beslut, spelat mot fold {{ p.total|signed(0) }} bb ({{ p.bb100_total|signed(1) }} bb/100 totalt) · säkert minus kostar {{ p.sure_cost_bb100|signed(1) }} bb/100</div>
+    {% if wr.get(p.pos) %}{% set c = wr[p.pos] %}<div class="note" style="margin:0 0 4px">Öppningsgräns: bäst topp {{ c.peak_pct }} % ({{ c.peak_bb100|signed(1) }} bb/100 i positionen{% if c.plateau %}, nästan lika bra {{ c.plateau[0] }}–{{ c.plateau[1] }} %{% endif %}) – du öppnar {{ '%.0f'|format(c.now_pct) }} % ({{ c.now_bb100|signed(1) }}). Träna gränsen med reglaget under <a href="/trana?s=pct|{{ p.pos }}">Träna</a>.</div>{% endif %}
+    {% if p.largest %}
+    <table class="tbl">
+      <tr><th>Beslut</th><th>Nöt-egenskaper</th><th class="n">Spelade</th><th class="n">Mot fold / hand</th><th class="n">95 %-intervall</th><th class="n">Totalt</th><th class="n">bb/100 totalt</th><th>Bedömning</th></tr>
+      {% for g in p.largest %}
+      <tr><td>{{ g.label }}</td><td>{{ g.nut }}</td><td class="n">{{ g.n }}</td><td class="n neg">{{ g.mean|signed(2) }} bb</td><td class="n">{{ g.lo|signed(1) }} till {{ g.hi|signed(1) }}</td><td class="n neg">{{ g.total|signed(0) }} bb</td><td class="n">{{ g.bb100_total|signed(2) }}</td>
+        <td class="{{ 'st-bad' if g.confirmed else '' }}">{{ 'bekräftad förlust' if g.confirmed else ('säkert minus' if g.sure_minus else ('osäkert (svansvakt)' if g.verdict == 'osäkert (svansvakt)' else 'osäkert')) }}</td></tr>
+      {% endfor %}
+    </table>
+    {% else %}<div class="note">Inga grupper med minus mot fold.</div>{% endif %}
+    {% endfor %}
+    <div class="note">Rundown = fyra valörer från 5 och uppåt inom fem steg, högst en lucka (t.ex. 9-8-7-6 eller 9-8-7-5). Säkert minus utan bekräftelse är en stark kandidat – med många grupper samtidigt kan någon vara slump. "Totalt" är facit för urvalet, inte en prognos.</div>
+  </div>
+  {% endif %}
+
+  {% if guide %}
+  <h2 data-tab="Öppningsguide">Öppningsguide: vilka händer ska du öppna?</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">När det är foldat till dig: hur dina öppningar gått jämfört med att folda, uppdelat på vilka nöt-egenskaper handen har (högt par JJ+, suited ess, rundown 5+ = fyra valörer inom fem steg, högst en lucka, alla ≥ 5). <b>Folda</b> = säkerställd förlust jämfört med fold. <b>Öppna</b> = säkerställd vinst. <b>Osäkert</b> = går inte att avgöra med ditt urval. Säkerställd betyder att ett test som inte antar normalfördelning (bootstrap över hela spelpass) klarar kravet även när alla rutor i guiden testas samtidigt.</p>
+    {% for g in guide %}
+    <div class="lbl">{{ g.pos }} – du öppnar {{ '%.0f'|format(g.open_pct) }} % av händerna</div>
+    <table class="tbl">
+      <tr><th>Nöt-egenskaper</th><th class="n">Andel av händerna</th><th class="n">Du öppnar</th><th class="n">Jämfört med fold</th><th class="n">95 %-intervall</th><th>Bedömning</th></tr>
+      {% for r in g.rows %}
+      <tr><td>{{ r.combo }}</td><td class="n">{{ '%.1f'|format(r.share) }} %</td><td class="n">{{ '%.0f'|format(r.open_pct) }} % <span class="note" style="font-size:12px">({{ r.opens }})</span></td>
+        <td class="n {{ '' if r.mean is none else ('pos' if r.mean >= 0 else 'neg') }}">{{ '–' if r.mean is none else r.mean|signed(2) }}{% if r.mean is not none %} bb{% endif %}</td>
+        <td class="n">{% if r.lo is not none %}{{ r.lo|signed(1) }} till {{ r.hi|signed(1) }}{% else %}–{% endif %}</td>
+        <td class="{{ 'st-bad' if r.verdict == 'Folda' else ('st-ok' if r.verdict == 'Öppna' else '') }}">{{ r.verdict }}</td></tr>
+      {% endfor %}
+    </table>
+    {% endfor %}
+    <div class="note">Räknat med all-in EV och efter rake, på händerna du faktiskt öppnade. "Andel av händerna" visar hur ofta du får en sådan hand i positionen. Intervallen tar hänsyn till att händer från samma spelpass hänger ihop. Med många rader testade samtidigt kan någon enstaka "Folda"/"Öppna" vara slump – lita mest på mönster som återkommer över flera positioner.</div>
+  </div>
+  {% endif %}
+
+  {% if nut_rows %}
+  <h2 data-tab="Nöt-egenskaper">Starthänder efter nöt-egenskaper</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Händerna grupperas efter hur många av tre nöt-egenskaper de har: <b>högt par</b> (knektar eller bättre), <b>suited ess</b> (2–3 kort i essets färg) och <b>rundown</b> (fyra valörer från 5 och uppåt med högst en lucka). Ett lågt par eller dubbelpar (under JJ) är ingen nöt-egenskap. Jämförelsen är mot att <b>folda direkt</b> vid ditt första beslut preflop – i SB och BB (och när du straddlat) räknas det du redan lagt in, eftersom det är förlorat även om du foldar.</p>
+    <table class="tbl">
+      <tr><th>Antal egenskaper</th><th class="n">Delad</th><th class="n">Spelad</th><th class="n">Jämfört med fold</th><th class="n">95 %-intervall</th><th class="n">Totalt mot fold</th><th>Bedömning</th></tr>
+      {% for r in nut_rows %}{% set f = nut_fold_by.get(r.name) if nut_fold_by is defined else none %}
+      <tr><td>{{ r.name }}</td><td class="n">{{ r.hands }}</td><td class="n">{{ r.vpip|pct }} <span class="note" style="font-size:12px">({{ r.played }})</span></td>
+        {% if f and f.mean is not none %}
+        <td class="n {{ 'pos' if f.mean >= 0 else 'neg' }}">{{ f.mean|signed(2) }} bb</td>
+        <td class="n">{% if f.lo is not none %}{{ f.lo|signed(1) }} till {{ f.hi|signed(1) }}{% else %}–{% endif %}</td>
+        <td class="n {{ 'pos' if f.total >= 0 else 'neg' }}">{{ f.total|signed(0) }} bb</td>
+        <td class="{{ 'st-ok' if f.verdict == 'lönsamt' else ('st-bad' if f.verdict == 'förlorar' else '') }}">{{ f.verdict }}</td>
+        {% else %}<td class="n">–</td><td class="n">–</td><td class="n">–</td><td></td>{% endif %}</tr>
+      {% endfor %}
+    </table>
+    {% if nut_fold and nut_fold.grid %}
+    <div class="lbl">Per position: jämfört med fold (bb per spelad hand)</div>
+    <table class="tbl grid">
+      <tr><th>Antal egenskaper</th>{% for p in nut_fold.positions %}<th class="n">{{ p }}</th>{% endfor %}</tr>
+      {% for g in nut_fold.grid %}
+      <tr><td>{{ g.name }}</td>{% for c in g.cells %}<td class="n {% if c and c.n >= 30 %}{{ 'cell-pos' if c.verdict == 'lönsamt' else ('cell-neg' if c.verdict == 'förlorar' else '') }}{% endif %}">{% if c and c.mean is not none %}<b class="{{ 'pos' if c.mean >= 0 else 'neg' }}">{{ c.mean|signed(2) }}</b><div class="note" style="margin:0;font-size:11px">spelar {{ '%.0f'|format(c.play_pct) }} % · {{ c.played }} st · {{ c.total|signed(0) }} bb</div>{% elif c %}<span class="note" style="font-size:12px">spelar {{ '%.0f'|format(c.play_pct) }} %</span>{% else %}–{% endif %}</td>{% endfor %}</tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+    <details><summary>Uppdelat på vilka egenskaper (netto när spelad)</summary>
+    <table class="tbl">
+      <tr><th>Egenskaper</th><th class="n">Delad</th><th class="n">Spelad</th><th class="n">Netto per spelad hand</th><th class="n">Netto när spelad</th></tr>
+      {% for r in nut_combo_rows %}
+      <tr><td>{{ r.name }}</td><td class="n">{{ r.hands }}</td><td class="n">{{ r.vpip|pct }}</td>
+        <td class="n {{ 'pos' if r.per_played >= 0 else 'neg' }}">{{ r.per_played|signed(2) }} bb/hand</td><td class="n">{{ r.net_played|signed(0) }} bb</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note">Den här tabellen visar nettot i händerna du spelade, med blinden inräknad – för SB och BB är det alltså inte jämfört med fold. Uppdelningen per kombination prövas i Öppningsguiden.</div></details>
+    <div class="note"><b>Så läser du tabellerna:</b> "Jämfört med fold" = hur ditt första beslut preflop (öppna, syna, höja) slutade, minus vad en fold hade kostat just då. Räknat med all-in EV och efter rake. "Totalt mot fold" = vad det har gett totalt att spela händerna i stället för att folda dem – facit för urvalet, inte en prognos. Grönt/rött och "förlorar"/"lönsamt" visas bara när det är säkerställt: ett bootstrap-test över hela spelpass som klarar kravet även när alla rutor i den här tabellen, öppningsguiden och rundown-tabellen prövas samtidigt. Rutor med färre än 100 spelade händer bedöms inte. Annars "jämnt / osäkert". Regeln "minst två nöt-egenskaper" är en tumregel från PLO6-teori (Grinders Vault) – den här tabellen visar hur det faktiskt gått för dig.</div>
+  </div>
+  {% endif %}
+
+  {% if rundowns and rundowns.pure and rundowns.pure.rows %}
+  <h2 data-tab="Rundowns">Rundowns: från vilket lägsta kort lönar de sig?</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Händer grupperade efter lägsta kortet i handens högsta rundown (fyra valörer inom fem steg med högst en lucka, alla 5 eller högre – t.ex. 8-7-6-5 eller 9-7-6-5, båda med lägsta kort 5; 4 i rad är den luckfria sorten). Huvudtabellen gäller <b>rena rundowns</b> – utan suited ess och utan högt par – så att det är rundownens eget värde som mäts.</p>
+    <div class="answer {{ 'good' if rundowns.pure.answer.kind == 'cut' else '' }}"><b>Svar:</b> {{ rundowns.pure.answer.text }}</div>
+    <table class="tbl">
+      <tr><th>Lägsta kort</th><th class="n">Fick</th><th class="n">Spelade</th><th class="n">Jämfört med fold</th><th class="n">95 %-intervall</th><th>Bedömning</th><th class="n">Vunnen pott med stege</th><th class="n">Stegen förlorade vid showdown</th></tr>
+      {% for r in rundowns.pure.rows %}
+      <tr><td>{{ r.group }}</td><td class="n">{{ r.dealt }}</td><td class="n">{{ '%.0f'|format(r.play_pct) }} % <span class="note" style="font-size:12px">({{ r.played }})</span></td>
+        <td class="n {{ '' if r.mean is none else ('pos' if r.mean >= 0 else 'neg') }}">{{ '–' if r.mean is none else r.mean|signed(2) }}{% if r.mean is not none %} bb{% endif %}</td>
+        <td class="n">{% if r.lo is not none %}{{ r.lo|signed(1) }} till {{ r.hi|signed(1) }}{% else %}–{% endif %}</td>
+        <td class="{{ 'st-ok' if r.verdict == 'lönsamt' else ('st-bad' if r.verdict == 'förlorar' else '') }}">{{ r.verdict }}</td>
+        <td class="n">{% if r.median_win_pot is not none %}{{ '%.0f'|format(r.median_win_pot) }} bb <span class="note" style="font-size:12px">({{ r.straight_wins }} st)</span>{% else %}–{% endif %}</td>
+        <td class="n">{% if r.straight_lost_pct is not none %}{{ '%.0f'|format(r.straight_lost_pct) }} % <span class="note" style="font-size:12px">av {{ r.sd_straights }}</span>{% else %}–{% endif %}</td></tr>
+      {% endfor %}
+    </table>
+    <div class="lbl">Om du bara spelar rena rundowns från ett visst lägsta kort och uppåt</div>
+    <table class="tbl">
+      <tr><th>Gräns</th><th class="n">Rundowns från gränsen och uppåt</th><th class="n">Rundowns under gränsen</th></tr>
+      {% for c in rundowns.pure.cum %}{% if c.below %}
+      <tr><td>från {{ c.from }}</td>
+        <td class="n {{ '' if c.above.mean is none else ('pos' if c.above.mean >= 0 else 'neg') }}">{{ c.above.mean|signed(2) }} bb <span class="note" style="font-size:12px">({{ c.above.n }})</span></td>
+        <td class="n {{ '' if c.below.mean is none else ('pos' if c.below.mean >= 0 else 'neg') }}">{{ c.below.mean|signed(2) }} bb <span class="note" style="font-size:12px">({{ c.below.n }}{% if c.below.lo is not none %}, {{ c.below.lo|signed(1) }} till {{ c.below.hi|signed(1) }}{% endif %})</span></td></tr>
+      {% endif %}{% endfor %}
+    </table>
+    <div class="note">"Osäkert (svansvakt)" = snittet ligger under noll även med felmarginalen, men gruppen har färre än 5 resultat över +10 bb – då bekräftas ingen förlust (försiktighetsregel: en enda stor vinst som inte råkat komma kan ändra bilden).</div>
+    <div class="note">"Lönsamt"/"förlorar" visas bara när det är säkerställt: ett test som inte antar normalfördelning (bootstrap över hela spelpass) klarar kravet även när alla grupper i tabellen testas samtidigt. Annars "jämnt / osäkert".</div>
+    {% if sim %}
+    <div class="lbl">Simulering: vad rundownen kan göra (oberoende av hur någon spelar)</div>
+    <p class="note" style="margin-top:2px">{{ '{:,}'.format(sim.settings.total_deals).replace(',', ' ') }} simulerade utdelningar: din rena rundown mot {{ sim.settings.opponents }} motståndare med {{ 'spelbara händer (minst en nöt-egenskap)' if sim.settings.playable_opponents else 'helt slumpade händer' }}, hela vägen till river. Ingen satsning – bara korten. Felmarginal ungefär ±0,3 procentenheter.</p>
+    <table class="tbl">
+      <tr><th>Lägsta kort</th><th class="n">Andel av potten (equity)</th><th class="n">Stege vid river</th><th class="n">… varav nötstegen</th><th class="n">Stegen förlorar ändå</th><th class="n">Vinner du med stegen: motståndaren har set+</th><th class="n">Floppad stege är nötstegen</th><th class="n">Floppad stege: motståndaren har set+</th></tr>
+      {% for g in sim.groups %}
+      <tr{% if g.group == 'Alla händer' %} style="color:var(--ink2)"{% endif %}><td>{{ g.group if g.group != 'Alla händer' else 'Alla händer (jämförelse)' }}</td>
+        <td class="n">{{ '%.1f'|format(g.equity) }} %</td><td class="n">{{ '%.1f'|format(g.river_straight) }} %</td>
+        <td class="n"><b>{{ '%.0f'|format(g.river_nut_of_straights) }} %</b></td><td class="n">{{ '%.0f'|format(g.straight_lost) }} %</td>
+        <td class="n">{{ '%.0f'|format(g.won_vs_set) }} %</td><td class="n">{{ '%.0f'|format(g.flop_nut_of_straights) }} %</td><td class="n">{{ '%.0f'|format(g.flop_opp_set) }} %</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note"><b>Så läser du den:</b> "… varav nötstegen" = hur ofta din stege är den högsta möjliga på bordet. "Stegen förlorar ändå" = andel av dina stegar som slås av en motståndare vid showdown (högre stege, färg, kåk). "Motståndaren har set+" = när du vinner med stegen, hur ofta motståndaren har ett set eller bättre – alltså en hand som kan betala en stor pott. Med sex kort har motståndaren nästan alltid två par, så set är ett bättre mått. Antagandet om motståndarnas händer påverkar siffrorna mer än antalet simuleringar.</div>
+    {% else %}
+    <p class="note">Simuleringen saknas – kör med <code>--simulera</code>.</p>
+    {% endif %}
+    <details><summary>Alla rundown-händer (även med suited ess eller högt par)</summary>
+      <table class="tbl">
+        <tr><th>Lägsta kort</th><th class="n">Spelade</th><th class="n">Jämfört med fold</th><th class="n">95 %-intervall</th><th>Bedömning</th><th class="n">Vunnen pott med stege</th><th class="n">Stegen förlorade vid showdown</th></tr>
+        {% for r in rundowns.all.rows %}
+        <tr><td>{{ r.group }}</td><td class="n">{{ r.played }}</td>
+          <td class="n {{ '' if r.mean is none else ('pos' if r.mean >= 0 else 'neg') }}">{{ '–' if r.mean is none else r.mean|signed(2) }}{% if r.mean is not none %} bb{% endif %}</td>
+          <td class="n">{% if r.lo is not none %}{{ r.lo|signed(1) }} till {{ r.hi|signed(1) }}{% else %}–{% endif %}</td>
+          <td class="{{ 'st-ok' if r.verdict == 'lönsamt' else ('st-bad' if r.verdict == 'förlorar' else '') }}">{{ r.verdict }}</td>
+          <td class="n">{% if r.median_win_pot is not none %}{{ '%.0f'|format(r.median_win_pot) }} bb{% else %}–{% endif %}</td>
+          <td class="n">{% if r.straight_lost_pct is not none %}{{ '%.0f'|format(r.straight_lost_pct) }} %{% else %}–{% endif %}</td></tr>
+        {% endfor %}
+      </table></details>
+    <div class="note">Jämfört med fold = hur dina första preflop-beslut med handen (öppna, syna, 3-betta) slutade, minus vad en fold hade kostat. "Vunnen pott med stege" = medianpotten när du vann med en stege. "Stegen förlorade" = andel av gångerna du hade stege vid showdown och ändå förlorade. Händer från alla positioner och situationer blandas – se Öppningsguiden för per position. Åtta grupper testas samtidigt, så en enstaka bedömning kan vara slump; lita mest på hur mönstret ser ut över flera grupper.</div>
+  </div>
+  {% endif %}
+
+  {% if ranges %}
+  <h2 data-tab="Range-gränser">Var går gränsen för lönsamma starthänder?</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Alla händer du fått i en situation rangordnas från topp 0 % (bäst) till 100 %, med en handpoäng som lärts från dina egna resultat (korsvaliderat). Kurvan över hur dina händer gått jämfört med fold tvingas vara fallande – gränsen är där den korsar noll. <b>"För brett"</b> visas bara om händerna bortom gränsen förlorar även i den halva av dina spelpass som inte användes för att hitta gränsen.</p>
+    <table class="tbl">
+      <tr><th>Situation</th><th>Pos</th><th class="n">Du spelar</th><th class="n">Lönsamt ned till</th><th class="n">80 %-intervall</th><th>Bedömning</th></tr>
+      {% for r in ranges %}
+      <tr><td>{{ r.name }}</td><td>{{ r.pos }}</td><td class="n">{{ '%.0f'|format(r.play_pct) }} %</td>
+        <td class="n">{{ ('topp %.0f %%'|format(r.cutoff_pct)) if r.cutoff_pct is not none else 'allt du spelar' }}</td>
+        <td class="n">{{ '%.0f'|format(r.lo_pct) }}–{{ '%.0f'|format(r.hi_pct) }} %</td>
+        <td class="{{ 'st-bad' if r.verdict.kind == 'wide' else ('st-ok' if r.verdict.kind == 'ok' else '') }}">{{ {'wide': 'För brett', 'ok': 'Ok', 'unclear': 'Oklart'}[r.verdict.kind] }}</td></tr>
+      {% endfor %}
+    </table>
+    {% for r in ranges %}
+    <details><summary>{{ r.name }} – {{ r.pos }}: resultat per tiondel</summary>
+      <p class="note">{{ r.verdict.text }}</p>
+      {% if r.border.inside %}
+      <div class="lbl">Händer precis vid gränsen (topp {{ '%.0f'|format(r.cutoff_pct) }} %)</div>
+      <table class="tbl"><tr><th>Precis innanför – spela</th><th>Precis utanför – folda</th></tr>
+      {% for i in range([r.border.inside|length, r.border.outside|length]|max) %}
+      <tr><td>{% if r.border.inside[i] is defined %}{{ r.border.inside[i].cards|cards }} <span class="note" style="font-size:12px">{{ r.border.inside[i].nut }}</span>{% endif %}</td>
+          <td>{% if r.border.outside[i] is defined %}{{ r.border.outside[i].cards|cards }} <span class="note" style="font-size:12px">{{ r.border.outside[i].nut }}</span>{% endif %}</td></tr>
+      {% endfor %}</table>
+      {% endif %}
+      <table class="tbl"><tr><th>Handens rang</th><th>Exempel från dina händer</th><th class="n">Du spelade</th><th class="n">Jämfört med fold</th><th class="n">± felmarginal</th></tr>
+      {% for b in r.bands %}<tr><td>topp {{ b.band }}</td>
+        <td>{% for e in b.examples %}<div style="white-space:nowrap">{{ e.cards|cards }} <span class="note" style="font-size:12px">{{ e.nut }}</span></div>{% endfor %}</td>
+        <td class="n">{{ '%.0f'|format(b.play_pct) }} %</td>
+        <td class="n {{ '' if b.mean is none else ('pos' if b.mean >= 0 else 'neg') }}">{{ '–' if b.mean is none else b.mean|signed(2) }}{% if b.mean is not none %} bb{% endif %}</td>
+        <td class="n">{{ '–' if b.se is none else '±%.2f'|format(1.96 * b.se) }}</td></tr>{% endfor %}
+      </table></details>
+    {% endfor %}
+    <details><summary>Vad handpoängen bygger på</summary>
+      <table class="tbl"><tr><th>Egenskap</th><th class="n">Vikt (bb jämfört med fold)</th></tr>
+      {% for n, v in ranges[0].weights.items() %}<tr><td>{{ n }}</td><td class="n {{ 'pos' if v >= 0 else 'neg' }}">{{ v|signed(2) }}</td></tr>{% endfor %}
+      </table></details>
+    <div class="note">Gränsen gäller händerna du själv valt att spela. Inom en tiondel spelar du ofta bara en del av händerna – troligen de bättre – så tabellen säger inget säkert om händer du foldat. Positiva vikter = egenskapen har gjort händerna bättre.</div>
+  </div>
+  {% endif %}
+
+  <h2 data-tab="Per position">Per position</h2>
+  <div class="panel scroll">
+    <table class="tbl">
+      <tr><th>Position</th><th class="n">Händer</th><th class="n">VPIP</th><th class="n">Öppnar (RFI)</th><th class="n">bb/100 (all-in EV)</th><th class="n">Netto (all-in EV, bb)</th></tr>
+      {% for r in pos_rows %}
+      <tr><td>{{ r.pos }}</td><td class="n">{{ r.hands }}</td><td class="n">{{ r.vpip|pct }}</td><td class="n">{{ r.rfi|pct }}</td>
+        <td class="n {{ 'pos' if r.bb100 >= 0 else 'neg' }}">{{ r.bb100|signed }}</td><td class="n">{{ r.net|signed(0) }}</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note">Blinds är nästan alltid förlorande – det normala. Jämför hellre med dig själv över tid.</div>
+  </div>
+
+  <h2 data-tab="Starthänder">Starthänder</h2>
+  <div class="panel scroll">
+    <table class="tbl">
+      <tr><th>Handtyp</th><th class="n">Delad</th><th class="n">Spelad</th><th class="n">Resultat när spelad</th><th class="n">Netto när spelad</th></tr>
+      {% for r in bucket_rows %}
+      <tr><td>{{ r.name }}</td><td class="n">{{ r.hands }}</td><td class="n">{{ r.vpip|pct }}</td>
+        <td class="n {{ 'pos' if r.per_played >= 0 else 'neg' }}">{{ r.per_played|signed(2) }} bb/hand</td><td class="n">{{ r.net_played|signed(0) }} bb</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note">Räknar bara händer där du frivilligt gick in i potten (blinds du foldat räknas inte). Beskrivande – om en handtyp verkligen förlorar mer än att folda syns det under säkerställda läckor.</div>
+  </div>
+

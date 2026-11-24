@@ -1,0 +1,54 @@
+  {% set KH = kpi_hide|default([]) or [] %}
+  {% set has_rb = rbs is defined and rbs and rbs.n is defined %}
+  {% set has_h = hourly and hourly.total and hourly.total.hours %}
+  {% macro kc(key, label) %}<div class="kpi{{ ' kpi-off' if key in KH }}" data-k="{{ key }}"><div class="l">{{ label }}</div>{{ caller() }}</div>{% endmacro %}
+  <div class="kpis" id="kpis">
+    {% if has_rb %}
+    {% call kc('real', 'Verklig winrate (all-in EV inkl. rakeback)') %}<div class="v {{ 'pos' if rbs.ev100_rb >= 0 else 'neg' }}" style="font-size:1.35em">{{ '%+.1f'|format(rbs.ev100_rb) }} bb/100</div><div class="note" style="margin:0">±{{ '%.0f'|format(rbs.ev100_rb_ci) }} (95 %) · {{ rbs.n }} händer</div>{% endcall %}
+    {% call kc('rb100', 'Rakeback bb/100') %}<div class="v pos">{{ '%+.1f'|format(rbs.rb100) }}</div><div class="note" style="margin:0">≈ {{ '%.0f'|format(rbs.pct) }} % av raken · ${{ '{:,.0f}'.format(rbs.rb_money).replace(',', ' ') }}</div>{% endcall %}
+    {% set ev_rb_m = st.ev_net_money + rbs.rb_money %}{% set ev_rb_bb = st.ev_net_bb + rbs.rb_bb %}{% set net_rb_m = st.net_money + rbs.rb_money %}
+    {% call kc('ev_rb_m', 'All-in EV inkl. rakeback (pengar)') %}<div class="v {{ 'pos' if ev_rb_m >= 0 else 'neg' }}">{{ ev_rb_m|signed(2) }}</div><div class="note" style="margin:0">{{ ev_rb_bb|signed(0) }} bb</div>{% endcall %}
+    {% call kc('net_rb_m', 'Resultat inkl. rakeback (pengar)') %}<div class="v {{ 'pos' if net_rb_m >= 0 else 'neg' }}">{{ net_rb_m|signed(2) }}</div><div class="note" style="margin:0">{{ (st.net_bb + rbs.rb_bb)|signed(0) }} bb</div>{% endcall %}
+    {% endif %}
+    {% call kc('hands', 'Händer') %}<div class="v">{{ st.hands }}</div>{% endcall %}
+    {% call kc('net_bb', 'Resultat') %}<div class="v {{ 'pos' if st.net_bb >= 0 else 'neg' }}">{{ st.net_bb|signed(0) }} bb</div>{% endcall %}
+    {% call kc('bb100', 'bb/100') %}<div class="v {{ 'pos' if st.bb100 >= 0 else 'neg' }}">{{ st.bb100|signed }}</div>{% endcall %}
+    {% call kc('ev100', 'All-in EV bb/100') %}<div class="v {{ 'pos' if st.ev_bb100 >= 0 else 'neg' }}">{{ st.ev_bb100|signed }}</div>{% endcall %}
+    {% call kc('ev100_pre', 'All-in EV bb/100 före rake') %}<div class="v {{ 'pos' if (st.ev_net_bb + st.ev_rake_bb) >= 0 else 'neg' }}">{{ (100 * (st.ev_net_bb + st.ev_rake_bb) / st.hands if st.hands else 0)|signed }}</div>{% endcall %}
+    {% call kc('bb100_pre', 'bb/100 före rake') %}<div class="v {{ 'pos' if (st.net_bb + st.rake_paid_bb) >= 0 else 'neg' }}">{{ (100 * (st.net_bb + st.rake_paid_bb) / st.hands if st.hands else 0)|signed }}</div>{% endcall %}
+    {% call kc('rake100', 'Rake bb/100') %}<div class="v">{{ '%.1f'|format(100 * st.rake_paid_bb / st.hands if st.hands else 0) }}</div>{% endcall %}
+    {% call kc('money', 'Pengar') %}<div class="v {{ 'pos' if st.net_money >= 0 else 'neg' }}">{{ st.net_money|signed(2) }}</div>{% endcall %}
+    {% call kc('ev_m', 'All-in EV (pengar)') %}<div class="v {{ 'pos' if st.ev_net_money >= 0 else 'neg' }}">{{ st.ev_net_money|signed(2) }}</div>{% endcall %}
+    {% if has_h %}
+    {% call kc('hourly', 'Timlön (' ~ ('%.0f'|format(hourly.total.hph)) ~ ' händer/h)') %}<div class="v {{ 'pos' if hourly.total.usd_h >= 0 else 'neg' }}">{{ hourly.total.usd_h|signed(2) }} $</div>{% endcall %}
+    {% call kc('ev_hourly', 'EV-timlön') %}<div class="v {{ 'pos' if hourly.total.ev_usd_h >= 0 else 'neg' }}">{{ hourly.total.ev_usd_h|signed(2) }} $</div>{% endcall %}
+    {% if has_rb %}{% set evh_rb = hourly.total.ev_usd_h + rbs.rb_money / hourly.total.hours %}
+    {% call kc('ev_hourly_rb', 'EV-timlön inkl. rakeback') %}<div class="v {{ 'pos' if evh_rb >= 0 else 'neg' }}">{{ evh_rb|signed(2) }} $</div>{% endcall %}{% endif %}
+    {% endif %}
+    {% if not mixed %}{% call kc('leaks', 'Säkerställda läckor' if strict else 'Läckor hittade') %}<div class="v">{{ leaks|length }}</div>{% endcall %}{% endif %}
+  </div>
+  {% if vid %}<details class="kpi-cfg" style="margin:2px 0 8px"><summary class="note" style="cursor:pointer;margin:0;display:inline">⚙ Anpassa rutor</summary>
+    <div style="display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:6px;align-items:center">
+      <button class="btn sm" type="button" data-kpreset="enkel" title="Verklig winrate, resultat och all-in EV inkl. rakeback, händer, timlön">Enkel</button>
+      <button class="btn sm ghost" type="button" data-kpreset="allt">Allt</button>
+      <span id="kpi-boxes" style="display:contents"></span>
+    </div></details>
+  <script>
+  (function(){
+    var box=document.getElementById('kpis'); if(!box) return;
+    var cells=[].slice.call(box.querySelectorAll('.kpi[data-k]')), holder=document.getElementById('kpi-boxes');
+    var ENKEL={{ KPI_SIMPLE|default(['real','net_rb_m','ev_rb_m','hands','hourly'])|tojson }};
+    function hidden(){ return cells.filter(function(c){return c.classList.contains('kpi-off');}).map(function(c){return c.getAttribute('data-k');}); }
+    function save(){ var fd=new FormData(); fd.append('hide', JSON.stringify(hidden()));
+      fetch('/api/kpi',{method:'POST',body:fd,headers:{'X-Requested-With':'fetch'}}).catch(function(){}); }
+    cells.forEach(function(c){ var l=document.createElement('label'); l.className='note'; l.style.margin='0';
+      var i=document.createElement('input'); i.type='checkbox'; i.checked=!c.classList.contains('kpi-off');
+      i.addEventListener('change',function(){ c.classList.toggle('kpi-off',!i.checked); save(); });
+      l.appendChild(i); l.appendChild(document.createTextNode(' '+c.querySelector('.l').textContent)); holder.appendChild(l); c._cb=i; });
+    [].forEach.call(document.querySelectorAll('[data-kpreset]'),function(b){ b.addEventListener('click',function(){
+      var all=b.getAttribute('data-kpreset')==='allt';
+      cells.forEach(function(c){ var on=all||ENKEL.indexOf(c.getAttribute('data-k'))>=0; c.classList.toggle('kpi-off',!on); c._cb.checked=on; });
+      save(); }); });
+  })();
+  </script>{% endif %}
+  {% if rbs is defined and rbs and rbs.per_stake and 'per_stake' not in KH %}<div class="note" style="margin:4px 0 10px">Verklig winrate per nivå (all-in EV inkl. rakeback, 95 %-intervall): {% for x in rbs.per_stake %}<span class="tag {{ 'good' if x.ev100_rb - x.ci > 0 else ('bad' if x.ev100_rb + x.ci < 0 else '') }}">${{ x.stake.replace('/', '/$') }} {{ '%+.1f'|format(x.ev100_rb) }} ±{{ '%.0f'|format(x.ci) }} bb/100 ({{ x.n }} händer, rakeback {{ '%+.1f'|format(x.rb100) }})</span> {% endfor %}</div>{% endif %}

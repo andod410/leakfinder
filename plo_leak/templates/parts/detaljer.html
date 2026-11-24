@@ -1,0 +1,148 @@
+  <p class="sec-i">Metod, statistik och kontrollsiffror för den som vill gå på djupet.</p>
+  {% if strict %}
+  <h2 data-tab="Metod">Så avgörs en läcka</h2>
+  <div class="panel">
+    <p style="margin-top:0">{{ strict_text }}</p>
+    <p style="margin-bottom:0">Programmet testade {{ tests }} beslutsgrupper (situation × position × starthandstyp, och syner mot bets per handstyrka) i halva A{% if candidates is not none %}; {{ candidates }} gick vidare till bekräftelse i halva B{% endif %}. Det kan bara bevisa att något du <i>gör</i> förlorar pengar – inte att något du inte gör skulle vinna, eftersom ingen vet hur händerna du foldade hade gått.</p>
+  </div>
+  {% endif %}
+
+  {% if strict and tested %}
+  <h2 data-tab="Vad kan avgöras">Vad ditt urval kan avgöra</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">De resultatbaserade testerna (jämfört med fold). "Kan påvisa" = hur stor förlust per gång som skulle behövas för att den ska kunna bevisas med ditt antal händer. Är en verklig läcka mindre än så syns den inte – det betyder "kan inte avgöras ännu", inte "ingen läcka".</p>
+    <table class="tbl">
+      <tr><th>Beslut</th><th class="n">Gånger</th><th class="n">Mot fold (bb/gång)</th><th class="n">Kan påvisa förlust större än</th></tr>
+      {% for r in tested %}
+      <tr><td>{{ r.label }}</td><td class="n">{{ r.n }}</td><td class="n {{ 'pos' if r.mean >= 0 else 'neg' }}">{{ r.mean|signed(2) }}</td><td class="n">{{ '%.1f'|format(r.mde) }} bb</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+  {% endif %}
+
+  <h2 data-tab="Statistik">Statistiköversikt</h2>
+  <div class="panel scroll">
+    <table class="tbl">
+      {% if strict %}
+      <tr><th>Stat</th><th class="n">Du</th><th class="n">Urval</th></tr>
+      {% for r in table %}
+      <tr><td>{{ r.name }}</td><td class="n">{{ r.value|pct }}</td><td class="n">{{ r.opps }}</td></tr>
+      {% endfor %}
+      {% else %}
+      <tr><th>Stat</th><th class="n">Du</th><th class="n">Riktvärde</th><th class="n">Median i poolen</th><th>Källa</th><th class="n">Urval</th><th>Status</th></tr>
+      {% for r in table %}
+      <tr><td>{{ r.name }}{% if r.note %}<div class="note" style="margin-top:2px;font-size:12px">{{ r.note }}</div>{% endif %}</td><td class="n">{{ r.value|pct }}</td><td class="n">{{ '%g'|format(r.lo|round(1)) }}–{{ '%g'|format(r.hi|round(1)) }}%</td>
+        <td class="n">{{ r.median|pct if r.median is not none else '–' }}</td><td>{{ 'din pool (' ~ r.n ~ ')' if r.src == 'pool' else 'uppskattning' }}</td><td class="n">{{ r.opps }}</td>
+        <td class="{{ 'st-ok' if r.status == 'ok' else ('st-bad' if r.status.startswith('för ') and r.status not in ('för litet urval',) else 'st-na') }}">{{ r.status }}</td></tr>
+      {% endfor %}
+      {% endif %}
+    </table>
+    {% if strict %}<div class="note">Bara beskrivande siffror – utan riktvärden, eftersom inga riktvärden för PLO6 är belagda.</div>{% endif %}
+  </div>
+
+
+  {% if rd_summary and (rd_summary.weak.n or rd_summary.cooler.n) %}
+  <h2 data-tab="Showdown-förluster">Stora förluster vid showdown med samma handtyp</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Pottar på minst 20 bb där du och vinnaren hade samma typ av hand (t.ex. båda färg) men din var lägre. De delas upp efter hur nära nöten du var på river – coolers är inga misstag.</p>
+    <table class="tbl">
+      <tr><th>Typ</th><th class="n">Händer</th><th class="n">Resultat</th></tr>
+      {% for k in ['cooler', 'gray', 'weak'] %}{% set r = rd_summary[k] %}
+      <tr><td>{{ r.label }}</td><td class="n">{{ r.n }}</td><td class="n neg">{{ r.net|signed(0) }} bb</td></tr>
+      {% endfor %}
+    </table>
+    {% if rd %}
+    <div class="lbl">Dyraste förlusterna med slagbar hand</div>
+    <table class="tbl">
+      <tr><th>Hand</th><th>Dina kort</th><th>Bord</th><th>Du / vinnaren</th><th class="n">Kombos som slog dig</th><th class="n">Chans att en motståndare hade bättre</th><th class="n">Resultat</th></tr>
+      {% for e in rd %}
+      <tr><td>#{{ e.id }}</td><td>{{ e.hero_cards|cards }}</td><td>{{ e.board|cards }}</td>
+        <td>{{ e.hero_hand }} / {{ e.villain_hand }}</td><td class="n">≈{{ '%.0f'|format(e.beats_pct) }}%</td>
+        <td class="n">≈{{ '%.0f'|format(e.risk_pct) }}%</td><td class="n neg">{{ e.net|signed }} bb</td></tr>
+      {% endfor %}
+    </table>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  {% if river %}
+  <h2 data-tab="River-modellen">River-modellen (bara beskrivande)</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0"><b>Den här delen ger inga läckor.</b> Modellens slutsatser om folds och egna bets kan inte kontrolleras mot verkliga utfall, eftersom vi aldrig ser hur en foldad hand hade gått. Syner mot river-bets testas i stället med dina faktiska resultat, som alla andra beslut. GG visar alla händer vid showdown. När någon bettar river och blir synad ser vi vad de hade, och eftersom den som synar inte vet bettarens kort är det ett opartiskt stickprov av vad poolen bettar med. Med det värderas varje river-beslut du tagit heads-up – även alternativen du inte valde.</p>
+    <table class="tbl">
+      <tr><td>Heads-up river-situationer i dina händer</td><td class="n">{{ river.summary.spots }}</td></tr>
+      <tr><td>Poolens synade river-bets (bettarens hand känd)</td><td class="n">{{ river.summary.pool_bet_samples }}</td></tr>
+      <tr><td>Poolens svar på river-bets (fold/syn/raise)</td><td class="n">{{ river.summary.pool_responses }}</td></tr>
+      <tr><td>Check-igenom-händer (checkrange känd)</td><td class="n">{{ river.summary.pool_check_samples }}</td></tr>
+      <tr><td>Dina river-beslut som kunde värderas</td><td class="n">{{ river.summary.hero_decisions }}</td></tr>
+    </table>
+
+    <div class="lbl">Kontroll: stämmer modellen med dina faktiska utfall?</div>
+    <p class="note" style="margin-top:2px">Modellen bygger bara på andra spelares händer. Här jämförs dess förutsägelser med hur <i>dina</i> händer faktiskt gick. Om den inte klarar kontrollen visas inga river-slutsatser.</p>
+    <table class="tbl">
+      <tr><th>Beslutstyp</th><th class="n">Händer</th><th class="n">Förutsagt</th><th class="n">Faktiskt</th><th>Resultat</th></tr>
+      {% for name, c in river.calibration.items() %}
+      <tr><td>{{ name }}</td><td class="n">{{ c.n }}</td><td class="n">{{ '%.1f'|format(100 * c.pred) if c.pred is not none else '–' }} %</td>
+        <td class="n">{{ '%.1f'|format(100 * c.actual) if c.actual is not none else '–' }} %</td>
+        <td class="{{ 'st-ok' if c.ok else 'st-bad' }}">{{ 'godkänd' if c.ok else ('för få händer' if c.n < 50 else 'underkänd – inga slutsatser') }}</td></tr>
+      {% endfor %}
+    </table>
+    {% for name, c in river.calibration.items() %}{% if c.bins %}
+    <details><summary>Detaljer: {{ name }}</summary>
+      <table class="tbl"><tr><th>Förutsagd vinstchans</th><th class="n">Händer</th><th class="n">Förutsagt</th><th class="n">Faktiskt</th></tr>
+      {% for b in c.bins %}<tr><td>{{ b.range }}</td><td class="n">{{ b.n }}</td><td class="n">{{ '%.0f'|format(100 * b.pred) }} %</td><td class="n">{{ '%.0f'|format(100 * b.actual) }} %</td></tr>{% endfor %}
+      </table></details>
+    {% endif %}{% endfor %}
+
+  </div>
+
+  {% endif %}
+
+  {% if pool and not strict %}
+  <h2 data-tab="Riktvärden">Riktvärden från din egen databas</h2>
+  <div class="panel scroll">
+    {% if pool.usable %}
+    <p style="margin-top:0">Riktvärdena kommer från <b>{{ pool.winners if pool.group == 'vinnare' else pool.regs }} {{ 'vinnande regs' if pool.group == 'vinnare' else 'regs' }}</b> i dina egna händer: motståndare med minst {{ pool.min_hands }} händer mot dig{% if pool.group == 'vinnare' %} som vunnit pengar i de händerna{% endif %}. Gränsen för en läcka är när du hamnar utanför de mittersta 80 % av dem (10:e–90:e percentilen).</p>
+    <p>Två förbehåll: motståndarnas vinst mäts bara i händer där du satt med, och några tusen händer i PLO6 är kort tid. Vissa "vinnare" har alltså haft tur. Och spelarna i din pool är inte nödvändigtvis bra, de är riktvärden för vad som fungerar mot just dina motståndare.</p>
+    {% else %}
+    {% if pool.anonymized %}
+    <p style="margin-top:0"><b>Sajten anonymiserar motståndarna.</b> Dina händer innehåller {{ pool.players_total }} olika motståndarnamn men ingen med ens 1 000 händer – samma spelare får alltså nya namn hela tiden (så fungerar GG). Därför går det inte att se vilka som vinner, och riktvärden från vinnande spelare kan inte räknas fram ur den här datan. Inbyggda uppskattningar används, och läckorna bör i första hand bedömas utifrån <i>dina egna resultat i varje spot</i> (visas vid varje läcka).</p>
+    {% else %}
+    <p style="margin-top:0">För få motståndare med minst {{ pool.min_hands }} händer ({{ pool.regs }} st) för att räkna egna riktvärden. Inbyggda uppskattningar används istället.</p>
+    {% endif %}
+    {% endif %}
+    <table class="tbl">
+      <tr><td>Motståndare totalt</td><td class="n">{{ pool.players_total }}</td></tr>
+      {% for k, v in pool.hands_per_player.items() %}<tr><td>Motståndare med {{ k }} händer</td><td class="n">{{ v }}</td></tr>{% endfor %}
+      <tr><td>Med minst {{ pool.min_hands }} händer / varav vinnande</td><td class="n">{{ pool.regs }} / {{ pool.winners }}</td></tr>
+    </table>
+    {% if pool.reg_rows %}
+    <details><summary>Visa regs (anonymt, {{ pool.reg_rows|length }} st)</summary>
+      <table class="tbl">
+        <tr><th class="n">Händer</th><th class="n">bb/100</th><th class="n">VPIP</th><th class="n">PFR</th><th class="n">Fold mot 3-bet</th></tr>
+        {% for r in pool.reg_rows[:60] %}
+        <tr><td class="n">{{ r.hands }}</td><td class="n {{ 'pos' if r.bb100 >= 0 else 'neg' }}">{{ r.bb100|signed }}</td><td class="n">{{ r.vpip }}%</td><td class="n">{{ r.pfr }}%</td><td class="n">{{ r.fold_to_3bet|pct }}</td></tr>
+        {% endfor %}
+      </table>
+    </details>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <h2 data-tab="Kontroll mot DriveHUD">Kontrollera mot DriveHUD</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Filtrera fram samma händer i DriveHUD (samma variant och datumintervall) och jämför. Skillnader på någon procentenhet beror på att programmen definierar stats lite olika. Stora skillnader betyder att något lästs fel – hör av dig i så fall.</p>
+    <table class="tbl">
+      {% for k, v in control %}<tr><td>{{ k }}</td><td class="n">{{ v }}</td></tr>{% endfor %}
+    </table>
+  </div>
+
+  <h2 data-tab="Datakvalitet">Datakvalitet</h2>
+  <div class="panel scroll">
+    <table class="tbl">
+      <tr><td>Spelare vid bordet (antal händer)</td><td class="n">{% for k, v in st.players|dictsort %}{{ k }}: {{ v }}{% if not loop.last %} · {% endif %}{% endfor %}</td></tr>
+      <tr><td>Folds som saknades i historiken och lades till (preflop / postflop)</td><td class="n">{{ st.diag.inferred_preflop or 0 }} / {{ (st.diag.inferred_flop or 0) + (st.diag.inferred_turn or 0) + (st.diag.inferred_river or 0) }}</td></tr>
+      <tr><td>Händer där rubrikens blinds inte stämde med postade blinds (postade används)</td><td class="n">{{ st.diag.header_mismatch or 0 }}</td></tr>
+    </table>
+  </div>
+

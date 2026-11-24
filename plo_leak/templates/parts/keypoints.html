@@ -1,0 +1,8 @@
+  {% if points %}
+  <div class="panel keypoints" id="viktigast">
+    <div class="lbl" style="margin-top:0">Det viktigaste</div>
+    {% for p in points %}
+    <div class="kp {{ p.tone }}"><b>{{ p.title }}</b><span>{{ p.text }}</span></div>
+    {% endfor %}
+  </div>
+  {% endif %}

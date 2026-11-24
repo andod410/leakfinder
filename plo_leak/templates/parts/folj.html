@@ -1,0 +1,44 @@
+  <p class="sec-i">Dina regler – byggda bara på det programmet har bekräftat – och hur väl du följt dem i de händer som analyseras nu.
+    {% if fu.source == 'saved' %}Reglerna kommer från analysen av hela databasen {{ fu.meta.created }} ({{ fu.meta.hands }} händer, {{ fu.meta.first }} – {{ fu.meta.last }}).{% else %}<b>Reglerna kommer från just det här urvalet.</b> Kör en analys av hela databasen (utan "senaste händerna" och utan period) en gång, så sparas reglerna och används här framöver.{% endif %}</p>
+  <h2 data-tab="Dina regler">Dina regler</h2>
+  <div class="note" style="margin:0 0 10px"><b>Ord i reglerna:</b> <b>nöt-egenskaper</b> = högt par (JJ eller bättre), suited ess och rundown. <b>Rundown</b> (i programmet) = fyra valörer inom fem steg, högst en lucka, alla 5 eller högre – t.ex. 9-8-7-6 (4 i rad) eller 9-8-7-5 (rundown med lucka). Fyra kort i rad är alltså en rundown, men alla rundowns är inte fyra i rad. <b>Suited ess</b> = ett ess med 1–2 kort till i samma färg – det betyder inte AA (A♠️ Q♠️ … räcker). <b>Ett lågt par eller dubbelpar under JJ räknas inte</b>: i din data har par under JJ utan nöt-egenskaper kostat ca −1 bb per spelad hand, dubbelpar dubbelsuited ca −1 bb (undantag som håller: trippelsuited och dubbelsuited + suited kung).</div>
+  <div class="panel scroll">
+    <table class="tbl">
+      <tr><th>Regel</th><th class="n">Tillfällen</th><th class="n">Bröt mot regeln</th><th class="n">Andel</th><th class="n">Förväntad kostnad</th></tr>
+      {% for r in fu.per_rule %}
+      <tr><td>{{ r.title }}{% if r.level == 'trolig' %} <span class="tag">trolig</span>{% endif %}</td><td class="n">{{ r.opps }}</td><td class="n">{{ r.dev }}</td>
+        <td class="n {{ 'st-bad' if r.rate >= 10 else ('st-ok' if r.opps and r.rate < 2 else '') }}">{{ '%.0f'|format(r.rate) }} %</td>
+        <td class="n {{ 'neg' if r.expected < 0 else '' }}">{{ r.expected|signed(0) }} bb</td></tr>
+      {% endfor %}
+      <tr style="font-weight:600"><td>Totalt</td><td class="n">{{ fu.total.opps }}</td><td class="n">{{ fu.total.dev }}</td><td class="n">{{ '%.0f'|format(fu.total.rate) }} %</td><td class="n {{ 'neg' if fu.total.expected < 0 else '' }}">{{ fu.total.expected|signed(0) }} bb</td></tr>
+    </table>
+    {% for r in fu.rules %}<div class="note"><b>{{ r.title }}.</b> {{ r.why }}</div>{% endfor %}
+    <div class="note">Tillfällen = händer där regeln säger folda. Förväntad kostnad = antal brott × vad sådana händer kostat i genomsnitt i hela databasen – det säkraste måttet. Det faktiska resultatet i just dessa händer styrs mycket av tur. Målet är 0 % i kolumnen Andel. <a href="/trana">Träna dina öppningar →</a></div>
+  </div>
+  {% if fu.weeks %}
+  <h2 data-tab="Vecka för vecka">Vecka för vecka</h2>
+  <div class="panel scroll">
+    <table class="tbl">
+      <tr><th>Vecka</th><th class="n">Tillfällen</th><th class="n">Bröt mot regeln</th><th class="n">Andel</th><th class="n">Förväntad kostnad</th><th class="n">Faktiskt i de händerna</th></tr>
+      {% for w in fu.weeks|reverse %}
+      <tr><td>{{ w.week }}</td><td class="n">{{ w.opps }}</td><td class="n">{{ w.dev }}</td>
+        <td class="n {{ 'st-bad' if w.rate >= 10 else ('st-ok' if w.rate < 2 else '') }}">{{ '%.0f'|format(w.rate) }} %</td>
+        <td class="n {{ 'neg' if w.expected < 0 else '' }}">{{ w.expected|signed(0) }} bb</td>
+        <td class="n {{ 'pos' if w.actual >= 0 else 'neg' }}">{{ w.actual|signed(0) }} bb</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note">Senaste veckan överst. Förbättringen syns i kolumnen Andel – den ska gå mot noll.</div>
+  </div>
+  {% endif %}
+  {% if fu.costly %}
+  <h2 data-tab="Gå igenom händer">Gå igenom de här händerna</h2>
+  <div class="panel scroll">
+    <div class="lbl" style="margin-top:0">De tio dyraste regelbrotten</div>
+    <table class="tbl"><tr><th>Datum</th><th>Pos</th><th>Hand</th><th>Regel</th><th class="n">Jämfört med fold</th></tr>
+      {% for d in fu.costly %}{{ devrow(d) }}{% endfor %}</table>
+    <div class="lbl">De tio senaste regelbrotten</div>
+    <table class="tbl"><tr><th>Datum</th><th>Pos</th><th>Hand</th><th>Regel</th><th class="n">Jämfört med fold</th></tr>
+      {% for d in fu.latest %}{{ devrow(d) }}{% endfor %}</table>
+    <div class="note">Resultatet i en enskild hand säger lite – en dålig hand kan vinna och tvärtom. Titta på beslutet: varför spelade du handen, och hade du foldat den i dag?</div>
+  </div>
+  {% endif %}

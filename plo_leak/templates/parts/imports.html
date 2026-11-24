@@ -1,0 +1,17 @@
+  {% if imports or db_info %}
+  <div class="panel importbox">
+    {% for name, r in imports %}
+    <div><b>Inläsning – {{ name }}:</b> {{ r.files }} filer ({{ r.files_skipped }} oförändrade hoppades över) · {{ r.hands_seen }} händer hittade ·
+      <b class="{{ 'pos' if r.hands_new else '' }}">{{ r.hands_new }} nya sparades</b> · {{ r.hands_known }} fanns redan{% if r.raw_filled %} · <span class="pos">{{ r.raw_filled }} fick tillbaka sin originaltext</span>{% endif %}{% if r.hands_other_games %} · {{ r.hands_other_games }} andra spel (inte Omaha) hoppades över{% endif %}
+      {% if r.hands_unreadable %}· <span class="neg"><b>{{ r.hands_unreadable }} kunde inte läsas</b></span>{% endif %}
+      {% if r.newest %}· nyaste nya hand {{ r.newest[:16].replace('T', ' ') }}{% endif %}
+      {% if r.hands_unreadable %}<div class="note" style="margin:4px 0 0">Exempel på händer som inte kunde läsas (skicka gärna dessa rader till Claude): {% for e in r.unreadable_examples %}<code>{{ e }}</code>{% if not loop.last %} · {% endif %}{% endfor %}</div>{% endif %}
+      {% if r.rejected %}<div class="note neg" style="margin:4px 0 0"><b>⚠ Filer som inte lästes in:</b>{% for z, m, why in r.rejected %}<br>{{ z.split('/')[-1].split('\\')[-1] }} → {{ m }}: {{ why }}{% endfor %}</div>{% endif %}
+      {% if r.files and r.files == r.files_skipped %}<div class="note" style="margin:4px 0 0">Alla filer är oförändrade sedan förra inläsningen – deras händer finns redan i databasen. Exportera nya händer (gärna till en ny mapp) för att lägga till fler.</div>
+      {% elif r.files and not r.hands_seen %}<div class="note neg" style="margin:4px 0 0">Inga händer hittades i filerna – kontrollera att mappen innehåller handhistorik (t.ex. DriveHUD-exportens dh_exported_file_…).</div>
+      {% elif not r.files %}<div class="note neg" style="margin:4px 0 0">Hittade inga filer med handhistorik i mappen.</div>{% endif %}
+    </div>
+    {% endfor %}
+    {% if db_info %}<div style="margin-top:4px"><b>Databasen innehåller nu {{ '{:,}'.format(db_info.count).replace(',', ' ') }} händer</b>{% if db_info.first %} ({{ db_info.first[:10] }} – {{ db_info.last[:16].replace('T', ' ') }}){% endif %}.</div>{% endif %}
+  </div>
+  {% endif %}

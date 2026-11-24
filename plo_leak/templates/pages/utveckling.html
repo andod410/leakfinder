@@ -1,0 +1,73 @@
+{% macro rcol(rate) -%}
+{%- if rate is none -%}var(--chip){%- else -%}
+{%- set x = (([([(rate - 2) / 28 * 100, 0]|max), 100]|min)|round(0)) -%}
+color-mix(in srgb, var(--bad) {{ x }}%, var(--good))
+{%- endif -%}
+{%- endmacro %}
+<style>
+.hm{border-collapse:separate;border-spacing:3px;font-size:12.5px}
+.hm th{font-weight:600;color:var(--ink2);text-align:center;padding:2px 4px;white-space:nowrap}
+.hm th.rl{text-align:left;min-width:220px}
+.hm td.rl{padding-right:8px;max-width:340px}
+.hm td.c{min-width:38px;text-align:center;border-radius:5px;color:#fff;font-weight:700;padding:5px 2px}
+.hm td.c.e{color:var(--ink2);font-weight:400}
+.cbars{display:flex;align-items:flex-end;gap:4px;height:130px;margin:8px 0 2px}
+.cbars div{flex:1;min-width:10px;display:flex;flex-direction:column;justify-content:flex-end;height:100%;align-items:center}
+.cbars i{display:block;width:100%;border-radius:3px 3px 0 0}
+.cbars em{font-style:normal;font-size:10.5px;color:var(--ink2);margin-bottom:2px}
+.cbars span{font-size:10.5px;color:var(--ink2);margin-top:2px}
+.warn{border-left:4px solid var(--bad);padding:8px 12px;margin:0 0 8px;background:color-mix(in srgb,var(--bad) 8%,transparent);border-radius:6px}
+</style>
+{% set T = blocks %}
+<p class="sec-i">Dina händer i block om {{ '{:,}'.format(T.block or 5000).replace(',', ' ') }} (äldst till vänster). <b>Mål: rutorna blir gröna och staplarna sjunker.</b></p>
+{% if not T or not T.blocks %}
+<div class="panel">Det behövs minst {{ 2 * 5000 }} händer i urvalet för att visa utvecklingen.</div>
+{% else %}
+{% set B = T.blocks %}
+{% if T.trend %}{% set tr = T.trend %}
+<div class="kpis" style="grid-template-columns:repeat(auto-fit,minmax(170px,1fr))">
+  <div class="kpi"><div class="l">Läckkostnad, första blocket</div><div class="v neg">{{ '%.1f'|format(tr.first) }} <small class="note">bb/100</small></div></div>
+  <div class="kpi"><div class="l">Läckkostnad, senaste blocket</div><div class="v {{ 'pos' if tr.last < tr.first - 0.5 else ('neg' if tr.last > tr.first + 0.5 else '') }}">{{ '%.1f'|format(tr.last) }} <small class="note">bb/100</small></div></div>
+  <div class="kpi"><div class="l">Förändring</div>{% if tr.change|abs < 0.5 %}<div class="v">＝ {{ '%.1f'|format(tr.change|abs) }} <small class="note">bb/100</small></div><div class="s">ungefär oförändrat</div>{% else %}<div class="v {{ 'pos' if tr.change < 0 else 'neg' }}">{{ '▼' if tr.change < 0 else '▲' }} {{ '%.1f'|format(tr.change|abs) }} <small class="note">bb/100</small></div><div class="s">{{ 'du läcker mindre nu' if tr.change < 0 else 'du läcker mer nu' }}</div>{% endif %}</div>
+  <div class="kpi"><div class="l">Bästa blocket</div><div class="v">{{ '%.1f'|format(tr.best) }} <small class="note">bb/100</small></div></div>
+</div>
+{% endif %}
+
+<div class="panel" style="margin-top:14px">
+  <div class="card-h"><b>⚠ Nya läckor</b><span class="note" style="margin:0">senaste {{ '{:,}'.format(T.recent).replace(',', ' ') }} händerna mot alla tidigare</span></div>
+  {% if T.warnings %}
+  {% for w in T.warnings %}<div class="warn"><b>{{ w.title }}</b>{% if w.cost100 %} <span class="tag bad">≈ {{ '%.1f'|format(w.cost100) }} bb/100</span>{% endif %}<br>{{ w.text }}</div>{% endfor %}
+  <div class="note">En varning ges bara när skillnaden är större än tre felmarginaler (många jämförelser görs samtidigt).</div>
+  {% else %}<div class="answer good" style="border-left-color:var(--good);margin:0"><b>Inga nya läckor.</b> Du bryter inte oftare mot någon regel än förut, och du spelar inte tydligt fler händer eller 3-bettar annorlunda från någon position.</div>{% endif %}
+</div>
+
+<div class="panel" style="margin-top:14px">
+  <div class="card-h"><b>Läckkostnad per block</b><span class="note" style="margin:0">dina regelbrott × vad ett brott kostar – lägre är bättre</span></div>
+  {% set cmax = [B|map(attribute='cost100')|max, 0.5]|max %}
+  <div class="cbars">{% for b in B %}<div title="Block {{ b.label }} ({{ b.from }} – {{ b.to }}): {{ '%.1f'|format(b.cost100) }} bb/100, {{ b.breaks }} regelbrott"><em>{{ '%.1f'|format(b.cost100) }}</em><i style="height:{{ (88 * b.cost100 / cmax)|round(0) }}%;background:var(--accent);opacity:{{ 0.55 if not b.full else 1 }}"></i><span>{{ b.label }}</span></div>{% endfor %}</div>
+  <div class="note">Ett block = {{ '{:,}'.format(T.block).replace(',', ' ') }} händer i tidsordning (block 1 = de äldsta). {% if not B[-1].full %}Det sista blocket pågår ({{ B[-1].hands }} händer).{% endif %}</div>
+</div>
+
+<div class="panel scroll" style="margin-top:14px">
+  <div class="card-h"><b>Regel för regel</b><span class="note" style="margin:0">andel av tillfällena du bröt mot regeln · grön = följer, röd = bryter ofta · grå = färre än {{ T.min_opps }} tillfällen</span></div>
+  {% if T.rules %}
+  <table class="hm"><tr><th class="rl">Regel</th>{% for b in B %}<th title="{{ b.from }} – {{ b.to }}">{{ b.label }}</th>{% endfor %}<th>Nu</th></tr>
+  {% for r in T.rules %}<tr><td class="rl">{{ r.title }} <span class="tag {{ '' if r.level == 'trolig' else 'bad' }}">{{ r.level }}</span></td>
+    {% for c in r.cells %}<td class="c{{ ' e' if c.rate is none else '' }}" style="background:{{ rcol(c.rate) }}" title="{{ c.dev }} brott av {{ c.opps }} tillfällen">{{ '%.0f'|format(c.rate) if c.rate is not none else '·' }}</td>{% endfor %}
+    <td class="n" style="white-space:nowrap;padding-left:8px">{% if r.first is not none and r.last is not none %}{% set d = r.last - r.first %}<span class="{{ 'pos' if d < -1 else ('neg' if d > 1 else 'note') }}" style="margin:0">{{ '▼' if d < -1 else ('▲' if d > 1 else '＝') }} {{ '%.0f'|format(d|abs) }}</span>{% endif %}</td></tr>
+  {% endfor %}</table>
+  <div class="note">Siffran i rutan är procent av tillfällena (målet är högst 5 %). "Nu" = skillnaden mellan första och senaste blocket i procentenheter (▼ = bättre). Håll musen över en ruta för antal.</div>
+  {% else %}<div class="alert">Det finns inga regler än. Analysera hela databasen så tas de fram.</div>{% endif %}
+</div>
+
+<div class="panel scroll" style="margin-top:14px">
+  <div class="card-h"><b>Resultat per block (bara info)</b></div>
+  <table class="tbl"><tr><th>Block</th><th>Period</th><th class="n">Händer</th><th class="n">VPIP</th><th class="n">Regelbrott</th><th class="n">Läckkostnad / 100</th><th class="n hide-m">All-in EV / 100</th><th class="n">Rullande {{ T.roll }} block</th></tr>
+  {% for b in B %}<tr><td>{{ b.label }}</td><td style="white-space:nowrap">{{ b.from }} – {{ b.to }}</td><td class="n">{{ '{:,}'.format(b.hands).replace(',', ' ') }}</td><td class="n">{{ '%.1f'|format(b.vpip) }} %</td><td class="n">{{ b.breaks }}</td>
+    <td class="n neg">{{ '%.1f'|format(b.cost100) }} bb</td>
+    <td class="n hide-m note" style="margin:0">{{ b.ev100|signed(1) }}{% if b.ev_se == b.ev_se %} ±{{ '%.0f'|format(1.96 * b.ev_se) }}{% endif %}</td>
+    <td class="n {{ 'pos' if b.roll100 >= 0 else 'neg' }}">{{ b.roll100|signed(1) }}{% if b.roll_se == b.roll_se %} <span class="note" style="margin:0">±{{ '%.0f'|format(1.96 * b.roll_se) }}</span>{% endif %}</td></tr>{% endfor %}
+  </table>
+  <div class="note">Resultat per block är mest brus (±30 bb/100). Följ läckkostnaden i stället.</div>
+</div>
+{% endif %}

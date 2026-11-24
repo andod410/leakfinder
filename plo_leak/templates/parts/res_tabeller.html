@@ -1,0 +1,54 @@
+  <h2 data-tab="Resultat och rake">Resultat och rake</h2>
+  <div class="panel scroll" style="margin-bottom:16px">
+    <table class="tbl">
+      <tr><th></th><th class="n">Totalt (bb)</th><th class="n">Totalt (pengar)</th><th class="n">bb/100</th></tr>
+      {% for r in money %}
+      <tr><td>{{ r.label }}</td>
+        <td class="n {{ '' if 'Rake' in r.label else ('pos' if r.bb >= 0 else 'neg') }}">{{ ('%.0f'|format(r.bb)) if 'Rake' in r.label else r.bb|signed(0) }}</td>
+        <td class="n {{ '' if 'Rake' in r.label else ('pos' if r.money >= 0 else 'neg') }}">{{ ('%.2f'|format(r.money)) if 'Rake' in r.label else r.money|signed(2) }}</td>
+        <td class="n {{ '' if 'Rake' in r.label else ('pos' if r.bb100 >= 0 else 'neg') }}">{{ ('%.2f'|format(r.bb100)) if 'Rake' in r.label else r.bb100|signed }}</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note">bb/100 = per 100 händer. Rake + avgifter = rake, jackpot och övriga GG-avgifter som dragits från pottar du vunnit (din andel vid delad pott) – alltså de pengar du hade fått utan rake. Rakeback ingår inte. All-in EV ersätter utfallet med förväntat resultat i händer där pengarna gick in före river.</div>
+  </div>
+
+  {% if game_rows|length > 1 %}
+  <h2 data-tab="Per speltyp">Resultat per speltyp</h2>
+  <div class="panel scroll" style="margin-bottom:16px">
+    <table class="tbl">
+      <tr><th>Speltyp</th><th>Bord</th><th class="n">Händer</th><th class="n">Vunnet</th><th class="n">bb/100</th><th class="n">All-in EV</th><th class="n">EV bb/100</th><th class="n">Rake</th><th class="n">Rake bb/100</th><th class="n">bb/100 före rake</th><th>Nivåer</th></tr>
+      {% for r in game_rows %}
+      <tr{% if r.total %} style="font-weight:600"{% endif %}><td>{{ r.game }}{% if not r.total and r.game in (filters.games_sel if filters and filters.games_sel else [main_game]) %} <span class="badge">i urvalet</span>{% endif %}</td><td>{{ r.kind }}</td><td class="n">{{ r.hands }}</td>
+        <td class="n {{ 'pos' if r.net_money >= 0 else 'neg' }}">{{ r.net_money|signed(2) }}</td>
+        <td class="n {{ 'pos' if r.bb100 >= 0 else 'neg' }}">{{ r.bb100|signed }}</td>
+        <td class="n {{ 'pos' if r.ev_money >= 0 else 'neg' }}">{{ r.ev_money|signed(2) }}</td>
+        <td class="n {{ 'pos' if r.ev100 >= 0 else 'neg' }}">{{ r.ev100|signed }}</td>
+        <td class="n">{{ '%.2f'|format(r.rake_money) }}</td><td class="n">{{ '%.1f'|format(r.rake100) }}</td>
+        <td class="n {{ 'pos' if r.pre100 >= 0 else 'neg' }}">{{ r.pre100|signed }}</td>
+        <td style="white-space:nowrap;font-size:13px">{{ r.stakes }}</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note">Alla händer du laddat in{{ ' inom vald period' }} – oavsett variant. Resten av rapporten gäller varianterna markerade "i urvalet" – läckor, öppningsguide och range-gränser visas bara när en enda variant är vald, eftersom samma typ av hand har helt olika värde i PLO4, PLO5 och PLO6. Rush &amp; Cash känns igen på handnumret (RC…). "Analysera bara de senaste händerna" påverkar inte den här tabellen.</div>
+  </div>
+  {% endif %}
+
+  {% if stake_rows %}
+  <h2 data-tab="Per nivå">Resultat per nivå{% if mixed %} – {{ filters.games_sel|join(' + ') }}{% elif game_rows|length > 1 %} – {{ main_game }}{% endif %}</h2>
+  <div class="panel scroll" style="margin-bottom:16px">
+    <table class="tbl">
+      <tr><th>Nivå</th><th class="n">Händer</th><th class="n">Vunnet</th><th class="n">bb/100</th><th class="n">All-in EV</th><th class="n">EV bb/100</th><th class="n">Rake</th><th class="n">Rake bb/100</th><th class="n">bb/100 före rake</th><th class="n">EV bb/100 före rake</th></tr>
+      {% for r in stake_rows %}
+      <tr{% if r.total %} style="font-weight:600"{% endif %}><td>{{ r.stake if r.stake in ('Totalt', 'Övriga') else '$' ~ r.stake }}</td><td class="n">{{ r.hands }}</td>
+        <td class="n {{ 'pos' if r.net_money >= 0 else 'neg' }}">{{ r.net_money|signed(2) }}</td>
+        <td class="n {{ 'pos' if r.bb100 >= 0 else 'neg' }}">{{ r.bb100|signed }}</td>
+        <td class="n {{ 'pos' if r.ev_money >= 0 else 'neg' }}">{{ r.ev_money|signed(2) }}</td>
+        <td class="n {{ 'pos' if r.ev100 >= 0 else 'neg' }}">{{ r.ev100|signed }}</td>
+        <td class="n">{{ '%.2f'|format(r.rake_money) }}</td><td class="n">{{ '%.1f'|format(r.rake100) }}</td>
+        <td class="n {{ 'pos' if r.pre100 >= 0 else 'neg' }}">{{ r.pre100|signed }}</td>
+        <td class="n {{ 'pos' if r.ev_pre100 >= 0 else 'neg' }}">{{ r.ev_pre100|signed }}</td></tr>
+      {% endfor %}
+    </table>
+    <div class="note">Vunnet, All-in EV och Rake i pengar; övriga kolumner per 100 händer. Rake = rake, jackpot och övriga GG-avgifter i pottar du vunnit. Rakeback ingår inte. Nivåer med färre än 100 händer ingår i "Övriga".</div>
+  </div>
+  {% endif %}
+

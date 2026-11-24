@@ -1,0 +1,9 @@
+{
+  "file": "plo_djupanalys_till_claude_20261113_001035.zip",
+  "bytes": 17867272,
+  "postflop_decisions": 173950,
+  "rows_with_exact_draw_counts": 50145,
+  "errors": [],
+  "method_file": true,
+  "export_seconds": 378.53
+}

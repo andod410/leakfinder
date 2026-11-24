@@ -1,0 +1,203 @@
+<span data-solver-page hidden></span>{# 2.87 (R7-01): Topp 3 kan visa solverfrekvenser – sidan döljs när GG startar #}
+{% if quick_info and quick_info.view %}<div class="note" style="margin:0 0 10px">👁 <b>Urvalet visas:</b> resultat, all-in EV, grafer, sessioner och timlön gäller de {{ '{:,}'.format(st.hands).replace(',', ' ') }} händerna i urvalet. {% if quick_info.skipped %}Läckor, regler och modeller är inte analyserade för den här varianten/nivån{% else %}Läckor, regler och modeller är från den fulla analysen {{ quick_info.date }}{% if quick_info.since %} ({{ '{:,}'.format(quick_info.since).replace(',', ' ') }} nya händer sedan dess){% endif %}{% endif %} – tryck <b>🔬 Analysera urvalet</b> för att räkna om dem.</div>{% elif quick_info %}<div class="note" style="margin:0 0 10px">⚡ Snabbt uppdaterad: resultat, sessioner och grafer har med alla händer. Läckor och regler är från den fulla analysen {{ quick_info.date }} ({{ '{:,}'.format(quick_info.since).replace(',', ' ') }} nya händer sedan dess). Tryck <b>Uppdatera analysen</b> i urvalet för en full analys – den görs automatiskt efter {{ '{:,}'.format(quick_info.max).replace(',', ' ') }} nya händer.</div>{% endif %}
+{% if imports %}{% include "parts/imports.html" %}{% endif %}
+{% include "parts/kpis.html" %}
+{% if rbs %}<div class="panel" style="margin-bottom:14px;display:flex;flex-wrap:wrap;gap:10px;align-items:center">
+  <form method="post" action="/rakeback-kurva" style="margin:0"><input type="hidden" name="vid" value="{{ vid }}"><input type="hidden" name="toggle" value="1">
+    <button class="btn sm{{ '' if rbc.on else ' ghost' }}" type="submit">💰 Rakeback i graferna (alla linjer): <b>{{ 'PÅ' if rbc.on else 'AV' }}</b></button></form>
+  <span>All-in EV <b>{{ '%+.1f'|format(rbs.ev100) }}</b> bb/100 · inkl. rakeback <b>{{ '%+.1f'|format(rbs.ev100_rb) }}</b> bb/100
+    <span class="note" style="margin:0">(≈ {{ '%.0f'|format(rbs.pct) }} % av raken, ${{ '{:,.0f}'.format(rbs.rb_money).replace(',', ' ') }} i urvalet – skattning)</span></span>
+  <details style="flex-basis:100%"><summary class="note" style="margin:0">Ändra procentsatserna</summary>
+    <form method="post" action="/rakeback-kurva" class="rb-lb" style="display:flex;flex-wrap:wrap;gap:8px 14px;margin-top:6px"><input type="hidden" name="vid" value="{{ vid }}">
+      <label>Ocean Rewards % <input name="ocean" value="{{ rbc.ocean }}" size="5"></label>
+      {% for k, v in rbc.lb.items() %}<label>Leaderboard {{ k }} % <input name="lb_{{ k }}" value="{{ v }}" size="5"></label>{% endfor %}
+      <label>Agentbonus % <input name="agent" value="{{ rbc.agent }}" size="5"></label>
+      <button class="btn sm" type="submit">Spara</button>
+      <span class="note" style="margin:0;flex-basis:100%">Rakeback per hand = handens rake × (Ocean + leaderboard för spelformen + agent). Från mätningen 11 sep–14 nov 2026; agentbonus 0 tills den betalats. Uppdatera efter veckomätningen från 1 december.</span>
+    </form></details>
+</div>{% endif %}
+{% if chart %}<div style="margin-bottom:14px">{{ unitcharts(chart, chart_money, "chart", "Vinstkurva", note="Tryck på en linje för att visa eller dölja den. Mer under Resultat & graf.") }}</div>{% endif %}
+<div class="panel top3" style="margin-bottom:14px">
+  <div class="card-h"><b>🎯 Topp 3 just nu</b><span class="note" style="margin:0">jobba bara med det här</span></div>
+  {% if top3 and top3['items'] %}{% for x in top3['items'] %}<div class="t3">
+    <div class="t3i">{{ x.ic }}</div>
+    <div><b>{{ loop.index }}. {{ x.title }}</b><div class="note" style="margin:2px 0 0">{{ x.text }}</div></div>
+    {% if x.link %}<a class="btn sm ghost" href="/v/{{ vid }}/{{ x.link }}">Se →</a>{% endif %}
+  </div>{% endfor %}
+  {% else %}<div class="note" style="margin:0">{{ 'Topp 3 kunde inte räknas: ' ~ top3.error if top3 and top3.error else 'Inget att visa för det här urvalet – lägg in solverfilen under Solver för preflopfacit.' }}</div>{% endif %}
+</div>
+<style>.top3 .t3{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}.top3 .card-h+.t3{border-top:0}.top3 .t3i{font-size:20px}</style>
+<details class="panel" style="margin-bottom:14px"><summary><b>Mer</b> <span class="note" style="margin:0">prio-lista, framåttest, läckkarta, nivåer, positioner</span></summary>
+<div style="margin-top:12px">
+{% if prio %}<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>🏁 Prio-lista</b><span class="note" style="margin:0">förvald studieplan – preflop-raderna visar vad felen kostar i $/h nu; övriga rader saknar facit och är inte uppmätta i $/h</span></div>
+{% for ic, t, d in prio %}<div style="display:flex;gap:10px;margin:6px 0"><div style="font-size:18px;width:24px">{{ ic }}</div><div><b>{{ loop.index }}. {{ t }}</b>{% if prio_usd and prio_usd.rows.get(loop.index0) is not none %} <span class="note" style="margin:0">≈ ${{ '%.1f'|format(prio_usd.rows[loop.index0]) }}/h just nu (klara fel senaste {{ prio_usd.days }} dagarna)</span>{% endif %}<div class="note" style="margin:1px 0 0">{{ d }}</div></div></div>{% endfor %}</div>{% endif %}
+{% if forward %}<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>🔒 Framåttest – regler frysta {{ forward.date }}</b><span class="note" style="margin:0">bara händer efter frysdatum räknas ({{ forward.hands_after }} händer hittills) · {{ forward.need }}{% if forward.hash %} · fingeravtryck <code>{{ forward.hash }}</code>{% endif %}</span></div>
+<table class="tbl"><tr><th>Regel</th><th>Brott</th><th>Pass</th><th>bb per brott</th><th>Status</th></tr>
+{% for r in forward.rules %}<tr><td>{{ r.title }}</td><td>{{ r.n }}</td><td>{{ r.clusters }}</td><td>{% if r.mean is not none %}{{ "%+.2f"|format(r.mean) }}{% if r.se is not none %} ± {{ "%.2f"|format(r.se) }}{% endif %}{% else %}–{% endif %}</td><td>{% if r.verdict == "håller" %}✅ bekräftad{% elif r.verdict == "håller inte" %}❌ håller inte{% elif r.verdict == "för få" %}⏳ för få{% else %}{{ r.verdict }}{% endif %}</td></tr>{% endfor %}</table></div>{% endif %}
+{% if bluff and bluff.spots is defined %}<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>🎲 River-bluff-test v2 (slumpat, från {{ bluff.start }})</b><span class="note" style="margin:0">{{ bluff.rule }}</span></div>
+<div class="verdict {{ bluff.tone }}" style="margin-bottom:8px">{{ bluff.verdict }}</div>
+<div class="note" style="margin:0">Lägen S1 {{ bluff.spots }}{% if bluff.arm_bet is defined %} · bet-arm {{ bluff.arm_bet }} · check-arm {{ bluff.arm_check }} · följsamhet {{ '%.0f'|format(bluff.comply) }} %{% endif %} · blank river (S2, redovisas bara) {{ bluff.s2_spots or 0 }} · avläsning vid {{ bluff.looks|join(' och ') }}</div></div>{% endif %}
+{% if hypotheses and hypotheses.rules %}<details class="panel" style="margin-bottom:14px"><summary><b>🧪 Nya hypoteser – framåttest från {{ hypotheses.date }}</b> <span class="note" style="margin:0">{{ hypotheses.hands_after }} händer efter {{ hypotheses.date }} · {{ hypotheses.note }} · definition <code>{{ hypotheses.hash }}</code></span></summary>
+<table class="tbl"><tr><th>#</th><th>Hypotes</th><th>Mäts</th><th class="n">Händer</th><th class="n">Pass</th><th class="n">Mot fold / hand</th><th>Status</th></tr>
+{% for r in hypotheses.rules %}<tr><td>{{ r.id }}</td><td>{{ r.title }}</td><td class="note">{{ r.measure }}{% if r.compare and r.compare.n %}<br>jämförelse syn: {{ r.compare.n }} st, {{ '%+.2f'|format(r.compare.mean) if r.compare.mean is not none else '–' }} bb (beskrivande){% endif %}</td><td class="n">{{ r.n }}</td><td class="n">{{ r.clusters }}</td><td class="n">{% if r.mean is not none %}{{ '%+.2f'|format(r.mean) }}{% if r.se is not none %} ± {{ '%.2f'|format(1.96 * r.se) }}{% endif %}{% else %}–{% endif %}</td><td>{% if r.verdict == 'håller' %}✅ håller{% elif r.verdict == 'håller inte' %}❌ håller inte{% elif r.verdict == 'för få' %}⏳ för få{% else %}{{ r.verdict }}{% endif %}</td></tr>{% endfor %}</table>
+<div class="note">{{ hypotheses.need }}. "Håller" = det mätta beslutet förlorar mot fold även med felmarginal (korrigerat för tre hypoteser) och bootstrap. Rundown = fyra valörer från 5 och uppåt inom fem steg, högst en lucka.</div></details>{% endif %}
+{% if pf_forward and pf_forward.rules %}<details class="panel" style="margin-bottom:14px"><summary><b>🔒 Framåttest – postflop-riktlinjer</b> <span class="note" style="margin:0">{{ pf_forward.hands }} händer efter {{ pf_forward.date }} · {{ pf_forward.note }}{% if pf_forward.hash %} · definition <code>{{ pf_forward.hash }}</code>{% if not pf_forward.hash_ok %} ⚠ ändrad sedan låsningen{% endif %}{% endif %}</span></summary>
+<table class="tbl"><tr><th>#</th><th>Situation → rekommendation</th><th class="n">Lägen</th><th class="n">Följde</th><th class="n">Följde minus inte (pott)</th><th>Status</th></tr>
+{% for r in pf_forward.rules %}<tr><td>{{ r.nr }}</td><td>{{ r.text }}</td><td class="n">{{ r.n }}</td><td class="n">{{ '%.0f'|format(r.follow_pct) ~ ' %' if r.follow_pct is not none else '–' }}</td><td class="n">{% if r.diff is not none %}{{ '%+.2f'|format(r.diff) }} ± {{ '%.2f'|format(1.96 * r.se) }}{% else %}–{% endif %}</td><td>{% if r.verdict == 'håller framåt' %}✅ håller framåt{% elif r.verdict == 'håller inte' %}❌ håller inte{% elif r.verdict == 'för få' %}⏳ för få{% else %}{{ r.verdict }}{% endif %}</td></tr>{% endfor %}</table></details>{% endif %}
+{% if focus %}{% set f = focus %}
+<div class="panel focus{{ ' done' if f.done else '' }}" style="margin-bottom:14px">
+  <div class="card-h"><b>🎯 Din fokusläcka – jobba bara med den här</b><span class="tag {{ '' if f.level == 'trolig' else 'bad' }}">{{ f.level }}</span></div>
+  <div class="fx">
+    <div class="fx-main">
+      <div class="fx-title">{{ f.title }}</div>
+      <div class="fx-cost">{% if f.per100 > 0 %}Kostar dig ca <b class="neg">{{ '%.1f'|format(f.per100) }} bb/100</b> just nu{% else %}Kostar dig inget just nu{% endif %}</div>
+      {% if f.kind == 'stake' %}<div class="note" style="margin:6px 0 0"><b>{{ '%.0f'|format(f.rate) }} %</b> av dina senaste {{ '{:,}'.format(f.recent_hands).replace(',', ' ') }} händer spelades på nivån där du går tydligt sämre.</div>
+      {% elif f.kind == 'pf' %}<div class="note" style="margin:6px 0 0">Du {{ 'bettade' if f.dir == 'min' else '3-bettade' }} <b>{{ '%.0f'|format(f.rate) }} %</b> av {{ f.opps }} gånger (senaste {{ '{:,}'.format(f.recent_hands).replace(',', ' ') }} händerna) · mål {{ 'minst' if f.dir == 'min' else 'högst' }} {{ '%.0f'|format(f.goal) }} %</div>
+      {% elif f.kind == 'session' %}<div class="note" style="margin:6px 0 0"><b>{{ '%.0f'|format(f.rate) }} %</b> av dina senaste {{ '{:,}'.format(f.recent_hands).replace(',', ' ') }} händer spelades efter gränsen, när du spelar lösare och bryter oftare mot dina regler.</div>
+      {% else %}<div class="note" style="margin:6px 0 0">Brott: <b>{{ '%.0f'|format(f.rate) }} %</b> av {{ f.opps }} gånger (senaste {{ '{:,}'.format(f.recent_hands).replace(',', ' ') }} händerna) · {{ f.cost_hand|signed(2) }} bb per brott</div>{% endif %}
+      {% set RLf = (focus_all or [])|rejectattr('kind')|sort(attribute='per100', reverse=True)|list %}{% set rsumf = RLf|sum(attribute='per100') %}
+      {% set isrule = f.kind is not defined %}{% set fv = rsumf if isrule else f.per100 %}
+      {% if isrule and RLf|length > 1 %}<div class="note" style="margin:4px 0 0">Del av läckan <b>Följ dina preflop-regler</b> ({{ '%.1f'|format(rsumf) }} bb/100 tillsammans).</div>{% endif %}
+      {% set cand = ((focus_all or [])|selectattr('kind')|rejectattr('done')|list + (postflop_leaks or [])|selectattr('guide')|list)|selectattr('per100', 'gt', fv + 0.05)|sort(attribute='per100', reverse=True)|list %}
+      {% if not isrule and RLf and rsumf > fv + 0.05 and (not cand or rsumf >= cand[0].per100) %}{% set bg = RLf[0] %}<div class="note" style="margin:6px 0 0">⚠️ Större läcka: <b>Följ dina preflop-regler</b> (ca {{ '%.1f'|format(rsumf) }} bb/100). Börja med den dyraste: {{ bg.do or bg.title }}.
+        <form method="post" action="/fokus" style="display:inline"><input type="hidden" name="vid" value="{{ vid }}"><input type="hidden" name="game" value="{{ main_game }}"><input type="hidden" name="id" value="{{ bg.id }}"><button class="btn sm" type="submit" style="margin-left:6px">Byt fokus</button></form></div>
+      {% elif cand %}{% set bg = cand|first %}<div class="note" style="margin:6px 0 0">⚠️ Större läcka: <b>{{ bg.title }}</b> (ca {{ '%.1f'|format(bg.per100) }} bb/100 mot {{ '%.1f'|format(fv) }}).{% if bg.id is defined %}
+        <form method="post" action="/fokus" style="display:inline"><input type="hidden" name="vid" value="{{ vid }}"><input type="hidden" name="game" value="{{ main_game }}"><input type="hidden" name="id" value="{{ bg.id }}"><button class="btn sm" type="submit" style="margin-left:6px">Byt fokus</button></form>{% else %} Det är ett råd – se listan nedan.{% endif %}</div>{% endif %}
+      <details class="why"><summary>Varför?</summary><div class="note" style="margin:4px 0 0">{{ f.why }}</div></details>
+      {% if f.except %}<div class="note" style="margin:4px 0 0">✅ <b>Räknas inte som läcka:</b> {{ f.except|join(', ') }}.</div>{% endif %}
+      <div class="fx-btns">
+        {% if f.kind == 'stake' %}<a class="btn sm" href="/v/{{ vid }}/resultat#per-nivå">Se resultat per nivå</a>
+        {% elif f.kind == 'session' %}<a class="btn sm" href="/v/{{ vid }}/sessioner#tid">⏱ Se Tid i sessionen</a>
+        {% else %}{% if f.train %}<a class="btn sm" href="/trana?s={{ f.train|urlencode }}">▶ Träna den här</a>{% endif %}
+        <a class="btn sm ghost" href="/v/{{ vid }}/hander?q=fokus&regel={{ f.id|urlencode }}">{% if f.kind == 'pf' %}{{ 'Se händerna där du checkade luft' if f.dir == 'min' else 'Se händerna där du 3-bettade' }}{% else %}Se händerna där du bröt mot den{% endif %} ({{ f.dev_rows|length }})</a>{% endif %}
+      </div>
+    </div>
+    <div class="fx-weeks" title="{{ 'Andel händer efter gränsen, vecka för vecka' if f.kind == 'session' else ('Din frekvens vecka för vecka' if f.kind == 'pf' else 'Andel tillfällen där du bröt mot regeln, vecka för vecka') }}">
+      <div class="lbl" style="margin-top:0">{{ 'Händer efter gränsen vecka för vecka' if f.kind == 'session' else ('Händer på fel nivå vecka för vecka' if f.kind == 'stake' else (('Bluff-frekvens vecka för vecka' if f.dir == 'min' else '3-bet-frekvens vecka för vecka') if f.kind == 'pf' else 'Regelbrott vecka för vecka')) }}</div>
+      {% set gmin = f.goal if f.kind == 'pf' and f.dir == 'min' else none %}{% set gmax = f.goal if f.kind == 'pf' and f.dir == 'max' else 5 %}
+      <div class="wk">{% for w in f.weeks %}{% set rt = w.rate if w.rate is not none else 0 %}{% set ok = (rt >= gmin) if gmin is not none else (rt <= gmax) %}
+        <div class="wkc" title="Veckan till {{ w.label }}: {{ w.dev }} {{ 'händer efter gränsen av' if f.kind == 'session' else 'brott av' }} {{ w.opps }} {{ 'händer' if f.kind == 'session' else 'tillfällen' }}">
+          <div class="wkv">{{ '%.0f'|format(w.rate) ~ '%' if w.rate is not none else '–' }}</div>
+          <div class="wkb"><div style="height:{{ [rt, 100]|min }}%;background:color-mix(in srgb, var({{ '--good' if ok else '--bad' }}) {{ 45 + ([rt, 50]|min) }}%, var(--chip))"></div></div>
+          <div class="wkl">{{ w.label }}</div></div>{% endfor %}</div>
+      <div class="note" style="margin:4px 0 0">Målet: {{ ('minst ' ~ '%.0f'|format(gmin)) if gmin is not none else ('högst ' ~ '%.0f'|format(gmax)) }} % två veckor i rad.</div>
+    </div>
+  </div>
+  {% if f.done %}<div class="answer good" style="border-left-color:var(--good);margin:12px 0 0"><b>Under kontroll!</b> {{ 'Du har tagit pauser i tid' if f.kind == 'session' else ('Du har nått målet' if f.kind == 'pf' else 'Du har följt regeln') }} de senaste två veckorna.{% if focus_next %} Nästa läcka att jobba med: <b>{{ focus_next.title }}</b> (ca {{ '%.1f'|format(focus_next.per100) }} bb/100).
+    <form method="post" action="/fokus" style="display:inline"><input type="hidden" name="vid" value="{{ vid }}"><input type="hidden" name="game" value="{{ main_game }}"><input type="hidden" name="id" value="{{ focus_next.id }}"><button class="btn sm" type="submit" style="margin-left:8px">Byt till nästa</button></form>{% endif %}</div>{% endif %}
+
+</div>
+{% endif %}
+{% if focus_all or postflop_leaks %}{% set mx = [((focus_all or [])|map(attribute='per100')|list + (postflop_leaks or [])|map(attribute='per100')|list)|max, ((focus_all or [])|rejectattr('kind')|sum(attribute='per100')), 0.5]|max %}
+<div class="panel lmap" style="margin:0 0 14px">
+  <div class="card-h"><b>Alla läckor – störst först</b><span class="note" style="margin:0">bb/100 nu · regelbrott vecka för vecka</span></div>
+  {% macro row(x, sub=False) %}<div class="lm{{ ' on' if focus and x.id is defined and x.id == focus.id else '' }}{{ ' sub' if sub else '' }}">
+    <span class="dot {{ 'good' if x.done else ('bad' if x.per100 >= 0.5 and x.id is defined else 'mid') }}"></span>
+    <span class="lt">{% if x.guide %}💡 {% endif %}{{ x.do or x.title }}{% if x.guide %} <span class="ho {{ 'ok' if x.level.startswith('bekräftad') else '' }}" title="Riktlinje från analysen 8 nov (omgång 2): {{ x.level }}, ca {{ x.gain }} – kostnaden är en tidigare uppskattning, inte mätt på ditt aktuella urval">{{ x.level.split(' ')[0] }} · uppskattning</span>{% endif %}{% if x.holdout %} <span class="ho {{ 'ok' if x.holdout.verdict == 'håller' else '' }}" title="Test på nya händer: {{ x.holdout.verdict }}">{{ {'håller': '✓ testad', 'osäkert': '? osäker', 'för få': '? få händer'}.get(x.holdout.verdict, x.holdout.verdict) }}</span>{% endif %}</span>
+    <span class="lb"><i style="width:{{ (100 * x.per100 / mx)|round(0) }}%"></i></span>
+    <span class="lv">{{ '%.1f'|format(x.per100) }}</span>
+    <span class="lw">{% if x.weeks is defined %}{% for w in x.weeks[-6:] %}<i title="{{ w.label }}: {{ '%.0f'|format(w.rate) ~ ' %' if w.rate is not none else '–' }}" style="height:{{ 3 + ([w.rate or 0, 40]|min) / 40 * 17 }}px;background:var({{ '--good' if (((w.rate or 0) >= x.goal) if x.kind == 'pf' and x.dir == 'min' else ((w.rate or 0) <= (x.goal if x.kind == 'pf' else 5))) else '--bad' }})"></i>{% endfor %}{% endif %}</span>
+    <span class="la">{% if x.id is not defined %}<a class="btn sm ghost" href="/v/{{ vid }}/{{ x.link or 'postflop' }}">Se</a>{% elif focus and x.id == focus.id %}<span class="tag">fokus</span>{% else %}<form method="post" action="/fokus"><input type="hidden" name="vid" value="{{ vid }}"><input type="hidden" name="game" value="{{ main_game }}"><input type="hidden" name="id" value="{{ x.id }}"><button class="btn sm ghost" type="submit">Fokus</button></form>{% endif %}</span>
+  </div>{% endmacro %}
+  {% set RL = (focus_all or [])|rejectattr('kind')|sort(attribute='per100', reverse=True)|list %}
+  {% set rsum = RL|sum(attribute='per100') %}
+  {% set items = (focus_all or [])|selectattr('kind')|list + (postflop_leaks or [])|list %}
+  {% if RL %}{% set items = items + [{'group': True, 'per100': rsum}] %}{% endif %}
+  {% set items = items|selectattr('per100', 'ge', 0.1)|sort(attribute='per100', reverse=True)|list %}
+  {% set rule_focus = focus and focus.kind is not defined %}
+  {% for x in items %}
+    {% if loop.index == 6 %}<details class="more"><summary class="note">Visa {{ items|length - 5 }} mindre läckor</summary>{% endif %}
+    {% if x.group %}<details class="grp"{{ ' open' if rule_focus else '' }}><summary class="lm sum">
+      <span class="dot bad"></span><span class="lt"><b>Följ dina preflop-regler</b> <span class="ho">{{ RL|length }} regler · tryck för att se dem</span></span>
+      <span class="lb"><i style="width:{{ (100 * x.per100 / mx)|round(0) }}%"></i></span><span class="lv">{{ '%.1f'|format(x.per100) }}</span><span class="lw"></span><span class="la">{% if rule_focus %}<span class="tag">fokus</span>{% endif %}</span>
+    </summary>{% for r in RL if r.per100 >= 0.05 or (focus and r.id == focus.id) %}{{ row(r, True) }}{% endfor %}</details>
+    {% else %}{{ row(x) }}{% endif %}
+    {% if loop.last and loop.index >= 6 %}</details>{% endif %}
+  {% endfor %}
+  <div class="note" style="margin:6px 0 0">Jobba med läckan överst. Preflop-reglerna räknas ihop till en läcka – tryck på raden för att se och välja en regel i taget. 💡 = råd (uppskattad vinst, följs inte vecka för vecka).</div>
+</div>
+<style>
+.lmap .lm{display:grid;grid-template-columns:14px 1fr 90px 36px 56px 70px;gap:8px;align-items:center;padding:5px 0;border-top:1px solid var(--line)}
+.lmap .card-h+.lm{border-top:0}
+.lmap .lm.on .lt{font-weight:700}
+.lmap .lm.sum{background:color-mix(in srgb,var(--bad) 8%,transparent);border-radius:6px;padding:7px 4px;cursor:pointer;list-style:none}
+.lmap .lm.sum::-webkit-details-marker{display:none}
+.lmap .lm.sub{padding-left:18px;font-size:13px}
+.lmap details.more>summary{cursor:pointer;margin:8px 0 2px}
+.lmap .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
+.lmap .dot.bad{background:var(--bad)} .lmap .dot.good{background:var(--good)} .lmap .dot.mid{background:#e0a030}
+.lmap .lb{height:8px;background:var(--chip);border-radius:4px;overflow:hidden}.lmap .lb i{display:block;height:100%;background:var(--bad)}
+.lmap .lv{text-align:right;font-weight:700;font-size:13px}
+.lmap .lw{display:flex;align-items:flex-end;gap:2px;height:20px}.lmap .lw i{display:block;width:7px;border-radius:2px}
+.lmap .la{text-align:right}
+@media(max-width:700px){.lmap .lm{grid-template-columns:12px 1fr 40px 60px}.lmap .lb,.lmap .lw{display:none}}
+.lmap .ho{font-size:11px;padding:1px 6px;border-radius:999px;background:var(--chip);color:var(--ink2);white-space:nowrap}
+.lmap .ho.ok{background:color-mix(in srgb,var(--good) 20%,transparent);color:var(--good)}
+details.why summary{cursor:pointer;color:var(--ink2);font-size:13px;margin-top:4px}
+</style>
+{% endif %}
+{% if sessions and sessions.sessions and sessions.has_rules %}{% set ls = sessions.sessions[0] %}
+<div class="panel" style="margin-bottom:14px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+  <div><b>Senaste sessionen</b> <span class="note" style="margin:0">{{ ls.start }}–{{ ls.end }} · {{ ls.hands }} händer</span><br>
+    {% if ls.follow is not none %}Du följde reglerna i <b class="{{ 'pos' if ls.base_follow is none or ls.follow >= ls.base_follow else 'neg' }}">{{ '%.0f'|format(ls.follow) }} %</b> av {{ ls.opps }} tillfällen{% if ls.base_follow is not none %} (snitt {{ '%.0f'|format(ls.base_follow) }} %){% endif %} · {{ ls.verdict.text }}.{% else %}{{ ls.verdict.text }}.{% endif %}</div>
+  <a class="btn sm" href="/v/{{ vid }}/sessioner?s={{ ls.key }}">Analysera sessionen →</a>
+</div>
+{% endif %}
+<div class="grid2 eq">
+  <div class="panel">
+    <div class="card-h"><b>Läckor och förbättringar</b>{% if not mixed %}<a href="/v/{{ vid }}/lackor">Alla →</a>{% endif %}</div>
+    {% if mixed %}<div class="note" style="margin:0">Läckor räknas bara för en variant i taget. Välj en variant i urvalet.</div>
+    {% else %}
+    {% if top %}<div class="lbl" style="margin-top:0">Bekräftade läckor</div>
+    <ul class="mini">{% for l in top %}<li><span><span class="t">{{ l.title }}</span><br><span class="note" style="margin:0">{{ l.fix[0] }}</span></span>
+      <span class="badge {{ l.level }}">ca {{ '%.2f'|format(l.severity) }} bb/100</span></li>{% endfor %}</ul>{% endif %}
+    {% if confirmed_rules %}<div class="lbl"{% if not top %} style="margin-top:0"{% endif %}>Bekräftat: spela inte</div>
+    <ul class="mini">{% for r in confirmed_rules[:4] %}<li><span class="t">{{ r.title }}</span><span class="badge Stor">{{ r.cost|signed(2) }} bb/hand</span></li>{% endfor %}</ul>{% endif %}
+    {% if improve %}<div class="lbl"{% if not top and not confirmed_rules %} style="margin-top:0"{% endif %}>Trolig förbättring (inte bevisat)</div>
+    <ul class="mini">{% for o in improve[:4] %}<li><span>{{ o.title }} <span class="note">· säkerhet {{ '%.0f'|format(100 * o.p) }} %</span></span><span class="badge">{{ o.gain100|signed(1) }} bb/100</span></li>{% endfor %}</ul>{% endif %}
+    {% if not top and not confirmed_rules and not improve %}<div class="note" style="margin:0">Inget av det du gör är bevisat eller troligt sämre än att folda med dina händer. Det betyder inte att du spelar perfekt – bara att datan inte pekar ut något än.</div>{% endif %}
+    {% endif %}
+  </div>
+  <div class="panel">
+    <div class="card-h"><b>Följ upp dina regler</b>{% if fu %}<a href="/v/{{ vid }}/folj">Detaljer →</a>{% endif %}</div>
+    {% if fu and fu.total.opps %}
+    <div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:6px">
+      <div><div class="big-n {{ 'pos' if fu.total.rate < 2 else ('neg' if fu.total.rate >= 10 else '') }}">{{ '%.0f'|format(fu.total.rate) }} %</div><div class="note" style="margin:0">bröt mot regeln ({{ fu.total.dev }} av {{ fu.total.opps }})</div></div>
+      <div><div class="big-n {{ 'neg' if fu.total.expected < 0 else '' }}">{{ fu.total.expected|signed(0) }} bb</div><div class="note" style="margin:0">förväntad kostnad</div></div>
+    </div>
+    <ul class="mini">{% for r in fu.per_rule %}<li><span>{{ r.title }}</span><span class="{{ 'st-bad' if r.rate >= 10 else ('st-ok' if r.opps and r.rate < 2 else '') }}">{{ '%.0f'|format(r.rate) }} %</span></li>{% endfor %}</ul>
+    {% elif fu %}<div class="note" style="margin:0">Inga tillfällen där dina regler säger folda i det här urvalet.</div>
+    {% else %}<div class="note" style="margin:0">{{ 'Uppföljning görs per variant.' if mixed else 'Inga sparade regler än. Analysera hela databasen för en variant (utan senaste händerna och period) så sparas de.' }}</div>{% endif %}
+  </div>
+</div>
+<div class="grid2 eq">
+  {% if stake_rows %}
+  <div class="panel scroll">
+    <div class="card-h"><b>Per nivå</b><a href="/v/{{ vid }}/resultat#per-nivå">Mer →</a></div>
+    {% if stake_check and stake_check.rows and stake_check.best %}<div class="note" style="margin:0 0 6px">All-in EV per nivå (bb/100 och dollar per aktiv timme, rakeback ej med): {% for x in stake_check.rows %}<span class="tag {{ 'bad' if x.verdict == 'tydligt sämre' else ('good' if x.verdict == 'bäst' else '') }}">${{ x.stake.replace('/', '/$') }} {{ x.ev100|signed(1) }} ±{{ '%.0f'|format(1.96 * x.se100) }} bb/100{% if x.usd_h is not none %} · ${{ '%+.0f'|format(x.usd_h) }}/h{% endif %}{% if x.verdict == 'tydligt sämre' %} · tydligt lägre timlön{% endif %}</span> {% endfor %}</div>{% endif %}
+    <table class="tbl"><tr><th>Nivå</th><th class="n">Händer</th><th class="n">bb/100</th><th class="n">EV bb/100</th><th class="n">Vunnet</th></tr>
+      {% for r in stake_rows %}<tr{% if r.total %} style="font-weight:600"{% endif %}><td>{{ r.stake if r.stake in ('Totalt', 'Övriga') else '$' ~ r.stake }}</td><td class="n">{{ r.hands }}</td>
+        <td class="n {{ 'pos' if r.bb100 >= 0 else 'neg' }}">{{ r.bb100|signed }}</td><td class="n {{ 'pos' if r.ev100 >= 0 else 'neg' }}">{{ r.ev100|signed }}</td>
+        <td class="n {{ 'pos' if r.net_money >= 0 else 'neg' }}">{{ r.net_money|signed(2) }}</td></tr>{% endfor %}
+    </table>
+  </div>
+  {% endif %}
+  <div class="panel scroll">
+    <div class="card-h"><b>Per position</b>{% if not mixed %}<a href="/v/{{ vid }}/preflop#per-position">Mer →</a>{% endif %}</div>
+    <table class="tbl"><tr><th>Position</th><th class="n">Händer</th><th class="n">VPIP</th><th class="n">RFI</th><th class="n">EV bb/100</th></tr>
+      {% for r in pos_rows %}<tr><td>{{ r.pos }}</td><td class="n">{{ r.hands }}</td><td class="n">{{ r.vpip|pct }}</td><td class="n">{{ r.rfi|pct }}</td>
+        <td class="n {{ 'pos' if r.bb100 >= 0 else 'neg' }}">{{ r.bb100|signed }}</td></tr>{% endfor %}
+    </table>
+  </div>
+</div>
+{% if game_rows|length > 1 %}
+<div class="panel scroll">
+  <div class="card-h"><b>Alla speltyper i perioden</b><a href="/v/{{ vid }}/resultat#per-speltyp">Mer →</a></div>
+  <table class="tbl"><tr><th>Speltyp</th><th>Bord</th><th class="n">Händer</th><th class="n">Vunnet</th><th class="n">bb/100</th><th class="n">EV bb/100</th><th class="n">Rake bb/100</th></tr>
+    {% for r in game_rows %}<tr{% if r.total %} style="font-weight:600"{% endif %}><td>{{ r.game }}{% if not r.total and r.game in (filters.games_sel if filters and filters.games_sel else [main_game]) %} <span class="tag">i urvalet</span>{% endif %}</td><td>{{ r.kind }}</td><td class="n">{{ r.hands }}</td>
+      <td class="n {{ 'pos' if r.net_money >= 0 else 'neg' }}">{{ r.net_money|signed(2) }}</td><td class="n {{ 'pos' if r.bb100 >= 0 else 'neg' }}">{{ r.bb100|signed }}</td>
+      <td class="n {{ 'pos' if r.ev100 >= 0 else 'neg' }}">{{ r.ev100|signed }}</td><td class="n">{{ '%.1f'|format(r.rake100) }}</td></tr>{% endfor %}
+  </table>
+</div>
+{% endif %}
+</div></details>

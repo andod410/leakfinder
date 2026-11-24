@@ -1,0 +1,13 @@
+  {% if big_hands and (big_hands.losses or big_hands.wins) %}
+  <h2 id="hander">Spela upp dina största händer</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">De största förlusterna och vinsterna i urvalet. Tryck "Spela upp handen" för att stega igenom handen med kort, insatser och equity på varje gata.</p>
+    {% if big_hands.losses %}<div class="lbl">Största förlusterna</div>
+    <table class="tbl"><tr><th>Datum</th><th>Pos</th><th>Hand</th><th class="n">Pott</th><th class="n">Resultat</th></tr>
+      {% for d in big_hands.losses %}{{ bigrow(d, big_hands.replays) }}{% endfor %}</table>{% endif %}
+    {% if big_hands.wins %}<div class="lbl">Största vinsterna</div>
+    <table class="tbl"><tr><th>Datum</th><th>Pos</th><th>Hand</th><th class="n">Pott</th><th class="n">Resultat</th></tr>
+      {% for d in big_hands.wins %}{{ bigrow(d, big_hands.replays) }}{% endfor %}</table>{% endif %}
+    <div class="note">Equity räknas bara mellan händerna vars kort syns – spelare med okända kort räknas inte med, så andelarna blir tillsammans 100 %. Flop och turn räknas exakt, preflop med 20 000 slumpade bord. Fler uppspelningar finns under Följ upp, för händer där du brutit mot dina regler.</div>
+  </div>
+  {% endif %}

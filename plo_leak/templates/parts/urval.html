@@ -1,0 +1,18 @@
+  {% if filters and filters.enabled %}
+  <form class="panel urval" method="post" action="/analyze" enctype="multipart/form-data" autocomplete="off"
+        onsubmit="this.querySelector('button').textContent='Analyserar …'">
+    <div class="lbl" style="margin-top:0">Urval{% if filters.full %} – hela databasen{% endif %}</div>
+    <div class="ug">
+      <label>Variant<span class="uvar">{% for g in filters.games %}<span><input type="checkbox" name="games" value="{{ g }}"{% if g in filters.games_sel %} checked{% endif %} onchange="this.form.stake.value='';this.form.table.value=''"> {{ g }}</span>{% endfor %}</span></label>
+      <label>Bord<select name="table"><option value="">Alla bord</option><option value="vanliga"{% if filters.table == 'vanliga' %} selected{% endif %}>Vanliga bord</option>{% if filters.has_rush or filters.table == 'rush' %}<option value="rush"{% if filters.table == 'rush' %} selected{% endif %}>Rush &amp; Cash</option>{% endif %}</select></label>
+      <label>Nivå<select name="stake"><option value="">Alla nivåer</option>{% for k in filters.stakes %}<option value="{{ k }}"{% if k == filters.stake %} selected{% endif %}>${{ k.replace('/', '/$') }}</option>{% endfor %}</select></label>
+      <label>Senaste händerna<span class="uin"><input type="checkbox" name="latest_on" value="1"{% if filters.latest_on %} checked{% endif %}><input type="number" name="latest" min="1" step="1" value="{{ filters.latest }}"></span></label>
+      <label>Från<input type="text" name="fran" placeholder="{{ filters.span[0] or 'ÅÅÅÅ-MM-DD' }}" value="{{ filters.fran }}"></label>
+      <label>Till<input type="text" name="till" placeholder="{{ filters.span[1] or 'ÅÅÅÅ-MM-DD' }}" value="{{ filters.till }}"></label>
+    </div>
+    <input type="hidden" name="hero" value="{{ filters.hero }}">
+    <div class="ub"><button type="submit" class="btn" style="border:0;cursor:pointer">Uppdatera analysen</button>
+      <a href="/" class="note" style="margin:0">Lägg till nya händer</a></div>
+    <div class="note">Ändra urvalet och tryck Uppdatera – händerna läses inte in igen, så det går snabbare än första gången. Datum skrivs ÅÅÅÅ-MM-DD. "Senaste händerna" räknas efter de andra valen. Dina regler under Följ upp sparas bara när hela databasen för en variant analyseras utan andra val.</div>
+  </form>
+  {% endif %}

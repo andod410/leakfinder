@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PLO-läckrapport</title>
+<style>
+{% include "parts/style.css" %}
+</style>
+</head>
+<body>
+{% from "parts/macros.html" import chartpanel, leakcard, devrow, bigrow with context %}
+<div class="wrap">
+  <h1>PLO-läckrapport</h1>
+  <div class="sub">{{ (filters.games_sel|join(' + ')) ~ ' tillsammans' if mixed else profile.label }} · {{ st.hands }} händer · {{ stakes }} · {{ st.first_date.strftime('%Y-%m-%d') if st.first_date }} – {{ st.last_date.strftime('%Y-%m-%d') if st.last_date }} · skapad {{ generated }} · version {{ version }}</div>
+
+{% include "parts/imports.html" %}
+
+{% include "parts/urval.html" %}
+
+{% include "parts/export.html" %}
+
+{% include "parts/kpis.html" %}
+
+{% include "parts/keypoints.html" %}
+  <nav class="toc">
+    {% if fu %}<a href="#folj">Följ upp</a>{% endif %}<a href="#resultat">Resultat</a>{% if big_hands and (big_hands.losses or big_hands.wins) %}<a href="#hander">Händer</a>{% endif %}{% if not mixed %}<a href="#preflop">Preflop</a>{% if river_tbl or turn_tbl %}<a href="#river">Turn & river</a>{% endif %}<a href="#lackor">Läckor</a><a href="#detaljer">Detaljer & kontroll</a>{% endif %}
+  </nav>
+
+  {% if fu %}
+  <section id="folj">
+  <div class="sec-h"><span>Följ upp</span></div>
+{% include "parts/folj.html" %}
+  </section>
+  {% endif %}
+
+  <section id="resultat">
+  <div class="sec-h"><span>Resultat</span></div>
+{% include "parts/res_tabeller.html" %}
+{% include "parts/grafer.html" %}
+{% include "parts/allin.html" %}
+{% include "parts/pott.html" %}
+{% include "parts/timlon.html" %}
+{% include "parts/storsta.html" %}
+  </section>
+
+  {% if mixed %}
+{% include "parts/mixed.html" %}
+  {% else %}
+  <section id="preflop">
+  <div class="sec-h"><span>Preflop</span></div>
+{% include "parts/preflop.html" %}
+  </section>
+
+  <section id="river">
+  <div class="sec-h"><span>Turn och river</span></div>
+{% include "parts/postflop.html" %}
+  </section>
+
+  <section id="lackor">
+  <div class="sec-h"><span>Läckor</span></div>
+{% include "parts/lackor.html" %}
+  </section>
+
+  <section id="detaljer">
+  <div class="sec-h"><span>Detaljer och kontroll</span></div>
+{% include "parts/detaljer.html" %}
+  </section>
+  {% endif %}
+
+  <div class="foot">
+    {% if not strict %}Riktvärden märkta "din pool" kommer från vinnande motståndare i din egen databas. Riktvärden märkta "uppskattning" är grova inbyggda värden som används när pooldata saknas och kan justeras i <code>plo_leak/leaks.py</code>.{% endif %}
+    "Säkerhet" anger hur stort urvalet är – en läcka med låg säkerhet är en varningsflagga, inte en dom.
+  </div>
+</div>
+<script>
+{% include "parts/charts.js" %}
+{% include "parts/replayer.js" %}
+{% include "parts/potchart.js" %}
+</script>
+</body>
+</html>

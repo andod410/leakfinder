@@ -1,0 +1,51 @@
+{% if pots and pots.rows %}
+{% macro heat(v, m) -%}
+{%- if v is none or not m -%}{%- else -%}{%- set pct = (100 * (v|abs) / m)|round(0) if m else 0 -%}background:color-mix(in srgb, var({{ '--good' if v >= 0 else '--bad' }}) {{ [pct * 0.55, 55]|min }}%, transparent){%- endif -%}
+{%- endmacro %}
+{% set rows = pots.rows|selectattr('n')|list %}
+{% set m_ev = rows|map(attribute='ev')|map('abs')|max %}
+{% set m_net = rows|map(attribute='net')|map('abs')|max %}
+  <h2 data-tab="Pottstorlek">Resultat efter pottens storlek</h2>
+  <div class="panel scroll pots" id="pots">
+    <p style="margin-top:0">Alla händer i urvalet sorterade efter hela pottens storlek när handen var slut. <b style="color:var(--good)">Grönt</b> = där du tjänar, <b style="color:var(--bad)">rött</b> = där du förlorar. Ju starkare färg, desto mer pengar.</p>
+    <div class="toolbar" style="margin-bottom:6px">
+      <div class="seg" data-r="metric"><button type="button" class="on" data-m="ev">All-in EV</button><button type="button" data-m="net">Faktiskt</button></div>
+      <div class="seg" data-r="unit"><button type="button" class="on" data-u="tot">Totalt bb</button><button type="button" data-u="hand">bb per hand</button><button type="button" data-u="b100">bb/100</button><button type="button" data-u="usd">Dollar</button></div>
+    </div>
+    <div class="potchart" data-r="plot"></div>
+    <script type="application/json" data-r="cfg">{{ pots.rows|tojson }}</script>
+    {% if pots.big.n %}
+    <div class="answer {{ 'good' if pots.big.ev >= 0 else '' }}" style="margin-top:12px;border-left-color:var({{ '--good' if pots.big.ev >= 0 else '--bad' }})"><b>Pottar på 150 bb och mer:</b> {{ '{:,}'.format(pots.big.n).replace(',', ' ') }} händer ({{ '%.1f'|format(pots.big.share) }} % av alla) har gett <b class="{{ 'pos' if pots.big.ev >= 0 else 'neg' }}">{{ pots.big.ev|signed(0) }} bb</b> med all-in EV ({{ pots.big.net|signed(0) }} bb faktiskt), alltså <b>{{ pots.big.ev100|signed(1) }} bb/100</b> av ditt totala resultat. Se "Vägen in i potten" nedan för hur du hamnade där.</div>
+    {% endif %}
+    <table class="tbl" style="margin-top:12px">
+      <tr><th>Pott</th><th class="n">Händer</th><th class="n">Andel</th><th class="n">All-in EV</th><th class="n">EV per hand</th><th class="n">95 %-intervall</th><th class="n">Faktiskt</th><th class="n">EV bb/100</th><th class="n">Dollar (EV)</th><th class="n">Showdown</th><th class="n">Vann vid showdown</th></tr>
+      {% for r in pots.rows %}{% if r.n %}
+      <tr><td><b>{{ r.label }}</b> bb</td><td class="n">{{ r.n }}</td><td class="n">{{ '%.1f'|format(r.share) }} %</td>
+        <td class="n" style="{{ heat(r.ev, m_ev) }}"><b class="{{ 'pos' if r.ev >= 0 else 'neg' }}">{{ r.ev|signed(0) }}</b></td>
+        <td class="n {{ 'pos' if r.ev_hand >= 0 else 'neg' }}">{{ r.ev_hand|signed(2) }}</td>
+        <td class="n">{% if r.ev_lo is not none %}{{ r.ev_lo|signed(1) }} till {{ r.ev_hi|signed(1) }}{% else %}–{% endif %}</td>
+        <td class="n" style="{{ heat(r.net, m_net) }}"><span class="{{ 'pos' if r.net >= 0 else 'neg' }}">{{ r.net|signed(0) }}</span></td>
+        <td class="n {{ 'pos' if r.ev100 >= 0 else 'neg' }}">{{ r.ev100|signed(1) }}</td>
+        <td class="n {{ 'pos' if r.ev_money >= 0 else 'neg' }}">{{ r.ev_money|signed(0) }}</td>
+        <td class="n">{{ '%.0f'|format(r.sd_pct) }} %</td><td class="n">{{ '%.0f'|format(r.won_sd_pct) ~ ' %' if r.won_sd_pct is not none else '–' }}</td></tr>
+      {% endif %}{% endfor %}
+    </table>
+    <div class="note">Pott = hela potten när handen var slut (alla spelares insatser), i bb. All-in EV ersätter utfallet med förväntat resultat när pengarna gick in före river – det rensar bort tur och otur i all-ins. EV bb/100 = hur mycket gruppen bidrar till ditt totala resultat per 100 händer; summan av kolumnen är din EV bb/100. Intervallen tar hänsyn till att händer från samma spelpass hänger ihop. <b>Obs:</b> pottens storlek beror delvis på hur handen slutar – pottar du vinner blir ofta stora – så stora pottar ser alltid ut som stora vinster eller förluster. Vägen in i potten säger mer om hur du spelar dem. Händer där du foldade tidigt räknas också i den pott de slutade med (en fold i BB i en pott på 220 bb hamnar under 200+) – de syns som "Du foldade" nedan.</div>
+
+    {% if pots.has_path %}
+    {% set m_band = pots.bands|map(attribute='cells')|sum(start=[])|map(attribute='ev')|map('abs')|max %}
+    <div class="lbl" style="margin-top:18px">Vägen in i potten (all-in EV, bb)</div>
+    <table class="tbl grid">
+      <tr><th>Pott</th>{% for p in pots.paths %}<th class="n">{{ p.name }}<div class="note" style="margin:0;font-size:11px;font-weight:400;text-transform:none;letter-spacing:0">{{ p.help }}</div></th>{% endfor %}<th class="n">Dina pengar in genom syn</th></tr>
+      {% for b in pots.bands %}{% if b.n %}
+      <tr><td><b>{{ b.label }}</b><div class="note" style="margin:0;font-size:11px">{{ b.n }} händer · {{ b.ev|signed(0) }} bb</div></td>
+        {% for c in b.cells %}<td class="n" style="{{ heat(c.ev, m_band) if c.n else '' }}">{% if c.n %}<b class="{{ 'pos' if c.ev >= 0 else 'neg' }}">{{ c.ev|signed(0) }}</b><div class="note" style="margin:0;font-size:11px">{{ c.n }} st ({{ '%.0f'|format(c.share) }} %) · {{ c.ev_hand|signed(1) }}/hand</div>{% else %}–{% endif %}</td>{% endfor %}
+        <td class="n">{{ '%.0f'|format(b.call_share) ~ ' %' if b.call_share is not none else '–' }}</td></tr>
+      {% endif %}{% endfor %}
+    </table>
+    <div class="note"><b>Så läser du tabellen:</b> Är du för lös i stora pottar syns det som en stor, röd ruta under <i>Du synade sist</i> i de nedersta raderna – du betalar av när motståndaren satsar. Röda rutor under <i>Du satsade sist</i> betyder i stället att dina egna bets/höjningar inte får betalt av sämre händer. <i>Du foldade</i> är nästan alltid rött – det är pengar du redan satt in innan du gav upp – och <i>Du satsade sist</i> ofta grönt, eftersom motståndaren då ofta foldar. Jämför därför framför allt <i>Du synade sist</i> mellan raderna. <i>Dina pengar in genom syn</i> = hur stor del av det du själv satte in i potterna som var syner (resten var bets och höjningar). Blindar räknas inte.</div>
+    {% else %}
+    <p class="note">Vägen in i potten räknas fram nästa gång fakta byggs om (görs automatiskt när du kör analysen).</p>
+    {% endif %}
+  </div>
+{% endif %}

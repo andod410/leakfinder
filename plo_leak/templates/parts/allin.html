@@ -1,0 +1,18 @@
+  {% if allin_rows %}
+  {% macro both(bb, usd) -%}<span data-unit="bb">{{ bb|signed(0) }}</span><span data-unit="usd">{% if usd is not none %}{{ ('+' if usd > 0 else ('−' if usd < 0 else '')) ~ '$' ~ ('{:,.2f}'.format(usd|abs)).replace(',', ' ') }}{% else %}–{% endif %}</span>{%- endmacro %}
+  <h2 data-tab="All-in EV">All-in EV</h2>
+  <div class="panel scroll">
+    <div class="unitsw" role="group" aria-label="Visa i bb eller dollar"><button type="button" class="btn sm ghost" data-u="bb">bb</button><button type="button" class="btn sm ghost" data-u="usd">Dollar</button></div>
+    <table class="tbl">
+      <tr><th>All-in på</th><th class="n">Händer</th><th class="n">Din snitt-equity</th><th class="n">Faktiskt</th><th class="n">EV</th><th class="n">Tur/otur</th></tr>
+      {% for r in allin_rows %}{% set am = r.actual_money if r.actual_money is defined else none %}{% set em = r.ev_money if r.ev_money is defined else none %}
+      <tr><td>{{ {'preflop': 'Preflop', 'flop': 'Flop', 'turn': 'Turn'}[r.street] }}</td><td class="n">{{ r.hands }}</td>
+        <td class="n">{{ '%.1f'|format(100 * r.eq_sum / r.hands) }}%</td><td class="n">{{ both(r.actual_bb, am) }}</td><td class="n">{{ both(r.ev_bb, em) }}</td>
+        <td class="n {{ 'pos' if r.actual_bb - r.ev_bb >= 0 else 'neg' }}">{{ both(r.actual_bb - r.ev_bb, (am - em) if am is not none and em is not none else none) }}</td></tr>
+      {% endfor %}
+      <tr><td><b>Totalt, alla händer</b></td><td class="n"></td><td class="n"></td><td class="n">{{ both(st.net_bb, st.net_money) }}</td><td class="n">{{ both(st.ev_net_bb, st.ev_net_money) }}</td>
+        <td class="n {{ 'pos' if st.net_money - st.ev_net_money >= 0 else 'neg' }}">{{ both(st.net_bb - st.ev_net_bb, st.net_money - st.ev_net_money) }}</td></tr>
+    </table>
+    <div class="note">Räknas när alla pengar gick in före river och alla inblandades kort visades. Turn- och flop-all-ins räknas exakt, preflop med 1 500 slumpade utfall. Sidopotter och rake/avgifter tas med. Jämför med DriveHUD: dess "$EV Diff" är EV minus faktiskt, alltså samma tal som "Tur/otur" här men med omvänt tecken.</div>
+  </div>
+  {% endif %}

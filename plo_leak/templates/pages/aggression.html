@@ -1,0 +1,55 @@
+<style>
+.ag-k{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+.bc{border-collapse:separate;border-spacing:3px;font-size:13.5px;width:100%}
+.bc th{color:var(--ink2);font-weight:600;text-align:left;padding:2px 6px}
+.bc td{padding:6px 8px;border-radius:6px}
+.bc td.v{text-align:center;font-weight:800;color:#fff}
+.sb{display:flex;align-items:flex-end;gap:4px;height:120px;margin:8px 0 2px}
+.sb div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:12px}
+.sb i{display:block;width:100%;border-radius:3px 3px 0 0}
+.sb em,.sb span{font-style:normal;font-size:10.5px;color:var(--ink2)}
+</style>
+{% set A = aggr %}
+{% if not A %}
+<div class="panel">För få postflop-beslut i urvalet (eller fakta byggda med en äldre version – analysera hela databasen igen).</div>
+{% else %}
+<div class="panel" style="margin-bottom:14px">
+  <div class="card-h"><b>⚔️ Hur aggressiv är du?</b></div>
+  <div class="ag-k">
+    {% for s in A.streets %}<div class="kpi"><div class="l">{{ s.street }}</div><div class="v">AF {{ '%.1f'|format(s.af) if s.af else '–' }}</div><div class="s">AFq {{ '%.0f'|format(s.afq) if s.afq else '–' }} %</div></div>{% endfor %}
+    <div class="kpi"><div class="l">C-bet flop (HU)</div><div class="v">{{ '%.0f'|format(A.cbet.ip) }} % <small class="note">IP</small></div><div class="s">{{ '%.0f'|format(A.cbet.oop) }} % ur position</div></div>
+    <div class="kpi"><div class="l">Stab i position</div><div class="v">{{ '%.0f'|format(A.stab) }} %</div><div class="s">när det checkats till dig (HU)</div></div>
+  </div>
+  <div class="note">Check-raise (HU, ur position): {% for c in A.cr %}{{ c.street }} {{ '%.0f'|format(c.pct) ~ ' %' if c.pct is not none else '–' }}{{ ' · ' if not loop.last }}{% endfor %}</div>
+</div>
+
+{% if A.quart %}
+<div class="panel scroll" style="margin-bottom:14px">
+  <div class="card-h"><b>Vinner du mer när du är aggressiv?</b><span class="note" style="margin:0">dina sessioner (minst 300 händer) delade efter stab-andel</span></div>
+  <table class="tbl"><tr><th>Sessioner</th><th class="n">Stab i position</th><th class="n">Utan showdown</th><th class="n">All-in EV</th><th class="n">Händer</th></tr>
+  {% for q in A.quart %}<tr><td>{{ q.label }} ({{ q.sessions }})</td><td class="n">{{ '%.0f'|format(q.stab) }} %</td><td class="n {{ 'pos' if q.nsd100 >= 0 else 'neg' }}">{{ q.nsd100|signed(1) }}</td><td class="n {{ 'pos' if q.ev100 >= 0 else 'neg' }}">{{ q.ev100|signed(1) }}</td><td class="n">{{ '{:,}'.format(q.hands).replace(',', ' ') }}</td></tr>{% endfor %}
+  </table>
+  <div class="note">bb/100. Under Sessioner varnar programmet när en session är passiv (minst {{ '%.0f'|format(A.passive_pp) }} procentenheter under din normala stab-andel).</div>
+</div>
+{% endif %}
+
+{% if A.blocks|length > 1 %}
+<div class="panel" style="margin-bottom:14px">
+  <div class="card-h"><b>Stab-andel över tid</b><span class="note" style="margin:0">block om 5 000 händer · siffran under = resultat utan showdown (bb/100)</span></div>
+  {% set lo = [A.blocks|map(attribute='stab')|min - 5, 0]|max %}{% set hi = A.blocks|map(attribute='stab')|max + 2 %}
+  <div class="sb">{% for b in A.blocks %}<div title="Block {{ b.label }}: {{ '%.0f'|format(b.stab) }} % stab · {{ '%+.1f'|format(b.nsd100) }} bb/100 utan showdown"><em>{{ '%.0f'|format(b.stab) }}</em><i style="height:{{ (100 * (b.stab - lo) / (hi - lo))|round(0) }}%;background:{{ 'var(--bad)' if b.stab <= A.stab - A.passive_pp / 2 else 'var(--accent)' }}"></i><span>{{ '%+.0f'|format(b.nsd100) }}</span></div>{% endfor %}</div>
+  <div class="note">Röd stapel = passiv period (klart under din normala stab-andel på {{ '%.0f'|format(A.stab) }} %).</div>
+</div>
+{% endif %}
+
+<div class="panel scroll">
+  <div class="card-h"><b>Betta eller checka när det checkats till dig i position?</b><span class="note" style="margin:0">heads-up · vad du fick tillbaka, i andel av potten</span></div>
+  <table class="bc"><tr><th>Läge</th><th>Hand</th><th style="text-align:center">Bet</th><th style="text-align:center">Check</th><th style="text-align:center">Du bettade</th></tr>
+  {% for t in A.table %}{% for r in t.rows %}<tr><td>{{ t.spot if loop.first else '' }}</td><td>{{ r.grp }}</td>
+    <td class="v" style="background:{{ 'var(--good)' if r.bet > r.check + 0.05 else 'var(--chip)' }}">{{ '%.2f'|format(r.bet) }}</td>
+    <td class="v" style="background:{{ 'var(--good)' if r.check > r.bet + 0.05 else 'var(--chip)' }}">{{ '%.2f'|format(r.check) }}</td>
+    <td style="text-align:center">{{ '%.0f'|format(r.bet_pct) }} %</td></tr>{% endfor %}{% endfor %}
+  </table>
+  <div class="note">👉 Där bet är grönt och du bettar sällan: betta oftare. Jämförelsen påverkas av att du själv väljer när du bettar – se den som riktning, inte facit.</div>
+</div>
+{% endif %}

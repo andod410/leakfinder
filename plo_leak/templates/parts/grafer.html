@@ -1,0 +1,7 @@
+  {% if chart %}
+  <div data-tab="Graf" class="unitbox">
+    {% if chart_money %}<div class="unitsw" role="group" aria-label="Visa i bb eller dollar"><button type="button" class="btn sm ghost" data-u="bb">bb</button><button type="button" class="btn sm ghost" data-u="usd">Dollar</button></div>{% endif %}
+    <div data-unit="bb">{{ chartpanel(chart, "chart", "Vinstkurva (bb)", note="Tryck på en linje ovanför grafen för att visa eller dölja den – axlarna anpassas efter det som visas. Faktiskt resultat = vad du vann eller förlorade. All-in EV tar bort tur och otur i händer där pengarna gick in före river. Med showdown = resultatet i händer där du gick hela vägen till showdown; utan showdown = händer som avgjordes innan (du foldade eller alla andra foldade). De två sista blir tillsammans ditt faktiska resultat. Betald rake (streckad) = rake och avgifter du betalat totalt.") }}</div>
+    {% if chart_money %}<div data-unit="usd">{{ chartpanel(chart_money, "chart-money", "Vinstkurva (dollar)", note="Samma kurvor i dollar. Spelar du på flera nivåer väger händerna på högre nivåer tyngre här än i bb-grafen.") }}</div>{% endif %}
+  </div>
+  {% endif %}

@@ -1,0 +1,33 @@
+{% macro col(v) -%}
+{%- if v is none -%}var(--chip){%- else -%}{%- set x = ([[v / 20, 1]|min, -1]|max) -%}
+{%- if x >= 0 -%}color-mix(in srgb, var(--good) {{ (35 + 65 * x)|round(0) }}%, var(--chip)){%- else -%}color-mix(in srgb, var(--bad) {{ (35 - 65 * x)|round(0) }}%, var(--chip)){%- endif -%}{%- endif -%}
+{%- endmacro %}
+<style>
+.wt{border-collapse:separate;border-spacing:4px;width:100%;max-width:760px}
+.wt th{color:var(--ink2);font-weight:600;font-size:12.5px;text-align:center;padding:2px}
+.wt th.rl,.wt td.rl{text-align:left;white-space:nowrap;font-weight:600}
+.wt td.c{border-radius:8px;text-align:center;padding:10px 4px;color:#fff;font-weight:800;font-size:16px}
+.wt td.c small{display:block;font-weight:500;font-size:11px;opacity:.9}
+.wt td.c.e{color:var(--ink2)}
+.wt tr.tot td.c{outline:2px solid var(--ink);outline-offset:-2px}
+.do{display:grid;gap:6px;margin:0 0 12px;font-size:15px}
+</style>
+{% set W = when %}
+{% if not W or not W.grid %}
+<div class="panel">Det behövs minst 12 000 händer i urvalet.</div>
+{% else %}
+<div class="panel" style="margin-bottom:14px">
+  <div class="do">
+    {% if W.best_cell %}<div>{{ '🟢' if W.best_cell.ev100 > 0 else '🟡' }} <b>{{ 'Bäst' if W.best_cell.ev100 > 0 else 'Minst förlust' }}:</b> {{ W.best_cell.stake }} kl. {{ W.best_cell.block }} – {{ W.best_cell.ev100|signed(1) }} bb/100</div>{% endif %}
+    {% if W.worst_cell %}<div>🔴 <b>Dyrast:</b> {{ W.worst_cell.stake }} kl. {{ W.worst_cell.block }} – kostar dig {{ '%.1f'|format(-W.worst_cell.contrib) }} av dina bb/100 totalt</div>{% endif %}
+    {% if W.significant %}<div>👉 <b>Spela helst kl. {{ W.best }}.</b> Den tiden är {{ W.diff100|signed(0) }} ± {{ '%.0f'|format(W.pm) }} bb/100 bättre än resten.</div>
+    {% else %}<div>⚪ Ingen tid är säkert bättre än de andra än.</div>{% endif %}
+  </div>
+  <table class="wt"><tr><th class="rl">Tid</th>{% for c in W.cols %}<th>{{ c.label }}</th>{% endfor %}</tr>
+  {% for row in W.grid %}<tr><td class="rl">{{ row.label }}</td>{% for c in row.cells %}<td class="c{{ ' e' if c is none else '' }}" style="background:{{ col(c.ev100 if c else none) }}" title="{% if c %}{{ c.hands }} händer · ± {{ '%.0f'|format(c.pm) }} · {{ '%.1f'|format(c.contrib) }} av dina bb/100{% endif %}">{% if c %}{{ c.ev100|signed(0) }}<small>{{ '{:,}'.format(c.hands).replace(',', ' ') }} händer</small>{% else %}·{% endif %}</td>{% endfor %}</tr>{% endfor %}
+  <tr class="tot"><td class="rl">Totalt</td>{% for t in W.totals %}<td class="c" style="background:{{ col(t.ev100) }}">{{ t.ev100|signed(1) }}<small>{{ '%.1f'|format(t.contrib) }} av totalen</small></td>{% endfor %}</tr>
+  </table>
+  <div class="note">bb/100 i all-in EV efter rake. Grön = vinst, röd = förlust. Håll över en ruta för felmarginal. Tiden är som i handhistoriken.</div>
+</div>
+<div class="note">Skillnaden är hittad i efterhand – bekräfta den med ca 60 timmar nytt spel på din bästa tid. Värdet i läckkartan räknas därför försiktigt.</div>
+{% endif %}

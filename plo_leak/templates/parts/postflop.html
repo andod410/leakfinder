@@ -1,0 +1,121 @@
+  {% if turn_tbl %}
+  <h2 data-tab="Turn">Turn: syna och fortsätta – eller folda direkt?</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">Varje gång du synat en bet på turn: hur slutade handen jämfört med om du foldat på turn? Allt som hände efteråt räknas in – river-kortet, din syn eller fold på river och showdown. Uppdelat på vad som hände på river.</p>
+    <table class="tbl">
+      <tr><th>Efter turn-synen …</th><th class="n">Andel</th><th class="n">Gånger</th><th class="n">Jämfört med fold på turn</th><th class="n">Totalt</th><th class="n">95 %-intervall</th></tr>
+      {% for r in turn_tbl.paths + [turn_tbl.total] %}
+      <tr{% if r.path == 'Alla turn-syner' %} style="font-weight:600"{% endif %}><td>{{ r.path }}</td><td class="n">{{ '%.0f'|format(r.share) }} %</td><td class="n">{{ r.n }}</td>
+        <td class="n {{ '' if r.mean is none else ('pos' if r.mean >= 0 else 'neg') }}">{{ '–' if r.mean is none else r.mean|signed(1) }}{% if r.mean is not none %} bb{% endif %}</td>
+        <td class="n {{ 'pos' if r.total >= 0 else 'neg' }}">{{ r.total|signed(0) }} bb</td>
+        <td class="n">{% if r.lo is not none %}{{ r.lo|signed(1) }} till {{ r.hi|signed(1) }}{% else %}–{% endif %}</td></tr>
+      {% endfor %}
+    </table>
+    <div class="lbl">Per handstyrka på turn</div>
+    <table class="tbl">
+      <tr><th>Din hand när du synade turn</th><th class="n">Alla turn-syner</th><th class="n">… som slutade med syn på river</th><th class="n">… övriga</th></tr>
+      {% for r in turn_tbl.strengths %}
+      <tr><td>{{ r.strength }}</td>
+        {% for c in [r.all, r.callcall, r.other] %}<td class="n {% if c and c.n >= 30 %}{{ 'cell-pos' if c.verdict == 'lönsamt' else ('cell-neg' if c.verdict == 'förlorar' else '') }}{% endif %}">{% if c and c.n >= 30 %}<b>{{ c.mean|signed(1) }}</b><div class="note" style="margin:0;font-size:11px">{{ c.n }} st</div>{% elif c %}<span class="note" style="font-size:12px">{{ c.n }} st</span>{% else %}–{% endif %}</td>{% endfor %}</tr>
+      {% endfor %}
+    </table>
+    <div class="note"><b>Så ska raderna läsas:</b> "Alla turn-syner" svarar på frågan "var det rätt att syna turn?" – det är det enda beslutet du kunde ta på turn. Uppdelningen efter vad som hände på river är beskrivande: den beror också på river-kortet (en träff blir oftare syn på river, en miss oftare fold), så den säger inte i sig att du ska syna eller folda mer på river. Grönt/rött = säkerställt lönsamt/förlorande (test som tar hänsyn till sneda resultat och till att alla rader testas samtidigt). Handstyrka på turn: hur stark din färdiga hand är just då, och "stort drag" = minst 8 kort som ger stege eller bättre.</div>
+  </div>
+  {% endif %}
+
+  {% if river_tbl %}
+  <h2 data-tab="River">River: syna eller folda mot en bet?</h2>
+  <div class="panel scroll">
+    <p style="margin-top:0">När du synar på river är det handens sista beslut – därför går det att räkna exakt hur synen gick jämfört med att folda. Folds kan inte värderas (motståndarens kort syns inte), men andelen visas.</p>
+    <table class="tbl">
+      <tr><th>Motståndarens bet</th><th class="n">Gånger</th><th class="n">Du foldade</th><th class="n">Syner</th><th class="n">Syn jämfört med fold</th><th class="n">95 %-intervall</th><th>Bedömning</th></tr>
+      {% for r in river_tbl.sizes + [river_tbl.total] %}
+      <tr{% if r.size == 'Alla storlekar' %} style="font-weight:600"{% endif %}><td>{{ r.size }}</td><td class="n">{{ r.faced }}</td><td class="n">{{ '%.0f'|format(r.fold_pct) }} %</td><td class="n">{{ r.calls }}</td>
+        <td class="n {{ '' if r.mean is none else ('pos' if r.mean >= 0 else 'neg') }}">{{ '–' if r.mean is none else r.mean|signed(1) }}{% if r.mean is not none %} bb{% endif %}</td>
+        <td class="n">{% if r.lo is not none %}{{ r.lo|signed(1) }} till {{ r.hi|signed(1) }}{% else %}–{% endif %}</td>
+        <td class="{{ 'st-ok' if r.verdict == 'lönsamt' else ('st-bad' if r.verdict == 'förlorar' else '') }}">{{ r.verdict }}</td></tr>
+      {% endfor %}
+    </table>
+    <div class="lbl">Dina syner per handstyrka och betstorlek (bb jämfört med fold, per syn)</div>
+    <table class="tbl grid">
+      <tr><th>Din hand</th>{% for nm in river_tbl.size_names %}<th class="n">{{ nm }}<div class="note" style="margin:0;font-size:11px;font-weight:400">{{ river_tbl.size_help[loop.index0] }}</div></th>{% endfor %}</tr>
+      {% for g in river_tbl.grid %}
+      <tr><td>{{ g.strength }}<div class="note" style="margin:0;font-size:11px">{{ g.help }}</div></td>
+        {% for c in g.cells %}<td class="n {% if c and c.n >= 30 %}{{ 'cell-pos' if c.verdict == 'lönsamt' else ('cell-neg' if c.verdict == 'förlorar' else '') }}{% endif %}">
+          {% if c and c.n >= 30 %}<b>{{ c.mean|signed(1) }}</b><div class="note" style="margin:0;font-size:11px">{{ c.n }} syner · fold {{ '%.0f'|format(c.fold_pct) }} %</div>
+          {% elif c %}<span class="note" style="font-size:12px">{{ c.n }} syner · fold {{ '%.0f'|format(c.fold_pct) }} %</span>{% else %}–{% endif %}</td>{% endfor %}</tr>
+      {% endfor %}
+    </table>
+    <div class="note">Grönt = säkert lönsamt att syna · rött = säkert förlorande · utan färg = osäkert.</div>
+  </div>
+  {% endif %}
+  {% if river_coach and river_coach.decisions %}{% set RC = river_coach %}
+  <h3 style="margin:22px 0 8px">🎯 River-coach: bästa beslutet mot poolens ranges</h3>
+  <div class="panel">
+    <div class="rg-do">
+      <div><b>Mot en bet (syna/folda):</b> {% if RC.ok.mot_bet %}<span class="tag good">modellen klarar kontrollen</span>{% else %}<span class="tag bad">osäker – visas bara som fingervisning</span>{% endif %}</div>
+      <div><b>I position efter check (checka/betta, storlek):</b> {% if RC.ok.ip_efter_check %}<span class="tag good">modellen klarar kontrollen</span>{% else %}<span class="tag bad">osäker – visas bara som fingervisning</span>{% endif %}</div>
+    </div>
+    {% set F = RC.findings|selectattr('validated')|list %}
+    {% if F %}
+    <table class="tbl" style="margin-top:10px"><tr><th>Läcka</th><th class="n">Gånger</th><th class="n">Värt (försiktigt)</th><th>Bättre val</th></tr>
+    {% for f in F[:6] %}<tr><td>{{ {'river_fold':'Foldar mot bets där syn ger mer','river_call':'Synar bets där fold ger mer','ip_missad_bet':'Checkar bakom där bet ger mer','ip_onodig_bet':'Bettar där check ger mer','ip_fel_storlek':'Fel storlek'}.get(f.kind, f.kind) }} <span class="note" style="margin:0">({{ f.sub }})</span></td>
+      <td class="n">{{ f.n }}</td><td class="n pos">+{{ '%.2f'|format(f.cost100_cons) }} bb/100</td>
+      <td>{% for k, v in f.best|dictsort(by='value', reverse=true) %}{% if loop.index <= 2 %}<span class="tag">{{ {'call':'syna','fold':'folda','check':'checka'}.get(k, k) }} {{ v }}</span>{% endif %}{% endfor %}</td></tr>{% endfor %}
+    </table>
+    {% else %}<div class="note">Inga säkerställda river-läckor där modellen klarar kontrollen.</div>{% endif %}
+    {% if RC.queue %}
+    <div class="lbl">De dyraste river-besluten att gå igenom</div>
+    <table class="tbl"><tr><th>Du valde</th><th>Bättre</th><th class="n">Skillnad</th><th></th></tr>
+    {% for q in RC.queue[:12] %}<tr><td>{{ {'call':'syna','fold':'folda','check':'checka'}.get(q.chosen, 'betta ' ~ q.chosen) }}</td><td><b>{{ {'call':'syna','fold':'folda','check':'checka'}.get(q.best, 'betta ' ~ q.best) }}</b></td><td class="n">{{ '%.1f'|format(q.gain) }} bb</td>
+      <td><button type="button" class="rpl-open" data-hid="{{ q.id }}" data-label="{{ {'call':'syna','fold':'folda','check':'checka'}.get(q.chosen, 'betta ' ~ q.chosen) }} → {{ {'call':'syna','fold':'folda','check':'checka'}.get(q.best, 'betta ' ~ q.best) }} · {{ '%.1f'|format(q.gain) }} bb">▶ Spela upp</button></td></tr>{% endfor %}
+    </table>{% endif %}
+    <div class="note"><b>Bets värderas som bet/fold:</b> modellen räknar med att du alltid foldar mot en check-raise. Med mycket starka händer (där du skulle syna eller höja igen) undervärderas därför en bet – läs förslagen "checka" med stark hand som osäkra.</div>
+    <div class="note">Vinstchansen räknas mot vad poolen faktiskt visat upp i samma linje (roll, betstorlek, aggressor på turn, brädtyp, SPR) och EV med rake. Kontrollen jämför modellens vinstchans med hur dina händer gick, på händer modellen inte lärt sig av. Det är en uppskattning mot poolen på GG, inte en solver. I uppspelningen visas coachens råd på river.</div>
+  </div>
+  {% endif %}
+  {% if river_guide and river_guide.sizes %}{% set G = river_guide %}
+  <h3 style="margin:22px 0 8px">🎯 River: syna eller folda mot en bet?</h3>
+  <div class="panel scroll">
+    <div class="rg-do">{% for z in G.sizes %}<div><b>{{ z.size }}:</b> syna om högst <b>{{ z.thr_label }}</b> av hans händer slår dig{% if z.fold_pct >= 15 %} <span class="tag bad">du foldar {{ '%.0f'|format(z.fold_pct) }} %</span>{% else %} <span class="tag good">bra</span>{% endif %}</div>{% endfor %}</div>
+    <table class="rg"><tr><th></th>{% for k in range(G.bins|length - 1) %}<th>{{ ('≤' ~ ('%g'|format(100 * G.bins[k + 1])).replace('.', ',') ~ ' %') if G.bins[k + 1] < 1 else 'mer' }}</th>{% endfor %}</tr>
+    {% for z in G.sizes %}<tr><td class="rl">{{ z.size }}</td>
+      {% for c in z.cells %}<td class="c {{ c.state }}{{ ' in' if c.hi <= z.thr else '' }}" title="{{ c.n }} gånger · {{ c.calls }} syner{% if c.mean is not none %} · syn {{ '%+.1f'|format(c.mean) }} bb{% endif %}{% if c.cats %} · oftast {{ c.cats|join(', ') }}{% endif %}">{{ '%.0f'|format(c.fold_pct) ~ '%' if c.fold_pct is not none else '' }}</td>{% endfor %}</tr>{% endfor %}
+    </table>
+    <div class="note">Vänster = nöten, höger = svagare (andel av hans möjliga händer som slår dig). <b style="color:var(--good)">Grön</b> = syn har gått plus · <b style="color:var(--bad)">röd</b> = minus · siffran = hur ofta du foldat. Ram = syna här. Håll över en ruta för vanliga händer.</div>
+    {% if G.missed %}
+    <div class="lbl">Senaste folds du borde ha synat</div>
+    <div class="rg-miss">{% for x in G.missed %}<button type="button" class="rpl-open" data-hid="{{ x.id }}">▶ {{ x.id }}</button>{% endfor %}</div>
+    {% endif %}
+    {% if G.val100 > 0.05 %}<div class="note">Värde om du synar till gränsen: minst ≈ {{ '%.1f'|format(G.val100) }} bb/100.</div>{% endif %}
+  </div>
+  <style>
+  .rg-do{display:grid;gap:4px;margin:0 0 10px;font-size:14.5px}
+  .rg{border-collapse:separate;border-spacing:3px;font-size:12px}
+  .rg th{color:var(--ink2);font-weight:600;padding:0 2px;text-align:center}
+  .rg td.rl{padding-right:8px;white-space:nowrap;font-weight:600}
+  .rg td.c{min-width:40px;height:30px;text-align:center;border-radius:5px;color:#fff;font-weight:700}
+  .rg td.good{background:var(--good)} .rg td.bad{background:var(--bad)} .rg td.few{background:var(--chip);color:var(--ink2)}
+  .rg td.in{outline:3px solid var(--ink);outline-offset:-3px}
+  .rg-miss{display:flex;flex-wrap:wrap;gap:6px 14px}
+  </style>
+  {% endif %}
+  {% if river_bluff and river_bluff.sizes %}{% set RB = river_bluff %}
+  <h3 style="margin:22px 0 8px">🃏 River: bluffa mer?</h3>
+  <div class="panel scroll">
+    <p style="margin-top:0">En bluff går plus när han foldar oftare än siffran i "En bluff behöver".</p>
+    <table class="tbl"><tr><th>Din betstorlek</th><th class="n">Bets</th><th class="n">Motståndaren foldade</th><th class="n">En bluff behöver</th><th>Bedömning</th></tr>
+    {% for r in RB.sizes %}<tr><td>{{ r.size }}<div class="note" style="margin:0;font-size:11px">i snitt {{ '%.0f'|format(r.frac_pct) }} % av potten</div></td><td class="n">{{ r.n }}</td>
+      <td class="n"><b>{{ '%.0f'|format(r.fold_pct) }} %</b> <span class="note" style="margin:0">{{ '%.0f'|format(r.fold_lo) }}–{{ '%.0f'|format(r.fold_hi) }}</span></td><td class="n">{{ '%.0f'|format(r.need_pct) }} %</td>
+      <td>{% if r.edge %}<span class="tag good">bluffar lönar sig</span>{% elif r.fold_hi < r.need_pct %}<span class="tag bad">bluffa inte</span>{% else %}<span class="tag">osäkert</span>{% endif %}</td></tr>{% endfor %}
+    </table>
+    {% if RB.weak_share is not none %}<div class="note">{{ '%.0f'|format(RB.weak_share) }} % av dina river-bets görs med svaga händer (minst hälften av motståndarens möjliga händer slår dig).</div>{% endif %}
+    {% if RB.ip %}
+    <div class="lbl">I position när motståndaren checkat river: hur ofta bettar du?</div>
+    <table class="tbl"><tr><th>Din hand</th><th class="n">Tillfällen</th><th class="n">Du bettade</th><th style="min-width:120px"></th></tr>
+    {% for r in RB.ip %}<tr><td>{{ r.strength }}</td><td class="n">{{ r.n }}</td><td class="n">{{ '%.0f'|format(r.bet_pct) }} %</td><td><div class="rbar"><i style="width:{{ r.bet_pct }}%;background:var(--accent)"></i></div></td></tr>{% endfor %}
+    </table>
+    {% endif %}
+    <div class="note">👉 <b>Gör så här:</b> när det står "bluffar lönar sig" – betta oftare med luft (händer som aldrig vinner vid showdown), helst i position efter check och med den storleken. Öka stegvis och följ tabellen.</div>
+  </div>
+  {% endif %}

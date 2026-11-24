@@ -1,0 +1,22 @@
+{% set PG = (guidelines or [])|selectattr('area', 'equalto', 'postflop')|sort(attribute='rank')|list %}
+{% if PG %}<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>💡 Riktlinjer postflop – störst vinst först</b><span class="note" style="margin:0">från analysen 8 nov (omgång 2: jämfört vid lika handstyrka, korsgranskad) · bekräftad = statistiskt säkerställd</span></div>
+<table class="tbl"><tr><th>#</th><th>Situation och vad du gör</th><th class="n">Ca vinst</th><th>Säkerhet</th></tr>
+{% for g in PG %}<tr><td>{{ g.rank }}</td><td><b>{{ g.title }}</b><div>{{ g.do }}</div><div class="note" style="margin:2px 0 0">{{ g.why }}</div></td><td class="n" style="white-space:nowrap">{{ g.gain }}</td><td>{{ '✅' if g.level.startswith('bekräftad') else '🟡' }} {{ g.level }}</td></tr>{% endfor %}
+</table></div>{% endif %}
+<div class="panel" style="margin-bottom:14px"><div class="card-h"><b>🔍 Hur ofta bluffar poolen på river?</b><span class="note" style="margin:0">analys 2026-11-12 av 8 676 river-bets som gick till showdown</span></div>
+<table class="tbl" style="max-width:620px"><tr><th>Poolens river-bet</th><th class="n">$0.5/$1</th><th class="n">$1/$2</th></tr>
+<tr><td>Alla</td><td class="n">7,7 %</td><td class="n">8,6 %</td></tr>
+<tr><td>Under 40 % av potten</td><td class="n">5,3 %</td><td class="n">4,7 %</td></tr>
+<tr><td>66 % eller mer</td><td class="n">~9 %</td><td class="n">~10 %</td></tr>
+<tr><td>All-in</td><td class="n">5,4 %</td><td class="n">3,9 %</td></tr>
+<tr><td>Höjning / check-raise</td><td class="n">1,9 %</td><td class="n">2,3 %</td></tr>
+<tr><td>Parat bord</td><td class="n">1,6 %</td><td class="n">1,4 %</td></tr>
+<tr><td>Oparat bord</td><td class="n">13,8 %</td><td class="n">15,6 %</td></tr></table>
+<div class="note">Andel där motståndaren hade högst ett par (= bluff). Svaga tvåpar som bluff och mockade händer syns inte, så verklig andel är troligen ~10–20 % – fortfarande långt under de ~33 % en balanserad pottbet skulle ha. Syna bara med händer som slår en del av hans värdehänder.</div></div>
+{% if river_tbl or turn_tbl %}
+<div class="tabbed">
+{% include "parts/postflop.html" %}
+</div>
+{% else %}
+<div class="panel empty">Inga turn- eller river-beslut att visa i det här urvalet.</div>
+{% endif %}

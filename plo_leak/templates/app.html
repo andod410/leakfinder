@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="sv" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ page_title }} · PLO-läckfinnare</title>
+<script>try{var t=localStorage.getItem('plo-theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<style>
+{% include "parts/style.css" %}
+{% include "parts/app.css" %}
+</style>
+</head>
+<body class="app">
+{% from "parts/macros.html" import chartpanel, unitcharts, leakcard, devrow, bigrow with context %}
+{% macro icon(n) -%}
+<svg viewBox="0 0 24 24" aria-hidden="true">{% if n == 'home' %}<rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/>{% elif n == 'graph' %}<path d="M3 20h18"/><path d="M4 16l5-6 4 3 7-8"/>{% elif n == 'hands' %}<rect x="3" y="5" width="11" height="15" rx="2"/><path d="M17 4.5l3.3 1.2a1.5 1.5 0 0 1 .9 1.9L17 19"/>{% elif n == 'pre' %}<path d="M4 6h16M4 12h10M4 18h6"/>{% elif n == 'post' %}<circle cx="12" cy="12" r="8"/><path d="M12 7v5l3 2"/>{% elif n == 'leak' %}<path d="M12 3s6 6.5 6 11a6 6 0 0 1-12 0c0-4.5 6-11 6-11z"/>{% elif n == 'follow' %}<path d="M4 12l5 5L20 6"/>{% elif n == 'sess' %}<rect x="3" y="5" width="18" height="15" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>{% elif n == 'train' %}<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".8"/>{% elif n == 'stats' %}<path d="M5 20V10M12 20V4M19 20v-7"/>{% elif n == 'db' %}<ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v12c0 1.7 3.1 3 7 3s7-1.3 7-3V6"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/>{% elif n == 'export' %}<path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><path d="M4 19h16"/>{% elif n == 'menu' %}<path d="M4 7h16M4 12h16M4 17h16"/>{% elif n == 'filter' %}<path d="M4 5h16l-6 7v6l-4 2v-8z"/>{% endif %}</svg>
+{%- endmacro %}
+{% set NAV = [
+  ('Analys', [('oversikt', 'Översikt', 'home', True), ('resultat', 'Resultat & graf', 'graph', True), ('hander', 'Händer', 'hands', True), ('sessioner', 'Sessioner', 'sess', True), ('rakeback', 'Rakeback & leaderboard', 'stats', True)]),
+  ('Spel', [('solver', 'Solver & träning', 'pre', True), ('preflop', 'Preflop', 'pre', True), ('postflop', 'Turn & river', 'post', True), ('betstorlek', 'Betstorlek', 'stats', True)]),
+  ('Förbättra', [('lackor', 'Läckor', 'leak', True), ('folj', 'Följ upp', 'follow', True), ('trana', 'Träna starthänder', 'train', False)]),
+  ('Mer', [('aggression', 'Aggression', 'graph', True), ('utveckling', 'Utveckling', 'graph', True), ('tider', 'När du vinner', 'sess', True), ('dela', 'Dela som bild', 'export', True)]),
+  ('Data', [('detaljer', 'Statistik & kontroll', 'stats', True), ('import', 'Import & databas', 'db', False), ('exportera', 'Exportera händer', 'export', False)]),
+] %}
+{% macro href(p) -%}
+{%- if p == 'trana' -%}/trana{% elif p == 'import' %}/import{% elif p == 'exportera' %}/exportera{% elif nav_vid %}/v/{{ nav_vid }}/{{ p }}{% else %}/?till={{ p }}{% endif -%}
+{%- endmacro %}
+<div class="shell">
+  <aside class="side" id="side">
+    <a class="brand" href="{{ href('oversikt') if nav_vid else '/' }}"><span class="logo">PLO</span><span>Läckfinnaren<small>version {{ app_version }}</small></span></a>
+    {% for g, items in NAV %}
+    <div class="nav-g">{{ g }}</div>
+    {% for key, label, ic, needs in items %}
+    <a class="nav-i{% if page == key %} on{% endif %}" href="{{ href(key) }}"{% if needs and not nav_vid %} title="Öppnar en analys av hela databasen"{% endif %}>{{ icon(ic) }}<span>{{ label }}</span>
+      {%- if key == 'lackor' and nav_vid and leaks is defined and leaks and not mixed %}<span class="cnt">{{ leaks|length }}</span>{% endif -%}
+      {%- if key == 'folj' and nav_vid and fu is defined and fu and fu.total.opps %}<span class="cnt{{ ' ok' if fu.total.rate < 2 else '' }}">{{ '%.0f'|format(fu.total.rate) }} %</span>{% endif -%}
+    </a>
+    {% endfor %}{% endfor %}
+    <div class="side-foot"><span title="Leakfinder stänger sig själv om GG startas. Stäng också PLO Trainer-fliken och andra pokerprogram innan du startar GG.">🛑 Stängs när GG startar</span><button type="button" id="theme-t" title="Byt mellan mörkt och ljust tema">Ljust tema</button></div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <div class="main">
+    <header class="top" id="top">
+      <div class="tbar">
+        <button class="icon-btn" type="button" id="nav-t" aria-label="Meny">{{ icon('menu') }}</button>
+        <div class="tt">{{ page_title }}</div>
+        {% if filters and filters.enabled and vid and (filters.fran or filters.till) %}<button class="btn sm ghost" type="button" title="Tar bort datumurvalet och visar hela perioden igen" onclick="var f=document.querySelector('form.fbar'); f.fran.value=''; f.till.value=''; var m=document.createElement('input'); m.type='hidden'; m.name='mode'; m.value='visa'; f.appendChild(m); if(window.plSending) plSending(); f.submit();">↩ Hela perioden</button>{% endif %}
+        {% if filters and filters.enabled and vid %}<button class="icon-btn" type="button" id="f-t" aria-label="Filter">{{ icon('filter') }}<span>Urval</span></button>{% endif %}
+      </div>
+      {% if filters and filters.enabled and vid %}
+      <form class="fbar" method="post" action="/analyze" enctype="multipart/form-data" autocomplete="off" onsubmit="var b=event.submitter||this.querySelector('.go'); b.textContent=(b.value==='analys'?'Analyserar …':'Visar …')">
+        <input type="hidden" name="back" value="{{ page }}">
+        <input type="hidden" name="hero" value="{{ filters.hero }}">
+        <div class="f">Variant<div class="row">{% for g in filters.games %}<label class="pill"><input type="checkbox" name="games" value="{{ g }}"{% if g in filters.games_sel %} checked{% endif %} onchange="this.form.stake.value='';this.form.table.value=''"><span>{{ g }}</span></label>{% endfor %}</div></div>
+        <label class="f">Bord<select name="table"><option value="">Alla bord</option><option value="vanliga"{% if filters.table == 'vanliga' %} selected{% endif %}>Vanliga bord</option>{% if filters.has_rush or filters.table == 'rush' %}<option value="rush"{% if filters.table == 'rush' %} selected{% endif %}>Rush &amp; Cash</option>{% endif %}</select></label>
+        <label class="f">Nivå<select name="stake"><option value="">Alla nivåer</option>{% for k in filters.stakes %}<option value="{{ k }}"{% if k == filters.stake %} selected{% endif %}>${{ k.replace('/', '/$') }}</option>{% endfor %}</select></label>
+        <div class="f">Senaste händerna<div class="row"><label class="pill"><input type="checkbox" name="latest_on" value="1"{% if filters.latest_on %} checked{% endif %}><span>Bara senaste</span></label><input type="number" name="latest" min="1" step="1" value="{{ filters.latest }}" aria-label="Antal senaste händer"></div></div>
+        <label class="f">Från<input type="date" name="fran" value="{{ filters.fran }}" min="{{ filters.span[0] }}" max="{{ filters.span[1] }}"></label>
+        <label class="f">Till<input type="date" name="till" value="{{ filters.till }}" min="{{ filters.span[0] }}" max="{{ filters.span[1] }}"></label>
+        <div class="f">&nbsp;<button type="button" class="clr" title="Töm från- och till-datum" onclick="this.form.fran.value='';this.form.till.value=''">✕ Rensa datum</button></div>
+        <button class="go" type="submit" name="mode" value="visa" title="Byter bara urvalet: resultat, all-in EV, grafer, sessioner och timlön räknas för urvalet. Läckor, regler och modeller visas från den senaste fulla analysen – inget räknas om (snabbt).">Visa urvalet</button>
+        <button class="go" type="submit" name="mode" value="analys" style="background:var(--chip);color:var(--ink)" title="Kör analysen: läckor, gränser och modeller räknas om – på just urvalet om du valt datum eller senaste händerna, annars på alla händer i varianten (tar längre tid).">🔬 Analysera urvalet</button>
+        <button class="go" type="button" style="background:var(--chip);color:var(--ink)" onclick="plQuick()" title="Läser in nya händer och uppdaterar resultat, sessioner och grafer – läckor och regler behålls (snabbt)">⚡ Nya händer</button>
+        <div class="sum"><b>{{ '{:,}'.format(st.hands).replace(',', ' ') }} händer</b><br>{{ st.first_date.strftime('%Y-%m-%d') if st.first_date }} – {{ st.last_date.strftime('%Y-%m-%d') if st.last_date }}</div>
+      </form>
+      {% endif %}
+    </header>
+    <main class="content">
+    {% if dev_on %}<div class="verdict {{ 'bad' if dev_late else 'bad-soft' }}" style="margin-bottom:10px">🧪 <b>Utvecklingsläge:</b> Leakfinder körs även när GG är igång. Solverdata visas aldrig medan GG körs.{% if dev_late %} <b>GG varnar och stänger konton för pokerprogram som körs samtidigt från 1 december – stäng av utvecklingsläget.</b>{% else %} Stäng av senast 30 november (GG börjar leta efter pokerprogram 1 december).{% endif %} <a href="/import#utveckling">Ändra</a></div>{% endif %}
+      {% if page != 'jobb' %}<div id="jobbar" style="display:none;margin-bottom:14px"></div>{% endif %}
+      {% if quick_info and quick_info.view and page not in ('oversikt', 'jobb') %}<div class="note" style="margin:0 0 10px">{% if quick_info.skipped %}👁 Bara urvalet visas – läckor, regler och modeller är inte analyserade för den här varianten/nivån. Tryck <b>🔬 Analysera urvalet</b> för att räkna dem.{% else %}👁 Läckor, regler och modeller är från den fulla analysen {{ quick_info.date }}{% if quick_info.since %} ({{ '{:,}'.format(quick_info.since).replace(',', ' ') }} nya händer sedan dess){% endif %}. Tryck <b>🔬 Analysera urvalet</b> för att räkna om dem.{% endif %}</div>{% endif %}
+      {% if vid %}<div class="panel cta" id="newbanner" style="margin-bottom:14px;{{ '' if watch_new else 'display:none' }}"><div><b id="newn">{{ watch_new }}</b> <b>nya händer</b> har lästs in sedan analysen öppnades. Snabb uppdatering: resultat, sessioner och grafer räknas om – läckor och regler behålls.<span id="newcd" class="note" style="margin-left:6px"></span></div>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label class="note" style="margin:0;display:flex;gap:6px;align-items:center"><input type="checkbox" id="autoupd"> Uppdatera automatiskt</label>{% if filters and filters.enabled %}<button class="btn sm" type="button" id="updnow">Uppdatera analysen</button>{% endif %}</div></div>{% endif %}
+      <div class="ph">
+        <div><h1>{{ page_title }}</h1>
+          {% if vid %}<div class="sub">{{ (filters.games_sel|join(' + ')) if filters and filters.games_sel else main_game }}{% if filters and filters.table %} · {{ 'Rush & Cash' if filters.table == 'rush' else 'Vanliga bord' }}{% endif %}{% if filters and filters.stake %} · ${{ filters.stake.replace('/', '/$') }}{% endif %}{% if filters and (filters.fran or filters.till) %} · urval {{ ('från ' ~ filters.fran) if filters.fran }}{{ ' ' if filters.fran and filters.till }}{{ ('till ' ~ filters.till) if filters.till }}{% endif %}{% if filters and filters.latest_on %} · senaste {{ '{:,}'.format(filters.latest|int).replace(',', ' ') }}{% if filters.n_all %} → {{ '{:,}'.format(st.hands).replace(',', ' ') }} av {{ '{:,}'.format(filters.n_all).replace(',', ' ') }} händer{% endif %}{% endif %}{% if not (filters and filters.latest_on and filters.n_all) %} · {{ '{:,}'.format(st.hands).replace(',', ' ') }} händer{% endif %} · {% if filters and (filters.fran or filters.latest_on) %}första hand {% endif %}{{ st.first_date.strftime('%Y-%m-%d') if st.first_date }} – {{ st.last_date.strftime('%Y-%m-%d') if st.last_date }}{% if filters and filters.full %} · hela databasen{% endif %}</div>
+          {% elif page_sub %}<div class="sub">{{ page_sub }}</div>{% endif %}
+        </div>
+        {% if vid %}<div class="acts"><a class="btn sm ghost" href="/v/{{ vid }}/export" title="Sammanställd analysfil (JSON) att ladda upp i chatten med Claude">Exportera till Claude</a><a class="btn sm ghost" href="/v/{{ vid }}/djupanalys" title="Zip med ALLA händer i hela urvalet (inte bara valda sessioner) – för bara vissa sessioner: kryssa i dem under Sessioner och välj 📦 Zip med händerna">Djupanalys hela urvalet (zip)</a></div>{% endif %}
+      </div>
+      {% if mixed and page in ('preflop', 'postflop', 'betstorlek', 'lackor', 'folj', 'sessioner', 'utveckling', 'tider', 'aggression', 'detaljer') %}
+      {% include "parts/mixed.html" %}
+      {% else %}
+      {% include "pages/" ~ page ~ ".html" %}
+      {% endif %}
+    </main>
+  </div>
+</div>
+<script>
+window.RPL_API = {{ (('/api/replay/' ~ vid) if vid else '')|tojson }};
+{% include "parts/charts.js" %}
+{% include "parts/replayer.js" %}
+{% include "parts/potchart.js" %}
+{% include "parts/app.js" %}
+(function(){
+  // 2.72: pågående jobb (djupanalys, export, nattberäkning …) syns överst på alla sidor med förlopp och länk.
+  var bar=document.getElementById('jobbar'); if(!bar) return;
+  function esc(x){ return String(x==null?'':x).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function poll(){
+    fetch('/api/jobs').then(function(r){return r.json();}).then(function(j){
+      var js=j.jobs||[];
+      if(!js.length){ bar.style.display='none'; bar.innerHTML=''; setTimeout(poll,6000); return; }
+      bar.innerHTML=js.map(function(x){
+        var pct=x.total?Math.min(100,Math.round(100*x.done/x.total)):null;
+        return '<div class="panel" style="margin-bottom:8px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">'+
+          '<div style="flex:1 1 260px"><b>'+(x.status==='väntar'?'⏳ I kö: ':'⚙️ Pågår: ')+esc(x.title)+'</b>'+
+          '<div class="note" style="margin:2px 0 0">'+esc(x.stage)+(x.eta?' · ca '+Math.round(x.eta/60)+' min kvar':'')+'</div>'+
+          '<div style="height:6px;background:var(--chip);border-radius:3px;margin-top:6px;overflow:hidden">'+
+          '<div style="height:100%;width:'+(pct===null?100:pct)+'%;background:var(--accent);'+(pct===null?'opacity:.35':'')+'"></div></div></div>'+
+          '<a class="btn sm" href="/jobb/'+esc(x.id)+'">Visa förloppet</a>'+
+          '<button type="button" class="btn sm ghost" data-cancel="'+esc(x.id)+'"'+(x.cancel?' disabled':'')+'>'+(x.cancel?'Avbryter …':'⏹ Avbryt')+'</button></div>';
+      }).join('');
+      bar.style.display='';
+      setTimeout(poll,2000);
+    }).catch(function(){ setTimeout(poll,8000); });
+  }
+  bar.addEventListener('click',function(e){   // 2.88: avbryt-knapp på alla tunga jobb
+    var b=e.target.closest('[data-cancel]'); if(!b) return;
+    b.disabled=true; b.textContent='Avbryter …';
+    fetch('/jobb/'+encodeURIComponent(b.getAttribute('data-cancel'))+'/avbryt',{method:'POST',headers:{'X-Requested-With':'fetch'}});
+  });
+  poll();
+})();
+{% if vid %}
+(function(){
+  // Nya händer från den bevakade mappen: programmet uppdaterar analysen själv (även när fliken ligger i bakgrunden)
+  // och sidan laddar om sig till den nya analysen – på samma sida, utan att du behöver trycka.
+  var VID={{ vid|tojson }};
+  var banner=document.getElementById('newbanner'), nEl=document.getElementById('newn'), cd=document.getElementById('newcd');
+  var auto=document.getElementById('autoupd'), btn=document.getElementById('updnow'), busy=false, base=null;
+  window.plQuick=function(back){ var f=document.querySelector('.fbar'); if(!f) return; if(back){ var b=f.querySelector('input[name=back]'); if(b) b.value=back; } go(); };
+  function go(){ var f=document.querySelector('.fbar'); if(!f) return; f.querySelector('.go').textContent='Uppdaterar …';
+    var q=f.querySelector('input[name=quick]'); if(!q){ q=document.createElement('input'); q.type='hidden'; q.name='quick'; f.appendChild(q); } q.value='1'; sending=true; f.submit(); }
+  if(btn) btn.addEventListener('click',go);
+  if(auto) auto.addEventListener('change',function(){
+    var fd=new FormData(); fd.append('on',auto.checked?'1':'0');
+    fetch('/api/auto',{method:'POST',body:fd}).then(check).catch(function(){}); });
+  function typing(){ var a=document.activeElement; return a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName)&&a.type!=='checkbox'; }
+  // 2.89: ändrat urval som inte är skickat ska aldrig försvinna – sidan laddar inte om sig då, utan säger till.
+  var fb=document.querySelector('form.fbar'), dirty=false, sending=false;
+  if(fb){ fb.addEventListener('input',function(){dirty=true;}); fb.addEventListener('change',function(){dirty=true;});
+    fb.addEventListener('submit',function(){sending=true;}); }
+  window.plSending=function(){ sending=true; };
+  function reload(nv){ if(busy||sending) return;
+    if(dirty){ banner.style.display=''; cd.textContent='En nyare analys är klar. Ditt ändrade urval behålls – tryck Visa urvalet så gäller det med de nya händerna.'; return; }
+    if(typing()){ setTimeout(check,3000); return; } busy=true;
+    location.replace(location.pathname.replace('/v/'+VID+'/','/v/'+nv+'/')+location.search+location.hash); }
+  function check(){
+    return fetch('/api/status').then(function(r){return r.json();}).then(function(j){
+      if(auto) auto.checked=!!j.auto_update;
+      if(base===null) base=(j.latest_vid===VID)?VID:j.latest_vid;  // en äldre analys du öppnat själv byts bara om en nyare tillkommer
+      if(j.latest_vid && j.latest_vid!==VID && j.latest_vid!==base && j.auto_update && !j.auto_running){ reload(j.latest_vid); return; }
+      if(j.watch_new>0 || j.auto_running){ nEl.textContent=j.watch_new; banner.style.display='';
+        cd.textContent=j.auto_running?('Uppdaterar … '+(j.auto_stage||'')):''; }
+    }).catch(function(){});
+  }
+  check();
+  setInterval(check,3000);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) check(); });
+})();
+{% endif %}
+</script>
+<script>
+/* 2.80: sidor med solverfrekvenser (Träna, Solver) laddas om när GG startar – servern visar då att de är dolda.
+   Sparade träningssvar i webbläsaren rensas samtidigt (de innehåller solverfacit). */
+(function(){
+  if(!document.querySelector('[data-solver-page]')) return;
+  /* 2.87 (R7-01, R7-02): när servern inte svarar (vakten har stängt programmet för att GG startade) döljs sidan direkt
+     i webbläsaren – annars låg solverfrekvenserna kvar i fliken. Sparade träningssvar rensas också. */
+  var miss=0;
+  function wipe(){ try{ Object.keys(localStorage).filter(k=>k.indexOf('plo-trana-')===0&&k!=='plo-trana-auto').forEach(k=>localStorage.removeItem(k)); }catch(e){} }
+  function hide(msg){ wipe(); document.body.innerHTML='<div style="font-family:sans-serif;padding:40px;max-width:640px"><h2>Sidan är dold</h2><p>'+msg+'</p></div>'; }
+  function chk(){ fetch('/api/gg',{cache:'no-store'}).then(r=>r.json()).then(j=>{
+    miss=0;
+    if(j.gg!=='nej'){ wipe(); location.reload(); }
+  }).catch(()=>{ miss++; if(miss>=2) hide('Leakfinder svarar inte längre (troligen stängdes programmet för att GG startade). Solverdata visas inte. Stäng GG och starta Leakfinder igen.'); }); }
+  setInterval(chk, 3000);
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) chk(); });
+})();
+</script>
+</body>
+</html>
