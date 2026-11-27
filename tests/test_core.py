@@ -2377,12 +2377,12 @@ def test_auto_update_on_new_hands(tmp_path, monkeypatch):
         path = tmp_path / "x.db"
     monkeypatch.setattr(web, "get_db", lambda: FakeDB())
     monkeypatch.setattr(web, "_last_vid", lambda: "abc")
-    web._AUTO["job"] = None
+    web._AUTO["job"] = None; web._AUTO["started"] = 0.0
     watch.save_settings(FakeDB(), last_spec={"stake": "1/2", "back": "sessioner", "folder": "/hemlig"})
     web._auto_update()
     assert started and started[0]["quick"] and started[0]["stake"] == "1/2" and started[0]["folder"] == ""
     watch.save_settings(FakeDB(), auto_update=False)
-    started.clear(); web._AUTO["job"] = None
+    started.clear(); web._AUTO["job"] = None; web._AUTO["started"] = 0.0
     web._auto_update()
     assert not started
 

@@ -139,4 +139,4 @@ def test_kpi_template_hides_and_computes(tmp_path):
 
 def test_version():
     import plo_leak
-    assert plo_leak.__version__ == "2.89"
+    assert plo_leak.__version__.startswith("2.89")

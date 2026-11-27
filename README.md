@@ -2,6 +2,10 @@
 
 > **Granskning:** `PROGRAMBESKRIVNING.md` beskriver alla delar av programmet och exakt hur varje uträkning görs.
 
+## Version 2.89.1 – automatisk uppdatering högst en gång per minut
+
+- Programmet och alla sidor uppdateras automatiskt högst en gång per minut. Se ANDRINGAR_2.89.1.md.
+
 ## Version 2.89 – urvalet håller, alla grafer i Dela som bild, valbara rutor
 
 - **Urvalet gäller alltid:** nivå, datum och senaste N kombineras. Sidan tappar aldrig ett ändrat urval när nya händer kommer in, och urvalsraden visar exakt vad som visas.

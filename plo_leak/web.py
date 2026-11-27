@@ -12,6 +12,7 @@ from datetime import datetime
 import os
 import socket
 import threading
+import time
 import webbrowser
 from collections import OrderedDict
 from pathlib import Path
@@ -1441,7 +1442,10 @@ def auto_api():
     return {"auto_update": on}
 
 
-_AUTO = {"job": None}
+_AUTO = {"job": None, "started": 0.0}
+# 2.89.1: automatisk uppdatering högst en gång per minut. Nya händer som kommer inom minuten tas med i nästa
+# uppdatering (bevakningen försöker igen var 4:e sekund så länge händer saknas i analysen).
+AUTO_MIN_GAP = 60.0
 _SPEC_KEEP = ("hero", "game", "games", "fran", "till", "table", "stake", "latest", "model_sel", "back")
 
 
@@ -1465,10 +1469,13 @@ def _auto_update(retry: bool = False) -> None:
             return  # ett jobb pågår – nästa kontroll (retry) tar med de nya händerna
         if retry and j is not None and j.status == "fel":
             return  # förra automatiska uppdateringen misslyckades – vänta på nya filer i stället för att loopa
+        if time.time() - float(_AUTO.get("started") or 0.0) < AUTO_MIN_GAP:
+            return  # 2.89.1: senaste automatiska uppdateringen startade för mindre än en minut sedan
         spec = _default_spec()
         spec.update({k: v for k, v in (ws.get("last_spec") or {}).items() if k in _SPEC_KEEP})
         spec.update(quick=True, folder="", upload_dir=None, n_uploads=0, use_db=True, simulera=False)
         _AUTO["job"] = MANAGER.start("Analys", _run_job, spec).id
+        _AUTO["started"] = time.time()
     except Exception:
         pass  # automatiken får aldrig stoppa programmet
 

@@ -141,7 +141,12 @@ window.RPL_API = {{ (('/api/replay/' ~ vid) if vid else '')|tojson }};
   if(fb){ fb.addEventListener('input',function(){dirty=true;}); fb.addEventListener('change',function(){dirty=true;});
     fb.addEventListener('submit',function(){sending=true;}); }
   window.plSending=function(){ sending=true; };
+  // 2.89.1: sidan laddas om automatiskt högst en gång per minut (räknat från när sidan laddades).
+  var MIN_GAP=60000, loaded=Date.now(), pend=null;
   function reload(nv){ if(busy||sending) return;
+    var wait=MIN_GAP-(Date.now()-loaded);
+    if(wait>0){ if(!pend){ pend=setTimeout(function(){ pend=null; check(); },wait+500); }
+      banner.style.display=''; cd.textContent='En nyare analys är klar – sidan uppdateras om '+Math.ceil(wait/1000)+' s (högst en gång per minut).'; return; }
     if(dirty){ banner.style.display=''; cd.textContent='En nyare analys är klar. Ditt ändrade urval behålls – tryck Visa urvalet så gäller det med de nya händerna.'; return; }
     if(typing()){ setTimeout(check,3000); return; } busy=true;
     location.replace(location.pathname.replace('/v/'+VID+'/','/v/'+nv+'/')+location.search+location.hash); }
