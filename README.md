@@ -2,6 +2,10 @@
 
 > **Granskning:** `PROGRAMBESKRIVNING.md` beskriver alla delar av programmet och exakt hur varje uträkning görs.
 
+## Version 2.89.2 – Översikt laddas inte om var 3:e sekund medan GG körs
+
+- Rättat: Översikt laddades om var 3:e sekund medan GG körde. Se ANDRINGAR_2.89.2.md.
+
 ## Version 2.89.1 – automatisk uppdatering högst en gång per minut
 
 - Programmet och alla sidor uppdateras automatiskt högst en gång per minut. Se ANDRINGAR_2.89.1.md.

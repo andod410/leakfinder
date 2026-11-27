@@ -49,7 +49,7 @@ def test_downloads_need_gg_closed(monkeypatch, tmp_path):
 def test_overview_has_solver_marker_and_js_hides_on_server_loss():
     ov = (ROOT / "plo_leak" / "templates" / "pages" / "oversikt.html").read_text(encoding="utf-8")
     app = (ROOT / "plo_leak" / "templates" / "app.html").read_text(encoding="utf-8")
-    assert "data-solver-page" in ov
+    assert "{% if solver_shown %}<span data-solver-page" in ov
     assert "miss>=2" in app and "Sidan är dold" in app
 
 

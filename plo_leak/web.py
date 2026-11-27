@@ -636,6 +636,9 @@ def view_page(vid, pg):
         except Exception as e:
             extra["rbweek"] = {"rows": [], "error": f"{type(e).__name__}: {e}"}
     if pg == "oversikt":
+        # 2.89.2: markeringen som får sidan att laddas om när GG startar sätts bara när solverdata kan visas.
+        # Förut fanns den alltid – med GG igång (eller "okänd") laddades Översikt då om var 3:e sekund.
+        open_before = solver_gate()[0] is not None
         try:
             extra["top3"] = _top3(_view(vid)["C"])
         except Exception as e:
@@ -644,6 +647,7 @@ def view_page(vid, pg):
             extra["prio_usd"] = _prio_usd(_view(vid)["C"])
         except Exception:
             extra["prio_usd"] = None
+        extra["solver_shown"] = open_before or solver_gate()[0] is not None
     if pg == "solver":
         extra.update(_solver_extra(_view(vid)["C"]))
     return shell(pg, PAGES[pg], vid, **extra)
